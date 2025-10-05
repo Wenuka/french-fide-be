@@ -2,9 +2,9 @@ import type { Request, Response, NextFunction } from "express";
 import jwksRsa from "jwks-rsa";
 import jwt, { JwtHeader } from "jsonwebtoken";
 
-const audience = process.env.FIREBASE_AUDIENCE; // typically the Firebase project ID
-const issuer = process.env.FIREBASE_ISSUER; // e.g. https://securetoken.google.com/<project-id>
-const projectId = process.env.FIREBASE_PROJECT_ID; // used for some checks if needed
+const audience = "fideprepweb"; // typically the Firebase project ID
+const issuer = "https://securetoken.google.com/fideprepweb"; // e.g. https://securetoken.google.com/<project-id>
+const projectId = "fideprepweb"; // used for some checks if needed
 
 const client = jwksRsa({
   jwksUri:

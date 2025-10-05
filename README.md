@@ -26,9 +26,6 @@ Copy `.env.sample` to `.env` and fill values.
 Required:
 - `DATABASE_URL` (Neon or any PostgreSQL; include `sslmode=require` for Neon)
 - `PORT` (optional, default 8080)
-- `FIREBASE_PROJECT_ID`
-- `FIREBASE_AUDIENCE` (usually same as project ID)
-- `FIREBASE_ISSUER` = `https://securetoken.google.com/<project-id>`
 
 ### 3) Prisma migrate & generate
 For local dev migrations:
