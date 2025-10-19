@@ -7,7 +7,8 @@
     "build": "prisma migrate deploy && prisma generate && tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "prisma:dev": "prisma migrate dev && prisma generate",
-    "prisma:deploy": "prisma migrate deploy && prisma generate"
+    "prisma:deploy": "prisma migrate deploy && prisma generate",
+    "backfill:favourites": "ts-node src/scripts/backfillFavouriteLists.ts"
   },
   "engines": {
     "node": ">=18.0.0"

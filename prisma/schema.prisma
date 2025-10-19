@@ -1,3 +1,4 @@
+// ---------- Generators & Datasource ----------
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,10 +8,115 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ---------- Enums ----------
+enum Language {
+  FR
+  EN
+  DE
+}
+
+enum VocabStatus {
+  unknown
+  green
+  red
+}
+
+enum VocabReferenceKind {
+  DEFAULT   // points to external JSON list `default_vocab` via reference_id
+  CUSTOM    // points to CustomVocab via custom_vocab_id
+}
+
+// ---------- Models ----------
 model User {
-  id            Int      @id @default(autoincrement()) // primary key for joins
-  uid           String   @unique                       // Firebase UID
-  email         String?  
-  emailVerified Boolean  @default(false)
-  createdAt     DateTime @default(now())
+  id             Int       @id @default(autoincrement())
+  uid            String    @unique       // Firebase UID
+  email          String?
+  emailVerified  Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+
+  source_lang    Language  @default(EN)
+  target_lang    Language  @default(FR)
+
+  // One-to-one favourite list pointer (unique makes it 1:1)
+  favourite_list Int?      @unique
+  favouriteList  VocabList?  @relation("FavouriteListRelation", fields: [favourite_list], references: [list_id])
+
+  // All lists owned by the user (1:N)
+  lists          VocabList[] @relation("OwnedListsRelation")
+
+  customVocabs   CustomVocab[]
+  hidden         HiddenVocab[]
+}
+
+model CustomVocab {
+  custom_vocab_id Int       @id @default(autoincrement())
+  uid             String
+  target_lang     Language
+  source_lang     Language
+
+  user  User   @relation(fields: [uid], references: [uid])
+  vocab Vocab[]
+
+  @@index([uid])
+}
+
+model Vocab {
+  vocab_id        Int                 @id @default(autoincrement())
+  reference_id    Int?                // If DEFAULT: id (0..9999) from external JSON
+  reference_kind  VocabReferenceKind
+  custom_vocab_id Int?                // If CUSTOM: FK to CustomVocab
+
+  customVocab CustomVocab?  @relation(fields: [custom_vocab_id], references: [custom_vocab_id])
+  listItems   VocabListItem[]
+  hiddenBy    HiddenVocab[]
+
+  @@index([reference_kind, reference_id])
+  @@index([custom_vocab_id])
+}
+
+model HiddenVocab {
+  uid      String
+  vocab_id Int
+
+  user  User  @relation(fields: [uid], references: [uid])
+  vocab Vocab @relation(fields: [vocab_id], references: [vocab_id])
+
+  @@id([uid, vocab_id])
+}
+
+model VocabList {
+  list_id   Int      @id @default(autoincrement())
+  uid       String
+  list_name String
+
+  // Owner side of 1:N (must share relation name with User.lists)
+  user  User @relation("OwnedListsRelation", fields: [uid], references: [uid])
+
+  // Backfield for the 1:1 favourite list relation (singular)
+  favouritedByUser User? @relation("FavouriteListRelation")
+
+  items VocabListItem[]
+
+  // A user cannot have two lists with the same name
+  @@unique([uid, list_name])
+  @@index([uid])
+}
+
+model VocabListItem {
+  id           Int          @id @default(autoincrement())
+  list_id      Int
+  vocab_id     Int
+
+  // Progress fields
+  list_name    String?
+  importance   Float        @default(0)
+  timesGreen   Int          @default(0)
+  timesRed     Int          @default(0)
+  vocab_status VocabStatus  @default(unknown)
+
+  listRef VocabList @relation(fields: [list_id], references: [list_id])
+  vocab   Vocab     @relation(fields: [vocab_id], references: [vocab_id])
+
+  @@unique([list_id, vocab_id])
+  @@index([vocab_id])
 }
