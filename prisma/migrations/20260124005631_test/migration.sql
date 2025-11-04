@@ -24,6 +24,8 @@ CREATE TABLE "CustomVocab" (
     "uid" TEXT NOT NULL,
     "target_lang" "Language" NOT NULL,
     "source_lang" "Language" NOT NULL,
+    "source_text" TEXT NOT NULL,
+    "target_text" TEXT NOT NULL,
 
     CONSTRAINT "CustomVocab_pkey" PRIMARY KEY ("custom_vocab_id")
 );
