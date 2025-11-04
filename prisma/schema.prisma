@@ -53,7 +53,8 @@ model CustomVocab {
   uid             String
   target_lang     Language
   source_lang     Language
-
+  source_text     String
+  target_text     String
   user  User   @relation(fields: [uid], references: [uid])
   vocab Vocab[]
 
