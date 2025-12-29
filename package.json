@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "jest",
     "build": "prisma migrate deploy && prisma generate && tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "prisma:dev": "prisma migrate dev && prisma generate",
     "prisma:deploy": "prisma migrate deploy && prisma generate",
-    "backfill:favourites": "ts-node src/scripts/backfillFavouriteLists.ts"
+    "backfill:favourites": "ts-node src/scripts/backfillFavouriteLists.ts",
+    "generate:vocab-default-ref": "ts-node scripts/seedDefaultVocab.ts"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -26,11 +28,16 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.10",
+    "@types/jest": "^29.5.12",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "@types/supertest": "^2.0.16",
+    "jest": "^29.7.0",
     "prisma": "^5.18.0",
+    "supertest": "^6.3.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
+    "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.4"

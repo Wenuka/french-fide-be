@@ -74,11 +74,11 @@ Requires `Authorization: Bearer <ID_TOKEN>`. Creates a custom vocab list for the
 curl -X POST http://localhost:8080/user/createList \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ID_TOKEN" \
-  -d '{ "listName": "My first list", "words": [1, 42, 99] }'
+  -d '{ "listName": "My first list", "words": [1, { "reference_id": 42 }, { "custom_vocab_id": 99 }] }'
 ```
 Request body:
 - `listName` (string, required) – Unique per user.
-- `words` (number[], optional) – `vocab_id`s to associate; pass `[]` or omit for an empty list.
+- `words` (array, optional) – Items to associate; each entry may be a numeric `vocab_id` or an object containing `reference_id` or `custom_vocab_id`. Pass `[]` or omit for an empty list.
 
 Response:
 ```json
@@ -95,11 +95,11 @@ Requires `Authorization: Bearer <ID_TOKEN>`. Adds vocab items to an existing lis
 curl -X POST http://localhost:8080/user/addWords \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ID_TOKEN" \
-  -d '{ "listId": 123, "words": [5, 9, 12] }'
+  -d '{ "listId": 123, "words": [5, { "reference_id": 9 }, { "custom_vocab_id": 12 }] }'
 ```
 Request body:
 - `listId` (number, required) – The list to attach words to.
-- `words` (number[], required) – Positive `vocab_id`s to attach.
+- `words` (array, required) – Vocab identifiers to attach; each entry may be a numeric `vocab_id` or an object containing `reference_id` or `custom_vocab_id`.
 
 Response:
 ```json
@@ -110,6 +110,35 @@ Response:
   "skipped": []
 }
 ```
+
+### POST /user/word-text
+Requires `Authorization: Bearer <ID_TOKEN>`. Returns source/target text for vocab items referenced either by list IDs (owned by the user) or explicit vocab identifiers (`vocabId`, `referenceId`, or `customVocabId`).
+```bash
+curl -X POST http://localhost:8080/user/word-text \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ID_TOKEN" \
+  -d '{ "listIds": [123], "wordIds": [{ "customVocabId": 45 }] }'
+```
+Response:
+```json
+{
+  "ok": true,
+  "words": [
+    {
+      "vocabId": 987,
+      "referenceKind": "DEFAULT",
+      "referenceId": 321,
+      "customVocabId": null,
+      "sourceLang": "FR",
+      "targetLang": "EN",
+      "sourceText": "prendre rendez-vous",
+      "targetText": "to make an appointment",
+      "listIds": [123]
+    }
+  ]
+}
+```
+By default the endpoint attempts to load default vocabulary strings from `process.env.DEFAULT_VOCAB_PATH`. If unset it will look for `data/default-vocab.json` or the front-end `french-fide/src/assets/main-vocab.json`. Populate one of these locations to enable translations for default vocab entries.
 
 ## Scripts
 - `dev` – Start dev server with auto-reload
@@ -133,5 +162,7 @@ npx prisma generate
 flashcard migration
 ```
 npm run prisma:deploy
-npm run backfill:favourites
+npm run generate:vocab-default-ref - to generate default vocab table
+npm run backfill:favourites - check whether we need to backfill langs
 ```
+
