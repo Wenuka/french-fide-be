@@ -15,14 +15,14 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://fideprep.ch"],
+    origin: ["http://localhost:3000", "https://fideprep.ch", "https://test.fideprep.ch"],
     credentials: true,
   })
 );
 
 // API Documentation
-app.use('/api-docs', 
-  swaggerUi.serve, 
+app.use('/api-docs',
+  swaggerUi.serve,
   swaggerUi.setup(swaggerSpec, {
     explorer: true,
     customSiteTitle: 'French FIDE API Documentation',
