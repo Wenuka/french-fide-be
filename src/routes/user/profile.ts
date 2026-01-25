@@ -84,6 +84,18 @@ router.put("/profile", requireAuth, async (req: Request, res: Response) => {
             return res.status(400).json({ error: "Invalid target_lang" });
         }
 
+        // Check if user has custom vocab
+        const hasCustomVocab = await prisma.customVocab.findFirst({
+            where: { uid },
+        });
+
+        if (hasCustomVocab) {
+            return res.status(400).json({
+                error: "You cannot change the language as you have started practicing custom words. Please use a new account if you wish to practice a new language."
+            });
+        }
+
+
         const email: string | undefined = user.email ?? undefined;
         const emailVerified: boolean = Boolean(user.email_verified);
 
