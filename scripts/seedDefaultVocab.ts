@@ -1,19 +1,40 @@
 import { PrismaClient, VocabReferenceKind } from "@prisma/client";
-import words from "./data/default_vocab.json";
+import topics from "./data/main-vocab.json";
 
 const prisma = new PrismaClient();
 
-type DefaultWord = {
-  reference_id: number;
+type VocabItem = {
+  word: {
+    fr: string;
+    en: string;
+    de: string;
+  };
+  level: string;
+  vid: number;
+};
+
+type Topic = {
+  id: number;
+  topic: {
+    fr: string;
+    de: string;
+  };
+  essentialVocabulary: VocabItem[];
 };
 
 async function main() {
-  console.log(`Seeding ${words.length} default vocab words…`);
+  // The JSON is a list of topics
+  const allTopics = topics as Topic[];
+
+  // Flatten to get all vocab items
+  const allVocab = allTopics.flatMap((t) => t.essentialVocabulary);
+
+  console.log(`Seeding ${allVocab.length} default vocab words from ${allTopics.length} topics…`);
 
   await prisma.vocab.createMany({
-    data: (words as DefaultWord[]).map((word) => ({
+    data: allVocab.map((word) => ({
       reference_kind: VocabReferenceKind.DEFAULT,
-      reference_id: word.reference_id,
+      reference_id: word.vid,
     })),
     skipDuplicates: true,
   });

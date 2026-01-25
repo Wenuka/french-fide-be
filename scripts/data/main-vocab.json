@@ -1,0 +1,2576 @@
+[
+  {
+    "id": 12,
+    "topic": {
+      "fr": "Nourriture",
+      "de": "Essen"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le pain",
+          "en": "Bread",
+          "de": "das Brot"
+        },
+        "level": "A1",
+        "vid": 1
+      },
+      {
+        "word": {
+          "fr": "Le fromage",
+          "en": "Cheese",
+          "de": "der Käse"
+        },
+        "level": "A1",
+        "vid": 2
+      },
+      {
+        "word": {
+          "fr": "L’eau",
+          "en": "Water",
+          "de": "das Wasser"
+        },
+        "level": "A1",
+        "vid": 3
+      },
+      {
+        "word": {
+          "fr": "Le lait",
+          "en": "Milk",
+          "de": "die Milch"
+        },
+        "level": "A1",
+        "vid": 4
+      },
+      {
+        "word": {
+          "fr": "La viande",
+          "en": "Meat",
+          "de": "das Fleisch"
+        },
+        "level": "A1",
+        "vid": 5
+      },
+      {
+        "word": {
+          "fr": "Le poisson",
+          "en": "Fish",
+          "de": "der Fisch"
+        },
+        "level": "A1",
+        "vid": 6
+      },
+      {
+        "word": {
+          "fr": "Les légumes",
+          "en": "Vegetables",
+          "de": "das Gemüse"
+        },
+        "level": "A1",
+        "vid": 7
+      },
+      {
+        "word": {
+          "fr": "Les fruits",
+          "en": "Fruits",
+          "de": "das Obst"
+        },
+        "level": "A1",
+        "vid": 8
+      },
+      {
+        "word": {
+          "fr": "Un repas",
+          "en": "Meal",
+          "de": "eine Mahlzeit"
+        },
+        "level": "A1",
+        "vid": 9
+      },
+      {
+        "word": {
+          "fr": "Un restaurant",
+          "en": "Restaurant",
+          "de": "ein Restaurant"
+        },
+        "level": "A1",
+        "vid": 10
+      },
+      {
+        "word": {
+          "fr": "Un dessert",
+          "en": "Dessert",
+          "de": "ein Dessert"
+        },
+        "level": "A1",
+        "vid": 11
+      },
+      {
+        "word": {
+          "fr": "Un plat",
+          "en": "Dish",
+          "de": "ein Gericht"
+        },
+        "level": "A2",
+        "vid": 12
+      },
+      {
+        "word": {
+          "fr": "Un menu",
+          "en": "Menu",
+          "de": "ein Menü"
+        },
+        "level": "A2",
+        "vid": 13
+      },
+      {
+        "word": {
+          "fr": "Boire",
+          "en": "To drink",
+          "de": "trinken"
+        },
+        "level": "A1",
+        "vid": 14
+      },
+      {
+        "word": {
+          "fr": "Manger",
+          "en": "To eat",
+          "de": "essen"
+        },
+        "level": "A1",
+        "vid": 15
+      },
+      {
+        "word": {
+          "fr": "Le petit-déjeuner",
+          "en": "Breakfast",
+          "de": "das Frühstück"
+        },
+        "level": "A1",
+        "vid": 16
+      },
+      {
+        "word": {
+          "fr": "Le déjeuner",
+          "en": "Lunch",
+          "de": "das Mittagessen"
+        },
+        "level": "A1",
+        "vid": 17
+      },
+      {
+        "word": {
+          "fr": "Le dîner",
+          "en": "Dinner",
+          "de": "das Abendessen"
+        },
+        "level": "A1",
+        "vid": 18
+      },
+      {
+        "word": {
+          "fr": "Le sucre",
+          "en": "Sugar",
+          "de": "der Zucker"
+        },
+        "level": "A1",
+        "vid": 19
+      },
+      {
+        "word": {
+          "fr": "Le sel",
+          "en": "Salt",
+          "de": "das Salz"
+        },
+        "level": "A1",
+        "vid": 20
+      },
+      {
+        "word": {
+          "fr": "Cuisiner",
+          "en": "To cook",
+          "de": "kochen"
+        },
+        "level": "A1",
+        "vid": 21
+      },
+      {
+        "word": {
+          "fr": "Un verre",
+          "en": "A glass",
+          "de": "ein Glas"
+        },
+        "level": "A1",
+        "vid": 22
+      },
+      {
+        "word": {
+          "fr": "Une bouteille",
+          "en": "A bottle",
+          "de": "eine Flasche"
+        },
+        "level": "A1",
+        "vid": 23
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "topic": {
+      "fr": "Voyage",
+      "de": "Reise"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le voyage",
+          "en": "Trip",
+          "de": "die Reise"
+        },
+        "level": "A1",
+        "vid": 24
+      },
+      {
+        "word": {
+          "fr": "Un billet",
+          "en": "Ticket",
+          "de": "eine Fahrkarte"
+        },
+        "level": "A1",
+        "vid": 25
+      },
+      {
+        "word": {
+          "fr": "Un passeport",
+          "en": "Passport",
+          "de": "ein Reisepass"
+        },
+        "level": "A1",
+        "vid": 26
+      },
+      {
+        "word": {
+          "fr": "Un hôtel",
+          "en": "Hotel",
+          "de": "ein Hotel"
+        },
+        "level": "A1",
+        "vid": 27
+      },
+      {
+        "word": {
+          "fr": "Un avion",
+          "en": "Plane",
+          "de": "ein Flugzeug"
+        },
+        "level": "A1",
+        "vid": 28
+      },
+      {
+        "word": {
+          "fr": "Un train",
+          "en": "Train",
+          "de": "ein Zug"
+        },
+        "level": "A1",
+        "vid": 29
+      },
+      {
+        "word": {
+          "fr": "Un bus",
+          "en": "Bus",
+          "de": "ein Bus"
+        },
+        "level": "A1",
+        "vid": 30
+      },
+      {
+        "word": {
+          "fr": "La valise",
+          "en": "Suitcase",
+          "de": "der Koffer"
+        },
+        "level": "A2",
+        "vid": 31
+      },
+      {
+        "word": {
+          "fr": "Un guide",
+          "en": "Guidebook",
+          "de": "ein Reiseführer"
+        },
+        "level": "B1",
+        "vid": 32
+      },
+      {
+        "word": {
+          "fr": "Une réservation",
+          "en": "Reservation",
+          "de": "eine Reservierung"
+        },
+        "level": "B1",
+        "vid": 33
+      },
+      {
+        "word": {
+          "fr": "Voyager",
+          "en": "To travel",
+          "de": "reisen"
+        },
+        "level": "A1",
+        "vid": 34
+      },
+      {
+        "word": {
+          "fr": "Partir",
+          "en": "To leave/depart",
+          "de": "abfahren"
+        },
+        "level": "A1",
+        "vid": 35
+      },
+      {
+        "word": {
+          "fr": "Arriver",
+          "en": "To arrive",
+          "de": "ankommen"
+        },
+        "level": "A1",
+        "vid": 36
+      },
+      {
+        "word": {
+          "fr": "L'aéroport",
+          "en": "Airport",
+          "de": "der Flughafen"
+        },
+        "level": "A1",
+        "vid": 37
+      },
+      {
+        "word": {
+          "fr": "La gare",
+          "en": "Train station",
+          "de": "der Bahnhof"
+        },
+        "level": "A1",
+        "vid": 38
+      },
+      {
+        "word": {
+          "fr": "Une carte",
+          "en": "Map",
+          "de": "eine Karte"
+        },
+        "level": "A1",
+        "vid": 39
+      },
+      {
+        "word": {
+          "fr": "Une destination",
+          "en": "Destination",
+          "de": "ein Reiseziel"
+        },
+        "level": "A2",
+        "vid": 40
+      },
+      {
+        "word": {
+          "fr": "Des vacances",
+          "en": "Holiday/Vacation",
+          "de": "die Ferien"
+        },
+        "level": "A1",
+        "vid": 41
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "topic": {
+      "fr": "Vêtements",
+      "de": "Kleidung"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Un vêtement",
+          "en": "Clothing",
+          "de": "ein Kleidungsstück"
+        },
+        "level": "A1",
+        "vid": 42
+      },
+      {
+        "word": {
+          "fr": "Un pantalon",
+          "en": "Pants",
+          "de": "eine Hose"
+        },
+        "level": "A1",
+        "vid": 43
+      },
+      {
+        "word": {
+          "fr": "Un t-shirt",
+          "en": "T-shirt",
+          "de": "ein T‑Shirt"
+        },
+        "level": "A1",
+        "vid": 44
+      },
+      {
+        "word": {
+          "fr": "Une chemise",
+          "en": "Shirt",
+          "de": "ein Hemd"
+        },
+        "level": "A1",
+        "vid": 45
+      },
+      {
+        "word": {
+          "fr": "Une robe",
+          "en": "Dress",
+          "de": "ein Kleid"
+        },
+        "level": "A1",
+        "vid": 46
+      },
+      {
+        "word": {
+          "fr": "Une jupe",
+          "en": "Skirt",
+          "de": "ein Rock"
+        },
+        "level": "A2",
+        "vid": 47
+      },
+      {
+        "word": {
+          "fr": "Des chaussures",
+          "en": "Shoes",
+          "de": "die Schuhe"
+        },
+        "level": "A1",
+        "vid": 48
+      },
+      {
+        "word": {
+          "fr": "Un manteau",
+          "en": "Coat",
+          "de": "ein Mantel"
+        },
+        "level": "A1",
+        "vid": 49
+      },
+      {
+        "word": {
+          "fr": "Un chapeau",
+          "en": "Hat",
+          "de": "ein Hut"
+        },
+        "level": "A2",
+        "vid": 50
+      },
+      {
+        "word": {
+          "fr": "Un pull",
+          "en": "Sweater",
+          "de": "ein Pullover"
+        },
+        "level": "A1",
+        "vid": 51
+      },
+      {
+        "word": {
+          "fr": "Mettre",
+          "en": "To put on - clothes",
+          "de": "anziehen"
+        },
+        "level": "A1",
+        "vid": 52
+      },
+      {
+        "word": {
+          "fr": "Enlever",
+          "en": "To take off - clothes",
+          "de": "ausziehen"
+        },
+        "level": "A2",
+        "vid": 53
+      },
+      {
+        "word": {
+          "fr": "Des chaussettes",
+          "en": "Socks",
+          "de": "die Socken"
+        },
+        "level": "A1",
+        "vid": 54
+      },
+      {
+        "word": {
+          "fr": "Une écharpe",
+          "en": "Scarf",
+          "de": "ein Schal"
+        },
+        "level": "A2",
+        "vid": 55
+      },
+      {
+        "word": {
+          "fr": "Des gants",
+          "en": "Gloves",
+          "de": "die Handschuhe"
+        },
+        "level": "A2",
+        "vid": 56
+      },
+      {
+        "word": {
+          "fr": "Une couleur",
+          "en": "Color",
+          "de": "eine Farbe"
+        },
+        "level": "A1",
+        "vid": 57
+      },
+      {
+        "word": {
+          "fr": "La taille",
+          "en": "Size",
+          "de": "die Größe"
+        },
+        "level": "A2",
+        "vid": 58
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "topic": {
+      "fr": "Météo",
+      "de": "Wetter"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le temps",
+          "en": "Weather",
+          "de": "das Wetter"
+        },
+        "level": "A1",
+        "vid": 59
+      },
+      {
+        "word": {
+          "fr": "Le soleil",
+          "en": "Sun",
+          "de": "die Sonne"
+        },
+        "level": "A1",
+        "vid": 60
+      },
+      {
+        "word": {
+          "fr": "La pluie",
+          "en": "Rain",
+          "de": "der Regen"
+        },
+        "level": "A1",
+        "vid": 61
+      },
+      {
+        "word": {
+          "fr": "La neige",
+          "en": "Snow",
+          "de": "der Schnee"
+        },
+        "level": "A1",
+        "vid": 62
+      },
+      {
+        "word": {
+          "fr": "Le vent",
+          "en": "Wind",
+          "de": "der Wind"
+        },
+        "level": "A1",
+        "vid": 63
+      },
+      {
+        "word": {
+          "fr": "Un nuage",
+          "en": "Cloud",
+          "de": "eine Wolke"
+        },
+        "level": "A1",
+        "vid": 64
+      },
+      {
+        "word": {
+          "fr": "Un orage",
+          "en": "Storm",
+          "de": "ein Gewitter"
+        },
+        "level": "A2",
+        "vid": 65
+      },
+      {
+        "word": {
+          "fr": "La chaleur",
+          "en": "Heat",
+          "de": "die Hitze"
+        },
+        "level": "B1",
+        "vid": 66
+      },
+      {
+        "word": {
+          "fr": "Le froid",
+          "en": "Cold",
+          "de": "die Kälte"
+        },
+        "level": "A1",
+        "vid": 67
+      },
+      {
+        "word": {
+          "fr": "La météo",
+          "en": "Weather forecast",
+          "de": "der Wetterbericht"
+        },
+        "level": "A2",
+        "vid": 68
+      },
+      {
+        "word": {
+          "fr": "Il fait beau",
+          "en": "It's nice weather",
+          "de": "Es ist schönes Wetter"
+        },
+        "level": "A1",
+        "vid": 69
+      },
+      {
+        "word": {
+          "fr": "Il fait chaud",
+          "en": "It's hot",
+          "de": "Es ist heiß"
+        },
+        "level": "A1",
+        "vid": 70
+      },
+      {
+        "word": {
+          "fr": "Il fait froid",
+          "en": "It's cold",
+          "de": "Es ist kalt"
+        },
+        "level": "A1",
+        "vid": 71
+      },
+      {
+        "word": {
+          "fr": "Il pleut",
+          "en": "It's raining",
+          "de": "Es regnet"
+        },
+        "level": "A1",
+        "vid": 72
+      },
+      {
+        "word": {
+          "fr": "Il neige",
+          "en": "It's snowing",
+          "de": "Es schneit"
+        },
+        "level": "A1",
+        "vid": 73
+      },
+      {
+        "word": {
+          "fr": "La température",
+          "en": "Temperature",
+          "de": "die Temperatur"
+        },
+        "level": "A1",
+        "vid": 74
+      },
+      {
+        "word": {
+          "fr": "Le ciel",
+          "en": "Sky",
+          "de": "der Himmel"
+        },
+        "level": "A1",
+        "vid": 75
+      },
+      {
+        "word": {
+          "fr": "Un éclair",
+          "en": "Lightning",
+          "de": "der Blitz"
+        },
+        "level": "B1",
+        "vid": 76
+      },
+      {
+        "word": {
+          "fr": "Le tonnerre",
+          "en": "Thunder",
+          "de": "der Donner"
+        },
+        "level": "B1",
+        "vid": 77
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "topic": {
+      "fr": "Santé",
+      "de": "Gesundheit"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le médecin",
+          "en": "Doctor",
+          "de": "der Arzt"
+        },
+        "level": "A1",
+        "vid": 78
+      },
+      {
+        "word": {
+          "fr": "L’hôpital",
+          "en": "Hospital",
+          "de": "das Krankenhaus"
+        },
+        "level": "A1",
+        "vid": 79
+      },
+      {
+        "word": {
+          "fr": "Un rendez-vous",
+          "en": "Appointment",
+          "de": "ein Termin"
+        },
+        "level": "A1",
+        "vid": 80
+      },
+      {
+        "word": {
+          "fr": "Le dentiste",
+          "en": "Dentist",
+          "de": "der Zahnarzt"
+        },
+        "level": "A2",
+        "vid": 81
+      },
+      {
+        "word": {
+          "fr": "La pharmacie",
+          "en": "Pharmacy",
+          "de": "die Apotheke"
+        },
+        "level": "A1",
+        "vid": 82
+      },
+      {
+        "word": {
+          "fr": "Un médicament",
+          "en": "Medicine",
+          "de": "ein Medikament"
+        },
+        "level": "A1",
+        "vid": 83
+      },
+      {
+        "word": {
+          "fr": "Une ordonnance",
+          "en": "Prescription",
+          "de": "ein Rezept"
+        },
+        "level": "A2",
+        "vid": 84
+      },
+      {
+        "word": {
+          "fr": "Une ambulance",
+          "en": "Ambulance",
+          "de": "ein Krankenwagen"
+        },
+        "level": "A2",
+        "vid": 85
+      },
+      {
+        "word": {
+          "fr": "La douleur",
+          "en": "Pain",
+          "de": "der Schmerz"
+        },
+        "level": "B1",
+        "vid": 86
+      },
+      {
+        "word": {
+          "fr": "Une blessure",
+          "en": "Injury",
+          "de": "eine Verletzung"
+        },
+        "level": "A2",
+        "vid": 87
+      },
+      {
+        "word": {
+          "fr": "La fièvre",
+          "en": "Fever",
+          "de": "das Fieber"
+        },
+        "level": "A2",
+        "vid": 88
+      },
+      {
+        "word": {
+          "fr": "Un accident",
+          "en": "Accident",
+          "de": "ein Unfall"
+        },
+        "level": "A2",
+        "vid": 89
+      },
+      {
+        "word": {
+          "fr": "Une carie",
+          "en": "Cavity",
+          "de": "die Karies"
+        },
+        "level": "B1",
+        "vid": 90
+      },
+      {
+        "word": {
+          "fr": "La grippe",
+          "en": "Flu",
+          "de": "die Grippe"
+        },
+        "level": "A2",
+        "vid": 91
+      },
+      {
+        "word": {
+          "fr": "La toux",
+          "en": "Cough",
+          "de": "der Husten"
+        },
+        "level": "A2",
+        "vid": 92
+      },
+      {
+        "word": {
+          "fr": "Un rhume",
+          "en": "Cold",
+          "de": "eine Erkältung"
+        },
+        "level": "A2",
+        "vid": 93
+      },
+      {
+        "word": {
+          "fr": "Se sentir bien/mal",
+          "en": "To feel good/bad",
+          "de": "sich gut/schlecht fühlen"
+        },
+        "level": "A1",
+        "vid": 94
+      },
+      {
+        "word": {
+          "fr": "Mal à la tête",
+          "en": "Headache",
+          "de": "Kopfschmerzen"
+        },
+        "level": "A1",
+        "vid": 95
+      },
+      {
+        "word": {
+          "fr": "La tension",
+          "en": "Blood pressure",
+          "de": "der Blutdruck"
+        },
+        "level": "B1",
+        "vid": 96
+      },
+      {
+        "word": {
+          "fr": "Les urgences",
+          "en": "Emergency room",
+          "de": "die Notaufnahme"
+        },
+        "level": "A2",
+        "vid": 97
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "topic": {
+      "fr": "Travail",
+      "de": "Arbeit"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le travail",
+          "en": "Work",
+          "de": "die Arbeit"
+        },
+        "level": "A1",
+        "vid": 98
+      },
+      {
+        "word": {
+          "fr": "Le bureau",
+          "en": "Office",
+          "de": "das Büro"
+        },
+        "level": "A1",
+        "vid": 99
+      },
+      {
+        "word": {
+          "fr": "Le patron",
+          "en": "Boss",
+          "de": "der Chef"
+        },
+        "level": "A1",
+        "vid": 100
+      },
+      {
+        "word": {
+          "fr": "Un collègue",
+          "en": "Colleague",
+          "de": "ein Kollege"
+        },
+        "level": "A2",
+        "vid": 101
+      },
+      {
+        "word": {
+          "fr": "L’emploi",
+          "en": "Employment",
+          "de": "die Beschäftigung"
+        },
+        "level": "A1",
+        "vid": 102
+      },
+      {
+        "word": {
+          "fr": "Le salaire",
+          "en": "Salary",
+          "de": "das Gehalt"
+        },
+        "level": "A2",
+        "vid": 103
+      },
+      {
+        "word": {
+          "fr": "Un contrat",
+          "en": "Contract",
+          "de": "ein Vertrag"
+        },
+        "level": "A2",
+        "vid": 104
+      },
+      {
+        "word": {
+          "fr": "L’horaire",
+          "en": "Schedule",
+          "de": "der Arbeitsplan"
+        },
+        "level": "A2",
+        "vid": 105
+      },
+      {
+        "word": {
+          "fr": "Une réunion",
+          "en": "Meeting",
+          "de": "eine Besprechung"
+        },
+        "level": "B1",
+        "vid": 106
+      },
+      {
+        "word": {
+          "fr": "La pause",
+          "en": "Break",
+          "de": "die Pause"
+        },
+        "level": "A2",
+        "vid": 107
+      },
+      {
+        "word": {
+          "fr": "Le chômage",
+          "en": "Unemployment",
+          "de": "die Arbeitslosigkeit"
+        },
+        "level": "B1",
+        "vid": 108
+      },
+      {
+        "word": {
+          "fr": "Un projet",
+          "en": "Project",
+          "de": "ein Projekt"
+        },
+        "level": "A2",
+        "vid": 109
+      },
+      {
+        "word": {
+          "fr": "Un ordinateur",
+          "en": "Computer",
+          "de": "ein Computer"
+        },
+        "level": "A1",
+        "vid": 110
+      },
+      {
+        "word": {
+          "fr": "Un bureau (meuble)",
+          "en": "Desk",
+          "de": "ein Schreibtisch"
+        },
+        "level": "A1",
+        "vid": 111
+      },
+      {
+        "word": {
+          "fr": "Une carrière",
+          "en": "Career",
+          "de": "die Karriere"
+        },
+        "level": "B1",
+        "vid": 112
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "topic": {
+      "fr": "Logement",
+      "de": "Wohnen"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "La maison",
+          "en": "House",
+          "de": "das Haus"
+        },
+        "level": "A1",
+        "vid": 113
+      },
+      {
+        "word": {
+          "fr": "L’appartement",
+          "en": "Apartment",
+          "de": "die Wohnung"
+        },
+        "level": "A1",
+        "vid": 114
+      },
+      {
+        "word": {
+          "fr": "Le loyer",
+          "en": "Rent",
+          "de": "die Miete"
+        },
+        "level": "A1",
+        "vid": 115
+      },
+      {
+        "word": {
+          "fr": "Le propriétaire",
+          "en": "Landlord",
+          "de": "der Vermieter"
+        },
+        "level": "A2",
+        "vid": 116
+      },
+      {
+        "word": {
+          "fr": "Un locataire",
+          "en": "Tenant",
+          "de": "ein Mieter"
+        },
+        "level": "A2",
+        "vid": 117
+      },
+      {
+        "word": {
+          "fr": "La chambre",
+          "en": "Bedroom",
+          "de": "das Schlafzimmer"
+        },
+        "level": "A1",
+        "vid": 118
+      },
+      {
+        "word": {
+          "fr": "Le salon",
+          "en": "Living room",
+          "de": "das Wohnzimmer"
+        },
+        "level": "A1",
+        "vid": 119
+      },
+      {
+        "word": {
+          "fr": "La cuisine",
+          "en": "Kitchen",
+          "de": "die Küche"
+        },
+        "level": "A1",
+        "vid": 120
+      },
+      {
+        "word": {
+          "fr": "La salle de bain",
+          "en": "Bathroom",
+          "de": "das Badezimmer"
+        },
+        "level": "A1",
+        "vid": 121
+      },
+      {
+        "word": {
+          "fr": "Un bail",
+          "en": "Lease",
+          "de": "ein Mietvertrag"
+        },
+        "level": "B1",
+        "vid": 122
+      },
+      {
+        "word": {
+          "fr": "Les charges",
+          "en": "Utilities",
+          "de": "die Nebenkosten"
+        },
+        "level": "B1",
+        "vid": 123
+      },
+      {
+        "word": {
+          "fr": "Une adresse",
+          "en": "Address",
+          "de": "eine Adresse"
+        },
+        "level": "A1",
+        "vid": 124
+      },
+      {
+        "word": {
+          "fr": "Une clé",
+          "en": "Key",
+          "de": "ein Schlüssel"
+        },
+        "level": "A1",
+        "vid": 125
+      },
+      {
+        "word": {
+          "fr": "Le jardin",
+          "en": "Garden",
+          "de": "der Garten"
+        },
+        "level": "A1",
+        "vid": 126
+      },
+      {
+        "word": {
+          "fr": "Le voisin / La voisine",
+          "en": "Neighbor",
+          "de": "der Nachbar"
+        },
+        "level": "A2",
+        "vid": 127
+      },
+      {
+        "word": {
+          "fr": "Meublé",
+          "en": "Furnished",
+          "de": "möbliert"
+        },
+        "level": "B1",
+        "vid": 128
+      },
+      {
+        "word": {
+          "fr": "Un quartier",
+          "en": "Neighborhood",
+          "de": "ein Viertel"
+        },
+        "level": "A2",
+        "vid": 129
+      },
+      {
+        "word": {
+          "fr": "Un ascenseur",
+          "en": "Elevator",
+          "de": "ein Aufzug"
+        },
+        "level": "A2",
+        "vid": 130
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "topic": {
+      "fr": "Enfants",
+      "de": "Kinder"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Un enfant",
+          "en": "Child",
+          "de": "ein Kind"
+        },
+        "level": "A1",
+        "vid": 131
+      },
+      {
+        "word": {
+          "fr": "Les parents",
+          "en": "Parents",
+          "de": "die Eltern"
+        },
+        "level": "A1",
+        "vid": 132
+      },
+      {
+        "word": {
+          "fr": "Le bébé",
+          "en": "Baby",
+          "de": "das Baby"
+        },
+        "level": "A1",
+        "vid": 133
+      },
+      {
+        "word": {
+          "fr": "Un jouet",
+          "en": "Toy",
+          "de": "ein Spielzeug"
+        },
+        "level": "A1",
+        "vid": 134
+      },
+      {
+        "word": {
+          "fr": "L’école",
+          "en": "School",
+          "de": "die Schule"
+        },
+        "level": "A1",
+        "vid": 135
+      },
+      {
+        "word": {
+          "fr": "Un camarade",
+          "en": "Classmate",
+          "de": "ein Mitschüler"
+        },
+        "level": "A2",
+        "vid": 136
+      },
+      {
+        "word": {
+          "fr": "Les devoirs",
+          "en": "Homework",
+          "de": "die Hausaufgaben"
+        },
+        "level": "A2",
+        "vid": 137
+      },
+      {
+        "word": {
+          "fr": "Une crèche",
+          "en": "Daycare",
+          "de": "eine Krippe"
+        },
+        "level": "A2",
+        "vid": 138
+      },
+      {
+        "word": {
+          "fr": "La maternelle",
+          "en": "Kindergarten",
+          "de": "der Kindergarten"
+        },
+        "level": "A2",
+        "vid": 139
+      },
+      {
+        "word": {
+          "fr": "Un adolescent",
+          "en": "Teenager",
+          "de": "ein Teenager"
+        },
+        "level": "B1",
+        "vid": 140
+      },
+      {
+        "word": {
+          "fr": "Jouer",
+          "en": "To play",
+          "de": "spielen"
+        },
+        "level": "A1",
+        "vid": 141
+      },
+      {
+        "word": {
+          "fr": "Dormir",
+          "en": "To sleep",
+          "de": "schlafen"
+        },
+        "level": "A1",
+        "vid": 142
+      },
+      {
+        "word": {
+          "fr": "Manger",
+          "en": "To eat",
+          "de": "essen"
+        },
+        "level": "A1",
+        "vid": 143
+      },
+      {
+        "word": {
+          "fr": "Grandir",
+          "en": "To grow up",
+          "de": "aufwachsen"
+        },
+        "level": "A2",
+        "vid": 144
+      },
+      {
+        "word": {
+          "fr": "Un livre d'images",
+          "en": "Picture book",
+          "de": "ein Bilderbuch"
+        },
+        "level": "A1",
+        "vid": 145
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "topic": {
+      "fr": "Achats",
+      "de": "Einkaufen"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le magasin",
+          "en": "Shop",
+          "de": "das Geschäft"
+        },
+        "level": "A1",
+        "vid": 146
+      },
+      {
+        "word": {
+          "fr": "Le supermarché",
+          "en": "Supermarket",
+          "de": "der Supermarkt"
+        },
+        "level": "A1",
+        "vid": 147
+      },
+      {
+        "word": {
+          "fr": "Le prix",
+          "en": "Price",
+          "de": "der Preis"
+        },
+        "level": "A1",
+        "vid": 148
+      },
+      {
+        "word": {
+          "fr": "Cher",
+          "en": "Expensive",
+          "de": "teuer"
+        },
+        "level": "A1",
+        "vid": 149
+      },
+      {
+        "word": {
+          "fr": "Bon marché",
+          "en": "Cheap",
+          "de": "günstig"
+        },
+        "level": "A1",
+        "vid": 150
+      },
+      {
+        "word": {
+          "fr": "La caisse",
+          "en": "Cash register",
+          "de": "die Kasse"
+        },
+        "level": "A2",
+        "vid": 151
+      },
+      {
+        "word": {
+          "fr": "Un reçu",
+          "en": "Receipt",
+          "de": "eine Quittung"
+        },
+        "level": "A2",
+        "vid": 152
+      },
+      {
+        "word": {
+          "fr": "Le client",
+          "en": "Customer",
+          "de": "der Kunde"
+        },
+        "level": "A1",
+        "vid": 153
+      },
+      {
+        "word": {
+          "fr": "Le vendeur",
+          "en": "Salesperson",
+          "de": "der Verkäufer"
+        },
+        "level": "A2",
+        "vid": 154
+      },
+      {
+        "word": {
+          "fr": "Un rabais",
+          "en": "Discount",
+          "de": "ein Rabatt"
+        },
+        "level": "B1",
+        "vid": 155
+      },
+      {
+        "word": {
+          "fr": "Payer",
+          "en": "To pay",
+          "de": "bezahlen"
+        },
+        "level": "A1",
+        "vid": 156
+      },
+      {
+        "word": {
+          "fr": "Commander",
+          "en": "To order",
+          "de": "bestellen"
+        },
+        "level": "A2",
+        "vid": 157
+      },
+      {
+        "word": {
+          "fr": "La monnaie",
+          "en": "Change",
+          "de": "das Wechselgeld"
+        },
+        "level": "A1",
+        "vid": 158
+      },
+      {
+        "word": {
+          "fr": "Une carte de crédit",
+          "en": "Credit card",
+          "de": "eine Kreditkarte"
+        },
+        "level": "A2",
+        "vid": 159
+      },
+      {
+        "word": {
+          "fr": "Les soldes",
+          "en": "Sales",
+          "de": "der Schlussverkauf"
+        },
+        "level": "B1",
+        "vid": 160
+      },
+      {
+        "word": {
+          "fr": "Essayer",
+          "en": "To try on",
+          "de": "anprobieren"
+        },
+        "level": "A2",
+        "vid": 161
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "topic": {
+      "fr": "Fête",
+      "de": "Feier"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Une fête",
+          "en": "Party",
+          "de": "eine Party"
+        },
+        "level": "A1",
+        "vid": 162
+      },
+      {
+        "word": {
+          "fr": "Un anniversaire",
+          "en": "Birthday",
+          "de": "ein Geburtstag"
+        },
+        "level": "A1",
+        "vid": 163
+      },
+      {
+        "word": {
+          "fr": "Un cadeau",
+          "en": "Gift",
+          "de": "ein Geschenk"
+        },
+        "level": "A1",
+        "vid": 164
+      },
+      {
+        "word": {
+          "fr": "Un gâteau",
+          "en": "Cake",
+          "de": "ein Kuchen"
+        },
+        "level": "A1",
+        "vid": 165
+      },
+      {
+        "word": {
+          "fr": "Une bougie",
+          "en": "Candle",
+          "de": "eine Kerze"
+        },
+        "level": "A2",
+        "vid": 166
+      },
+      {
+        "word": {
+          "fr": "Un invité",
+          "en": "Guest",
+          "de": "ein Gast"
+        },
+        "level": "A2",
+        "vid": 167
+      },
+      {
+        "word": {
+          "fr": "La musique",
+          "en": "Music",
+          "de": "die Musik"
+        },
+        "level": "A1",
+        "vid": 168
+      },
+      {
+        "word": {
+          "fr": "Une danse",
+          "en": "Dance",
+          "de": "ein Tanz"
+        },
+        "level": "A2",
+        "vid": 169
+      },
+      {
+        "word": {
+          "fr": "Un feu d’artifice",
+          "en": "Fireworks",
+          "de": "ein Feuerwerk"
+        },
+        "level": "B1",
+        "vid": 170
+      },
+      {
+        "word": {
+          "fr": "Fêter",
+          "en": "To celebrate",
+          "de": "feiern"
+        },
+        "level": "A2",
+        "vid": 171
+      },
+      {
+        "word": {
+          "fr": "Inviter",
+          "en": "To invite",
+          "de": "einladen"
+        },
+        "level": "A1",
+        "vid": 172
+      },
+      {
+        "word": {
+          "fr": "Danser",
+          "en": "To dance",
+          "de": "tanzen"
+        },
+        "level": "A1",
+        "vid": 173
+      },
+      {
+        "word": {
+          "fr": "Chanter",
+          "en": "To sing",
+          "de": "singen"
+        },
+        "level": "A1",
+        "vid": 174
+      },
+      {
+        "word": {
+          "fr": "Un verre",
+          "en": "A drink",
+          "de": "ein Glas"
+        },
+        "level": "A1",
+        "vid": 175
+      },
+      {
+        "word": {
+          "fr": "Un ami",
+          "en": "Friend",
+          "de": "ein Freund"
+        },
+        "level": "A1",
+        "vid": 176
+      },
+      {
+        "word": {
+          "fr": "Une célébration",
+          "en": "Celebration",
+          "de": "eine Feier"
+        },
+        "level": "B1",
+        "vid": 177
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "topic": {
+      "fr": "Poste, banque et assurances",
+      "de": "Post, Bank und Versicherungen"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "La poste",
+          "en": "Post office",
+          "de": "die Post"
+        },
+        "level": "A1",
+        "vid": 178
+      },
+      {
+        "word": {
+          "fr": "Une lettre",
+          "en": "Letter",
+          "de": "ein Brief"
+        },
+        "level": "A1",
+        "vid": 179
+      },
+      {
+        "word": {
+          "fr": "Un timbre",
+          "en": "Stamp",
+          "de": "eine Briefmarke"
+        },
+        "level": "A1",
+        "vid": 180
+      },
+      {
+        "word": {
+          "fr": "Un colis",
+          "en": "Package",
+          "de": "ein Paket"
+        },
+        "level": "A2",
+        "vid": 181
+      },
+      {
+        "word": {
+          "fr": "La banque",
+          "en": "Bank",
+          "de": "die Bank"
+        },
+        "level": "A1",
+        "vid": 182
+      },
+      {
+        "word": {
+          "fr": "Un compte",
+          "en": "Account",
+          "de": "ein Konto"
+        },
+        "level": "A2",
+        "vid": 183
+      },
+      {
+        "word": {
+          "fr": "La carte bancaire",
+          "en": "Bank card",
+          "de": "die Bankkarte"
+        },
+        "level": "A2",
+        "vid": 184
+      },
+      {
+        "word": {
+          "fr": "Un distributeur",
+          "en": "ATM",
+          "de": "ein Geldautomat"
+        },
+        "level": "A2",
+        "vid": 185
+      },
+      {
+        "word": {
+          "fr": "L’assurance",
+          "en": "Insurance",
+          "de": "die Versicherung"
+        },
+        "level": "B1",
+        "vid": 186
+      },
+      {
+        "word": {
+          "fr": "Un formulaire",
+          "en": "Form",
+          "de": "ein Formular"
+        },
+        "level": "B1",
+        "vid": 187
+      },
+      {
+        "word": {
+          "fr": "Envoyer",
+          "en": "To send",
+          "de": "senden"
+        },
+        "level": "A1",
+        "vid": 188
+      },
+      {
+        "word": {
+          "fr": "Une assurance maladie",
+          "en": "Health insurance",
+          "de": "die Krankenversicherung"
+        },
+        "level": "B1",
+        "vid": 189
+      },
+      {
+        "word": {
+          "fr": "Le code postal",
+          "en": "Postal code",
+          "de": "die Postleitzahl"
+        },
+        "level": "A1",
+        "vid": 190
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "topic": {
+      "fr": "Mobilité",
+      "de": "Mobilität"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le bus",
+          "en": "Bus",
+          "de": "der Bus"
+        },
+        "level": "A1",
+        "vid": 191
+      },
+      {
+        "word": {
+          "fr": "Le train",
+          "en": "Train",
+          "de": "der Zug"
+        },
+        "level": "A1",
+        "vid": 192
+      },
+      {
+        "word": {
+          "fr": "Le métro",
+          "en": "Subway",
+          "de": "die U‑Bahn"
+        },
+        "level": "A1",
+        "vid": 193
+      },
+      {
+        "word": {
+          "fr": "Un ticket",
+          "en": "Ticket",
+          "de": "ein Ticket"
+        },
+        "level": "A1",
+        "vid": 194
+      },
+      {
+        "word": {
+          "fr": "Un billet",
+          "en": "Travel ticket",
+          "de": "eine Fahrkarte"
+        },
+        "level": "A1",
+        "vid": 195
+      },
+      {
+        "word": {
+          "fr": "Un arrêt",
+          "en": "Stop",
+          "de": "eine Haltestelle"
+        },
+        "level": "A1",
+        "vid": 196
+      },
+      {
+        "word": {
+          "fr": "Une gare",
+          "en": "Station",
+          "de": "eine Station"
+        },
+        "level": "A1",
+        "vid": 197
+      },
+      {
+        "word": {
+          "fr": "Un vélo",
+          "en": "Bicycle",
+          "de": "ein Fahrrad"
+        },
+        "level": "A1",
+        "vid": 198
+      },
+      {
+        "word": {
+          "fr": "La voiture",
+          "en": "Car",
+          "de": "das Auto"
+        },
+        "level": "A1",
+        "vid": 199
+      },
+      {
+        "word": {
+          "fr": "Un permis de conduire",
+          "en": "Driving license",
+          "de": "ein Führerschein"
+        },
+        "level": "B1",
+        "vid": 200
+      },
+      {
+        "word": {
+          "fr": "Conduire",
+          "en": "To drive",
+          "de": "fahren"
+        },
+        "level": "A1",
+        "vid": 201
+      },
+      {
+        "word": {
+          "fr": "Marcher",
+          "en": "To walk",
+          "de": "gehen"
+        },
+        "level": "A1",
+        "vid": 202
+      },
+      {
+        "word": {
+          "fr": "Rouler",
+          "en": "To ride/drive",
+          "de": "fahren"
+        },
+        "level": "A1",
+        "vid": 203
+      },
+      {
+        "word": {
+          "fr": "Une route",
+          "en": "Road",
+          "de": "eine Straße"
+        },
+        "level": "A1",
+        "vid": 204
+      },
+      {
+        "word": {
+          "fr": "Un feu rouge",
+          "en": "Traffic light",
+          "de": "eine Ampel"
+        },
+        "level": "B1",
+        "vid": 205
+      },
+      {
+        "word": {
+          "fr": "La circulation",
+          "en": "Traffic",
+          "de": "der Verkehr"
+        },
+        "level": "A2",
+        "vid": 206
+      },
+      {
+        "word": {
+          "fr": "La station de métro",
+          "en": "Metro station",
+          "de": "die U‑Bahn‑Station"
+        },
+        "level": "A1",
+        "vid": 207
+      },
+      {
+        "word": {
+          "fr": "Le taxi",
+          "en": "Taxi",
+          "de": "das Taxi"
+        },
+        "level": "A1",
+        "vid": 208
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "topic": {
+      "fr": "Médias et loisirs",
+      "de": "Medien und Freizeit"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Le livre",
+          "en": "Book",
+          "de": "das Buch"
+        },
+        "level": "A1",
+        "vid": 209
+      },
+      {
+        "word": {
+          "fr": "La télévision",
+          "en": "Television",
+          "de": "das Fernsehen"
+        },
+        "level": "A1",
+        "vid": 210
+      },
+      {
+        "word": {
+          "fr": "Un film",
+          "en": "Movie",
+          "de": "ein Film"
+        },
+        "level": "A1",
+        "vid": 211
+      },
+      {
+        "word": {
+          "fr": "La musique",
+          "en": "Music",
+          "de": "die Musik"
+        },
+        "level": "A1",
+        "vid": 212
+      },
+      {
+        "word": {
+          "fr": "Un journal",
+          "en": "Newspaper",
+          "de": "eine Zeitung"
+        },
+        "level": "A2",
+        "vid": 213
+      },
+      {
+        "word": {
+          "fr": "Un magazine",
+          "en": "Magazine",
+          "de": "eine Zeitschrift"
+        },
+        "level": "A2",
+        "vid": 214
+      },
+      {
+        "word": {
+          "fr": "Un sport",
+          "en": "Sport",
+          "de": "ein Sport"
+        },
+        "level": "A1",
+        "vid": 215
+      },
+      {
+        "word": {
+          "fr": "Le cinéma",
+          "en": "Cinema",
+          "de": "das Kino"
+        },
+        "level": "A1",
+        "vid": 216
+      },
+      {
+        "word": {
+          "fr": "Une sortie",
+          "en": "Outing",
+          "de": "ein Ausflug"
+        },
+        "level": "B1",
+        "vid": 217
+      },
+      {
+        "word": {
+          "fr": "Les actualités",
+          "en": "News",
+          "de": "die Nachrichten"
+        },
+        "level": "B1",
+        "vid": 218
+      },
+      {
+        "word": {
+          "fr": "Lire",
+          "en": "To read",
+          "de": "lesen"
+        },
+        "level": "A1",
+        "vid": 219
+      },
+      {
+        "word": {
+          "fr": "Écouter",
+          "en": "To listen",
+          "de": "zuhören"
+        },
+        "level": "A1",
+        "vid": 220
+      },
+      {
+        "word": {
+          "fr": "Regarder",
+          "en": "To watch",
+          "de": "anschauen"
+        },
+        "level": "A1",
+        "vid": 221
+      },
+      {
+        "word": {
+          "fr": "Un concert",
+          "en": "Concert",
+          "de": "ein Konzert"
+        },
+        "level": "A2",
+        "vid": 222
+      },
+      {
+        "word": {
+          "fr": "Un jeu",
+          "en": "Game",
+          "de": "ein Spiel"
+        },
+        "level": "A1",
+        "vid": 223
+      },
+      {
+        "word": {
+          "fr": "Le stade",
+          "en": "Stadium",
+          "de": "das Stadion"
+        },
+        "level": "A2",
+        "vid": 224
+      },
+      {
+        "word": {
+          "fr": "Internet",
+          "en": "Internet",
+          "de": "das Internet"
+        },
+        "level": "A1",
+        "vid": 225
+      },
+      {
+        "word": {
+          "fr": "Les réseaux sociaux",
+          "en": "Social media",
+          "de": "die sozialen Netzwerke"
+        },
+        "level": "B1",
+        "vid": 226
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "topic": {
+      "fr": "Cours de formation",
+      "de": "Ausbildung"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Un cours",
+          "en": "Course",
+          "de": "ein Kurs"
+        },
+        "level": "A1",
+        "vid": 227
+      },
+      {
+        "word": {
+          "fr": "Un professeur",
+          "en": "Teacher",
+          "de": "ein Lehrer"
+        },
+        "level": "A1",
+        "vid": 228
+      },
+      {
+        "word": {
+          "fr": "Un étudiant",
+          "en": "Student",
+          "de": "ein Student"
+        },
+        "level": "A1",
+        "vid": 229
+      },
+      {
+        "word": {
+          "fr": "L’école",
+          "en": "School",
+          "de": "die Schule"
+        },
+        "level": "A1",
+        "vid": 230
+      },
+      {
+        "word": {
+          "fr": "Une université",
+          "en": "University",
+          "de": "eine Universität"
+        },
+        "level": "A2",
+        "vid": 231
+      },
+      {
+        "word": {
+          "fr": "Un diplôme",
+          "en": "Diploma",
+          "de": "ein Abschluss"
+        },
+        "level": "B1",
+        "vid": 232
+      },
+      {
+        "word": {
+          "fr": "La note",
+          "en": "Grade",
+          "de": "die Note"
+        },
+        "level": "A2",
+        "vid": 233
+      },
+      {
+        "word": {
+          "fr": "Un examen",
+          "en": "Exam",
+          "de": "eine Prüfung"
+        },
+        "level": "A2",
+        "vid": 234
+      },
+      {
+        "word": {
+          "fr": "Un stage",
+          "en": "Internship",
+          "de": "ein Praktikum"
+        },
+        "level": "B1",
+        "vid": 235
+      },
+      {
+        "word": {
+          "fr": "La formation",
+          "en": "Training",
+          "de": "die Ausbildung"
+        },
+        "level": "B1",
+        "vid": 236
+      },
+      {
+        "word": {
+          "fr": "Apprendre",
+          "en": "To learn",
+          "de": "lernen"
+        },
+        "level": "A1",
+        "vid": 237
+      },
+      {
+        "word": {
+          "fr": "Étudier",
+          "en": "To study",
+          "de": "studieren"
+        },
+        "level": "A1",
+        "vid": 238
+      },
+      {
+        "word": {
+          "fr": "Un devoir",
+          "en": "Assignment",
+          "de": "eine Aufgabe"
+        },
+        "level": "A2",
+        "vid": 239
+      },
+      {
+        "word": {
+          "fr": "La bibliothèque",
+          "en": "Library",
+          "de": "die Bibliothek"
+        },
+        "level": "A1",
+        "vid": 240
+      },
+      {
+        "word": {
+          "fr": "Le savoir",
+          "en": "Knowledge",
+          "de": "das Wissen"
+        },
+        "level": "B1",
+        "vid": 241
+      },
+      {
+        "word": {
+          "fr": "Réussir",
+          "en": "To succeed/pass an exam",
+          "de": "bestehen"
+        },
+        "level": "B1",
+        "vid": 242
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "topic": {
+      "fr": "Recherche d’emploi",
+      "de": "Jobsuche"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Un emploi",
+          "en": "Job",
+          "de": "eine Stelle"
+        },
+        "level": "A1",
+        "vid": 243
+      },
+      {
+        "word": {
+          "fr": "Un travail",
+          "en": "Work",
+          "de": "eine Arbeit"
+        },
+        "level": "A1",
+        "vid": 244
+      },
+      {
+        "word": {
+          "fr": "Un CV",
+          "en": "CV/Resume",
+          "de": "ein Lebenslauf"
+        },
+        "level": "A2",
+        "vid": 245
+      },
+      {
+        "word": {
+          "fr": "Une annonce",
+          "en": "Job ad",
+          "de": "eine Stellenanzeige"
+        },
+        "level": "A2",
+        "vid": 246
+      },
+      {
+        "word": {
+          "fr": "Un entretien",
+          "en": "Interview",
+          "de": "ein Vorstellungsgespräch"
+        },
+        "level": "B1",
+        "vid": 247
+      },
+      {
+        "word": {
+          "fr": "Une candidature",
+          "en": "Application",
+          "de": "eine Bewerbung"
+        },
+        "level": "B1",
+        "vid": 248
+      },
+      {
+        "word": {
+          "fr": "L’expérience",
+          "en": "Experience",
+          "de": "die Erfahrung"
+        },
+        "level": "B1",
+        "vid": 249
+      },
+      {
+        "word": {
+          "fr": "Un poste",
+          "en": "Position",
+          "de": "eine Position"
+        },
+        "level": "B1",
+        "vid": 250
+      },
+      {
+        "word": {
+          "fr": "Les compétences",
+          "en": "Skills",
+          "de": "die Fähigkeiten"
+        },
+        "level": "B1",
+        "vid": 251
+      },
+      {
+        "word": {
+          "fr": "Un entretien d'embauche",
+          "en": "Job interview",
+          "de": "ein Vorstellungsgespräch"
+        },
+        "level": "B1",
+        "vid": 252
+      },
+      {
+        "word": {
+          "fr": "Une lettre de motivation",
+          "en": "Cover letter",
+          "de": "ein Anschreiben"
+        },
+        "level": "B1",
+        "vid": 253
+      },
+      {
+        "word": {
+          "fr": "Une offre d'emploi",
+          "en": "Job offer",
+          "de": "ein Stellenangebot"
+        },
+        "level": "B1",
+        "vid": 254
+      },
+      {
+        "word": {
+          "fr": "Le recruteur",
+          "en": "Recruiter",
+          "de": "der Personalvermittler"
+        },
+        "level": "B1",
+        "vid": 255
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "topic": {
+      "fr": "Administration",
+      "de": "Verwaltung"
+    },
+    "essentialVocabulary": [
+      {
+        "word": {
+          "fr": "Une carte d’identité",
+          "en": "ID card",
+          "de": "ein Personalausweis"
+        },
+        "level": "A1",
+        "vid": 256
+      },
+      {
+        "word": {
+          "fr": "Le passeport",
+          "en": "Passport",
+          "de": "der Reisepass"
+        },
+        "level": "A1",
+        "vid": 257
+      },
+      {
+        "word": {
+          "fr": "Un formulaire",
+          "en": "Form",
+          "de": "ein Formular"
+        },
+        "level": "A2",
+        "vid": 258
+      },
+      {
+        "word": {
+          "fr": "Un document",
+          "en": "Document",
+          "de": "ein Dokument"
+        },
+        "level": "A2",
+        "vid": 259
+      },
+      {
+        "word": {
+          "fr": "Une signature",
+          "en": "Signature",
+          "de": "eine Unterschrift"
+        },
+        "level": "A2",
+        "vid": 260
+      },
+      {
+        "word": {
+          "fr": "La mairie",
+          "en": "Town hall",
+          "de": "das Rathaus"
+        },
+        "level": "A2",
+        "vid": 261
+      },
+      {
+        "word": {
+          "fr": "Un permis",
+          "en": "Permit",
+          "de": "eine Genehmigung"
+        },
+        "level": "B1",
+        "vid": 262
+      },
+      {
+        "word": {
+          "fr": "Une attestation",
+          "en": "Certificate",
+          "de": "eine Bescheinigung"
+        },
+        "level": "B1",
+        "vid": 263
+      },
+      {
+        "word": {
+          "fr": "Une autorisation",
+          "en": "Authorization",
+          "de": "eine Genehmigung"
+        },
+        "level": "B1",
+        "vid": 264
+      },
+      {
+        "word": {
+          "fr": "Remplir",
+          "en": "To fill out - a form",
+          "de": "ausfüllen"
+        },
+        "level": "A2",
+        "vid": 265
+      },
+      {
+        "word": {
+          "fr": "Signer",
+          "en": "To sign",
+          "de": "unterschreiben"
+        },
+        "level": "A2",
+        "vid": 266
+      },
+      {
+        "word": {
+          "fr": "Déclarer",
+          "en": "To declare",
+          "de": "angeben"
+        },
+        "level": "B1",
+        "vid": 267
+      },
+      {
+        "word": {
+          "fr": "Un rendez-vous",
+          "en": "Appointment",
+          "de": "ein Termin"
+        },
+        "level": "A1",
+        "vid": 268
+      },
+      {
+        "word": {
+          "fr": "Le justificatif",
+          "en": "Proof/Supporting document",
+          "de": "der Nachweis"
+        },
+        "level": "B1",
+        "vid": 269
+      },
+      {
+        "word": {
+          "fr": "Un dossier",
+          "en": "File/Application file",
+          "de": "eine Akte"
+        },
+        "level": "A2",
+        "vid": 270
+      }
+    ]
+  }
+]

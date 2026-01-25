@@ -1,15 +1,16 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import swaggerUi from 'swagger-ui-express';
+
+const app = express();
+
 import indexRouter from "./routes";
 import healthRouter from "./routes/health";
 import eventsRouter from "./routes/user";
 import swaggerSpec from "./config/swagger";
-
-dotenv.config();
-
-const app = express();
 
 // Middleware
 app.use(express.json());

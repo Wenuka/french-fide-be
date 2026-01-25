@@ -160,9 +160,9 @@ npx prisma generate
 ```
 
 flashcard migration
-```
+```bash
 npm run prisma:deploy
-npm run generate:vocab-default-ref - to generate default vocab table
-npm run backfill:favourites - check whether we need to backfill langs
+npm run generate:vocab-default-ref # to generate default vocab table
+npm run backfill:favourites # check whether we need to backfill langs
 ```
 
