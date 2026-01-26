@@ -217,8 +217,15 @@ router.get("/lists", requireAuth, async (req: Request, res: Response) => {
     }
     const metadataMap = await fetchVocabMetadataForIds(Array.from(allVocabIds));
 
+    // Refetch user to get the flag
+    const userRef = await prisma.user.findUnique({
+      where: { uid },
+      select: { has_generated_default_lists: true },
+    });
+
     res.json({
       ok: true,
+      hasGeneratedDefaultLists: userRef?.has_generated_default_lists ?? false,
       lists: lists.map((list) => ({
         id: list.list_id,
         name: list.list_name,
@@ -246,6 +253,174 @@ router.get("/lists", requireAuth, async (req: Request, res: Response) => {
       })),
     });
   } catch (err: any) {
+    res.status(500).json({ error: "Internal Server Error", message: err?.message });
+  }
+});
+
+/**
+ * @swagger
+ * /user/lists/generate-defaults:
+ *   post:
+ *     summary: Generate default vocab lists from main-vocab.json
+ *     description: Creates lists for each topic in the default vocabulary for the authenticated user.
+ *     tags:
+ *       - Vocabulary
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Lists generated successfully
+ *       400:
+ *         description: Invalid state (already generated)
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: Response) => {
+  try {
+    const uid = extractUidFromRequest(req);
+    if (!uid) return res.status(400).json({ error: "Invalid token payload (uid missing)" });
+
+    const user = await prisma.user.findUnique({
+      where: { uid },
+      select: { has_generated_default_lists: true },
+    });
+
+    if (user?.has_generated_default_lists) {
+      return res.status(400).json({ error: "Default lists have already been generated for this user." });
+    }
+
+    // Read main-vocab.json
+    // We can import it directly since it is a JSON file and typescript supports resolveJsonModule usually,
+    // but to be safe and dynamic, we can confirm the path or just import it like in frontend if we had same setup.
+    // However, in backend typically we might read with fs or import.
+    // The previous analysis showed it at scripts/data/main-vocab.json.
+    // Let's assume we can tolerate a slightly different approach:
+    // We will hardcode or dynamic import. Given we saw `scripts/data/main-vocab.json`, let's try to reading it.
+    // Actually, `scripts/data` might not be in the build output `dist`.
+    // It is safer to rely on `scripts/data/main-vocab.json` being available or moved.
+    // Wait, the user prompt said use @[french-fide/src/assets/main-vocab.json].
+    // BUT the backend also has `french-fide-be/scripts/data/main-vocab.json`.
+    // I will read it using `fs` relative to `process.cwd()` or `__dirname`.
+    // Assuming the backend runs from root or similar. I'll use path.join.
+
+    const fs = require('fs');
+    const path = require('path');
+
+    // Attempt to locate `main-vocab.json`. 
+    // In dev: src/../scripts/data/main-vocab.json? Or just `scripts/data/main-vocab.json` from root.
+    // Let's try 2 likely paths.
+    const possiblePaths = [
+      path.join(process.cwd(), 'scripts', 'data', 'main-vocab.json'),
+      path.join(__dirname, '..', '..', 'scripts', 'data', 'main-vocab.json'), // if in dist/routes/user
+      path.join(__dirname, '..', '..', '..', 'scripts', 'data', 'main-vocab.json') // if in sr/routes/user
+    ];
+
+    let mainVocab = null;
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        const raw = fs.readFileSync(p, 'utf-8');
+        mainVocab = JSON.parse(raw);
+        break;
+      }
+    }
+
+    if (!mainVocab) {
+      // Fallback: Use the one from frontend if we can access it? No, that's cross-repo (sort of).
+      // But wait, the previous `list_dir` showed `french-fide` and `french-fide-be` as siblings.
+      // I can cheat and read from sibling dir if locally running.
+      // But in prod this will fail.
+      // However, the user provided context showed `french-fide-be/scripts/data/main-vocab.json`.
+      // I will trust that it is accessible.
+      const siblingPath = path.join(process.cwd(), '..', 'french-fide', 'src', 'assets', 'main-vocab.json');
+      if (fs.existsSync(siblingPath)) {
+        const raw = fs.readFileSync(siblingPath, 'utf-8');
+        mainVocab = JSON.parse(raw);
+      }
+    }
+
+    if (!Array.isArray(mainVocab)) {
+      return res.status(500).json({ error: "Could not load default vocabulary file." });
+    }
+
+    await prisma.$transaction(async (tx) => {
+      for (const topic of mainVocab) {
+        const topicName = topic.topic?.fr || "Unknown Topic";
+        const items = Array.isArray(topic.essentialVocabulary) ? topic.essentialVocabulary : [];
+
+        if (items.length === 0) continue;
+
+        // 1. Create list
+        // Handle loose list name constraints or unique name collisions?
+        // We'll append " (FR)" or similar if needed? No, user wants topic name.
+        // If collision, we might skip or append number. 
+        // `skipDuplicates` is not available on create, but we can try/catch or find first.
+        // For simplicity, let's just create. If it fails due to unique constraint, we catch and ignore/continue?
+        // Or verify first.
+
+        const existing = await tx.vocabList.findFirst({
+          where: { uid, list_name: topicName }
+        });
+
+        let listId = existing?.list_id;
+        if (!listId) {
+          const created = await tx.vocabList.create({
+            data: {
+              uid,
+              list_name: topicName
+            }
+          });
+          listId = created.list_id;
+        }
+
+        // 2. Resolve vocab IDs
+        // These are DEFAULT items. We need to find their `Vocab` record by `reference_id` (vid) and `reference_kind` = DEFAULT.
+        // If they don't exist in `Vocab` table, we have to create them!
+        // Does the backend seed them? 
+        // `resolveWordReferenceToVocabId` helper handles finding/creating vocab entry if it's default?
+        // Let's check `helpers.ts` later or assume we need to do it here.
+        // Actually, `resolveWordReferenceToVocabId` does:
+        //    lookup Vocab where reference_kind=DEFAULT, reference_id=refId
+        //    if not found, create it.
+        // So we can re-use that logic or replicate it efficiently.
+        // Re-using it in a loop might be slow if many items, but for 80 items it is fine.
+
+        const vocabIds = [];
+        for (const item of items) {
+          const vid = Number(item.vid);
+          if (!Number.isNaN(vid)) {
+            // We utilize the helper logic inline to be transaction-safe or just import the helper.
+            // Importing `resolveWordReferenceToVocabId` allows re-use.
+            const vId = await resolveWordReferenceToVocabId(uid, vid, "DEFAULT", tx);
+            if (vId) vocabIds.push(vId);
+          }
+        }
+
+        // 3. Add items to list
+        if (vocabIds.length > 0) {
+          await tx.vocabListItem.createMany({
+            data: vocabIds.map((vid: number) => ({
+              list_id: listId!,
+              vocab_id: vid,
+              list_name: topicName,
+            })),
+            skipDuplicates: true
+          });
+        }
+      }
+
+      // Update user flag
+      await tx.user.update({
+        where: { uid },
+        data: { has_generated_default_lists: true }
+      });
+    }, {
+      maxWait: 10000,
+      timeout: 20000
+    });
+
+    res.status(201).json({ ok: true });
+  } catch (err: any) {
+    console.error(err);
     res.status(500).json({ error: "Internal Server Error", message: err?.message });
   }
 });

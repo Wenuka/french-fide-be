@@ -1,0 +1,2 @@
+-- Baseline migration.
+-- Column has_generated_default_lists already exists in the database.
