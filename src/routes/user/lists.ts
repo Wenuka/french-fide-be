@@ -342,6 +342,34 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
       return res.status(500).json({ error: "Could not load default vocabulary file." });
     }
 
+    // Pre-fetch all needed vocabs in one query to avoid N lookups inside the transaction
+    const allVids = new Set<number>();
+    for (const topic of mainVocab) {
+      if (Array.isArray(topic.essentialVocabulary)) {
+        for (const item of topic.essentialVocabulary) {
+          const vid = Number(item.vid);
+          if (!Number.isNaN(vid)) {
+            allVids.add(vid);
+          }
+        }
+      }
+    }
+
+    const foundVocabs = await prisma.vocab.findMany({
+      where: {
+        reference_kind: "DEFAULT",
+        reference_id: { in: Array.from(allVids) },
+      },
+      select: { vocab_id: true, reference_id: true },
+    });
+
+    const vocabMap = new Map<number, number>();
+    for (const v of foundVocabs) {
+      if (v.reference_id !== null) {
+        vocabMap.set(v.reference_id, v.vocab_id);
+      }
+    }
+
     await prisma.$transaction(async (tx) => {
       for (const topic of mainVocab) {
         const topicName = topic.topic?.fr || "Unknown Topic";
@@ -350,13 +378,6 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
         if (items.length === 0) continue;
 
         // 1. Create list
-        // Handle loose list name constraints or unique name collisions?
-        // We'll append " (FR)" or similar if needed? No, user wants topic name.
-        // If collision, we might skip or append number. 
-        // `skipDuplicates` is not available on create, but we can try/catch or find first.
-        // For simplicity, let's just create. If it fails due to unique constraint, we catch and ignore/continue?
-        // Or verify first.
-
         const existing = await tx.vocabList.findFirst({
           where: { uid, list_name: topicName }
         });
@@ -373,24 +394,12 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
         }
 
         // 2. Resolve vocab IDs
-        // These are DEFAULT items. We need to find their `Vocab` record by `reference_id` (vid) and `reference_kind` = DEFAULT.
-        // If they don't exist in `Vocab` table, we have to create them!
-        // Does the backend seed them? 
-        // `resolveWordReferenceToVocabId` helper handles finding/creating vocab entry if it's default?
-        // Let's check `helpers.ts` later or assume we need to do it here.
-        // Actually, `resolveWordReferenceToVocabId` does:
-        //    lookup Vocab where reference_kind=DEFAULT, reference_id=refId
-        //    if not found, create it.
-        // So we can re-use that logic or replicate it efficiently.
-        // Re-using it in a loop might be slow if many items, but for 80 items it is fine.
-
-        const vocabIds = [];
+        const vocabIds: number[] = [];
         for (const item of items) {
           const vid = Number(item.vid);
           if (!Number.isNaN(vid)) {
-            // We utilize the helper logic inline to be transaction-safe or just import the helper.
-            // Importing `resolveWordReferenceToVocabId` allows re-use.
-            const vId = await resolveWordReferenceToVocabId(uid, vid, "DEFAULT", tx);
+            // Use the pre-fetched map
+            const vId = vocabMap.get(vid);
             if (vId) vocabIds.push(vId);
           }
         }
