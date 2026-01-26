@@ -28,11 +28,11 @@ Required:
 - `PORT` (optional, default 8080)
 
 ### 3) Prisma migrate & generate
-For local dev migrations:
+For local dev migrations (that creates migration files and push to the test db (?)):
 ```bash
 npm run prisma:dev
 ```
-For CI/Prod apply migrations:
+For CI/Prod apply migrations (apply existing migration files to the prod db, no migration files):
 ```bash
 npm run prisma:deploy
 ```
