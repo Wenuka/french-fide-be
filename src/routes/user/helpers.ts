@@ -1,5 +1,6 @@
 import type { Request } from "express";
 import { prisma } from "../../lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const FAVOURITES_LIST_NAME = "Favourites";
 
@@ -277,10 +278,13 @@ export const buildVocabMetadataPayload = (vocabId: number, metadataMap: Map<numb
 export const resolveWordReferenceToVocabId = async (
   uid: string,
   refId: number,
-  refKind: "DEFAULT" | "CUSTOM"
+  refKind: "DEFAULT" | "CUSTOM",
+  tx?: Prisma.TransactionClient
 ): Promise<number | null> => {
+  const db = tx ?? prisma;
+
   if (refKind === "DEFAULT") {
-    const row = await prisma.vocab.findFirst({
+    const row = await db.vocab.findFirst({
       where: {
         reference_kind: "DEFAULT",
         reference_id: refId,
@@ -290,7 +294,7 @@ export const resolveWordReferenceToVocabId = async (
     return row?.vocab_id ?? null;
   }
 
-  const row = await prisma.vocab.findFirst({
+  const row = await db.vocab.findFirst({
     where: {
       reference_kind: "CUSTOM",
       custom_vocab_id: refId,
