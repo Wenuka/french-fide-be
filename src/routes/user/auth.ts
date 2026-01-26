@@ -237,6 +237,7 @@ router.get("/profile", requireAuth, async (req: Request, res: Response) => {
         emailVerified: true,
         source_lang: true,
         target_lang: true,
+        has_generated_default_lists: true,
       },
     });
 
@@ -244,12 +245,19 @@ router.get("/profile", requireAuth, async (req: Request, res: Response) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    const hasCustomVocab = await prisma.customVocab.findFirst({
+      where: { uid },
+      select: { custom_vocab_id: true }
+    });
+
     res.json({
       uid: user.uid,
       email: user.email,
       emailVerified: user.emailVerified,
       source_lang: user.source_lang,
       target_lang: user.target_lang,
+      hasGeneratedDefaultLists: user.has_generated_default_lists,
+      hasCustomVocab: !!hasCustomVocab,
     });
   } catch (err: any) {
     res.status(500).json({ error: "Internal Server Error", message: err?.message });
