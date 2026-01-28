@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import usersRouter from './user';
 import healthRouter from './health';
+import progressRouter from './progress';
 
 const router = Router();
 
@@ -37,5 +38,6 @@ router.get('', (_, res) => {
 // Mount other routes
 router.use('/user', usersRouter);
 router.use('/health', healthRouter);
+router.use('/progress', progressRouter);
 
 export default router;

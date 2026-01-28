@@ -29,6 +29,7 @@ Required:
 
 ### 3) Prisma migrate & generate
 For local dev migrations (that creates migration files and push to the test db (?)):
+Note: Never ever run on prod
 ```bash
 npm run prisma:dev
 ```
@@ -153,9 +154,9 @@ By default the endpoint attempts to load default vocabulary strings from `proces
 - CORS allows `http://localhost:3000` and `https://fideprep.ch`.
 
 
-connect to a new db
-```
-npx prisma migrate dev --name init
+connect to a new db (only for the test db)
+```bash
+npx prisma migrate dev --name init # only for the test db
 npx prisma generate
 ```
 
@@ -165,4 +166,3 @@ npm run prisma:deploy
 npm run generate:vocab-default-ref # to generate default vocab table
 npm run backfill:favourites # check whether we need to backfill langs
 ```
-

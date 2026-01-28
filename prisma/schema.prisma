@@ -47,6 +47,7 @@ model User {
 
   customVocabs   CustomVocab[]
   hidden         HiddenVocab[]
+  topicProgress  TopicProgress[]
 }
 
 model CustomVocab {
@@ -121,4 +122,24 @@ model VocabListItem {
 
   @@unique([list_id, vocab_id])
   @@index([vocab_id])
+}
+
+// ---------- Progress Tracking ----------
+
+enum TopicSection {
+  DIALOGUE    // 0
+  DISCUSSION  // 1
+}
+
+model TopicProgress {
+  id        Int          @id @default(autoincrement())
+  user_id   Int
+  section   TopicSection
+  topic_id  Int          // The ID of the scenario/discussion item
+
+  user      User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, section, topic_id])
+  @@index([user_id])
+  @@map("topic_progress")
 }
