@@ -26,7 +26,7 @@ app.use('/api-docs',
   swaggerUi.serve,
   swaggerUi.setup(swaggerSpec, {
     explorer: true,
-    customSiteTitle: 'French FIDE API Documentation',
+    customSiteTitle: 'FIDE Prep API Documentation',
   })
 );
 

@@ -1,4 +1,4 @@
-# French FIDE Backend
+# FIDE Prep Backend
 
 Node.js + TypeScript backend using Express, Prisma (PostgreSQL), and Firebase Auth (JWKS).
 

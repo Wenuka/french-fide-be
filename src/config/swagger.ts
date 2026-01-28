@@ -5,9 +5,9 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'French FIDE Backend API',
+      title: 'FIDE Prep Backend API',
       version,
-      description: 'API documentation for French FIDE Backend',
+      description: 'API documentation for FIDE Prep Backend',
     },
     components: {
       securitySchemes: {
