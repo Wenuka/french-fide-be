@@ -106,7 +106,7 @@ router.post('/', requireAuth, async (req, res) => {
         res.json({ success: true });
     } catch (error) {
         if (error instanceof z.ZodError) {
-            return res.status(400).json({ error: error.errors });
+            return res.status(400).json({ error: error.issues });
         }
         console.error('Error updating progress:', error);
         res.status(500).json({ error: 'Failed to update progress' });

@@ -58,6 +58,7 @@ describe("Auth routes", () => {
       emailVerified: true,
       source_lang: "EN",
       target_lang: "FR",
+      hasCustomVocab: false,
     });
     expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({
       where: { uid: "test-user" },
@@ -67,6 +68,7 @@ describe("Auth routes", () => {
         emailVerified: true,
         source_lang: true,
         target_lang: true,
+        has_generated_default_lists: true,
       },
     });
   });

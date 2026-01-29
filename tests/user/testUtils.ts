@@ -44,6 +44,7 @@ const resetPrismaMocks = () => {
   };
   mockPrisma.customVocab = {
     create: jest.fn(),
+    findFirst: jest.fn(),
   };
 };
 
