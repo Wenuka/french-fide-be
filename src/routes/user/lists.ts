@@ -282,11 +282,15 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
 
     const user = await prisma.user.findUnique({
       where: { uid },
-      select: { has_generated_default_lists: true },
+      select: { has_generated_default_lists: true, target_lang: true },
     });
 
     if (user?.has_generated_default_lists) {
       return res.status(400).json({ error: "Default lists have already been generated for this user." });
+    }
+
+    if (!user?.target_lang) {
+      return res.status(400).json({ error: "Target language not set. Please select a Language before generating lists." });
     }
 
     // Read main-vocab.json
@@ -372,7 +376,8 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
 
     await prisma.$transaction(async (tx) => {
       for (const topic of mainVocab) {
-        const topicName = topic.topic?.fr || "Unknown Topic";
+        const targetLang = user.target_lang.toLowerCase();
+        const topicName = topic.topic?.[targetLang] || "Unknown Topic";
         const items = Array.isArray(topic.essentialVocabulary) ? topic.essentialVocabulary : [];
 
         if (items.length === 0) continue;
