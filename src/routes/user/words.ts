@@ -361,9 +361,11 @@ router.post("/custom-words", requireAuth, async (req: Request, res: Response) =>
     }
 
     // Fetch user's default languages
+    // Fetch user's default languages
     const userRecord = await prisma.user.findUnique({
       where: { uid },
       select: {
+        id: true,
         source_lang: true,
         target_lang: true,
       },
@@ -397,6 +399,7 @@ router.post("/custom-words", requireAuth, async (req: Request, res: Response) =>
     const customEntry = await prisma.customVocab.create({
       data: {
         uid,
+        userId: userRecord.id,
         source_lang: finalSourceLang,
         target_lang: finalTargetLang,
         source_text: sourceText.trim(),

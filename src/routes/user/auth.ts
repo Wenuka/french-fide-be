@@ -142,9 +142,12 @@ router.post("/login", requireAuth, async (req: Request, res: Response) => {
             list_name: FAVOURITES_LIST_NAME,
           },
         },
-        update: {},
+        update: {
+          userId: dbUser.id,
+        },
         create: {
           uid,
+          userId: dbUser.id,
           list_name: FAVOURITES_LIST_NAME,
         },
         select: {
@@ -237,6 +240,7 @@ router.get("/profile", requireAuth, async (req: Request, res: Response) => {
     const user = await prisma.user.findUnique({
       where: { uid },
       select: {
+        id: true,
         uid: true,
         email: true,
         emailVerified: true,
@@ -251,7 +255,7 @@ router.get("/profile", requireAuth, async (req: Request, res: Response) => {
     }
 
     const hasCustomVocab = await prisma.customVocab.findFirst({
-      where: { uid },
+      where: { userId: user.id },
       select: { custom_vocab_id: true }
     });
 

@@ -109,10 +109,14 @@ router.post("/createList", requireAuth, async (req: Request, res: Response) => {
 
     wordIds = Array.from(new Set(wordIds)) as number[];
 
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const createdList = await prisma.$transaction(async (tx) => {
       const list = await tx.vocabList.create({
         data: {
           uid,
+          userId: user.id,
           list_name: trimmedName,
         },
       });
@@ -282,7 +286,7 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
 
     const user = await prisma.user.findUnique({
       where: { uid },
-      select: { has_generated_default_lists: true, target_lang: true },
+      select: { id: true, has_generated_default_lists: true, target_lang: true },
     });
 
     if (user?.has_generated_default_lists) {
@@ -392,6 +396,7 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
           const created = await tx.vocabList.create({
             data: {
               uid,
+              userId: user.id,
               list_name: topicName
             }
           });

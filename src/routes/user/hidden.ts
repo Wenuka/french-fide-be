@@ -46,6 +46,9 @@ router.post("/hidden", requireAuth, async (req: Request, res: Response) => {
     const uid = extractUidFromRequest(req);
     if (!uid) return res.status(400).json({ error: "Invalid token payload (uid missing)" });
 
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const validation = validateWordRefPayload(req.body);
     if (!validation.ok) {
       return res.status(validation.status).json({ error: validation.error });
@@ -65,7 +68,7 @@ router.post("/hidden", requireAuth, async (req: Request, res: Response) => {
     }
 
     await prisma.hiddenVocab.createMany({
-      data: [{ uid, vocab_id: vocabId }],
+      data: [{ uid, userId: user.id, vocab_id: vocabId }],
       skipDuplicates: true,
     });
 
@@ -113,6 +116,9 @@ router.delete("/hidden", requireAuth, async (req: Request, res: Response) => {
     const uid = extractUidFromRequest(req);
     if (!uid) return res.status(400).json({ error: "Invalid token payload (uid missing)" });
 
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const validation = validateWordRefPayload(req.body);
     if (!validation.ok) {
       return res.status(validation.status).json({ error: validation.error });
@@ -133,7 +139,7 @@ router.delete("/hidden", requireAuth, async (req: Request, res: Response) => {
 
     const deletion = await prisma.hiddenVocab.deleteMany({
       where: {
-        uid,
+        userId: user.id,
         vocab_id: { in: [vocabId] },
       },
     });
@@ -187,8 +193,11 @@ router.get("/hidden", requireAuth, async (req: Request, res: Response) => {
     const uid = extractUidFromRequest(req);
     if (!uid) return res.status(400).json({ error: "Invalid token payload (uid missing)" });
 
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const hiddenRows = await prisma.hiddenVocab.findMany({
-      where: { uid },
+      where: { userId: user.id },
       select: { vocab_id: true },
       orderBy: { vocab_id: "asc" },
     });

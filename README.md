@@ -170,8 +170,14 @@ npm run backfill:favourites # check whether we need to backfill langs
 
 uid string to user.id int to custom/hidden vocab and lists
 ```bash
-
+# 1.
 npm run prisma:deploy
+npx ts-node prisma/backfill_user_ids.ts
+
+# 2.
+# push the code to the server
+
+# 3.
 npx ts-node prisma/backfill_user_ids.ts
 
 ```
