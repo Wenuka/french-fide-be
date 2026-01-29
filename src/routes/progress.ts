@@ -62,6 +62,11 @@ router.post('/', requireAuth, async (req, res) => {
     try {
         const userId = extractUidFromRequest(req);
         if (!userId) return res.status(401).json({ error: "Invalid token" });
+
+        if (req.user && req.user.email_verified === false) {
+            return res.status(403).json({ error: "Email not verified. Please verify your email to save progress." });
+        }
+
         const body = updateProgressSchema.parse(req.body); // validates body
 
         const user = await prisma.user.findUnique({
