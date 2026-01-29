@@ -53,17 +53,17 @@ model User {
 
 model CustomVocab {
   custom_vocab_id Int       @id @default(autoincrement())
-  uid             String
-  userId          Int?      // New optional field for migration
+  uid             String?   @db.VarChar(255) // Deprecated: Kept for safety
+  userId          Int      // Converted to required Int
   target_lang     Language
   source_lang     Language
   source_text     String
   target_text     String
-  user  User   @relation(fields: [uid], references: [uid])
-  // userRel User? @relation("NewUserRelation", fields: [userId], references: [id]) // Optional: Add this later or now if needed, but for now just the column is enough for backfill logic? No, better not to add relation yet to avoid confusion or just add column.
-  // Actually, for backfill we just need the column. We can add relation later.
+
+  user  User   @relation(fields: [userId], references: [id])
   vocab Vocab[]
 
+  @@index([userId])
   @@index([uid])
 }
 
@@ -82,24 +82,25 @@ model Vocab {
 }
 
 model HiddenVocab {
-  uid      String
-  userId   Int?     // New optional field
+  uid      String?  @db.VarChar(255) // Deprecated: Kept for safety
+  userId   Int      // Converted to required Int
   vocab_id Int
 
-  user  User  @relation(fields: [uid], references: [uid])
+  user  User  @relation(fields: [userId], references: [id])
   vocab Vocab @relation(fields: [vocab_id], references: [vocab_id])
 
-  @@id([uid, vocab_id])
+  @@id([userId, vocab_id])
+  @@index([uid])
 }
 
 model VocabList {
   list_id   Int      @id @default(autoincrement())
-  uid       String
-  userId    Int?     // New optional field
+  uid       String?  @db.VarChar(255) // Deprecated: Kept for safety
+  userId    Int      // Converted to required Int
   list_name String
 
   // Owner side of 1:N (must share relation name with User.lists)
-  user  User @relation("OwnedListsRelation", fields: [uid], references: [uid])
+  user  User @relation("OwnedListsRelation", fields: [userId], references: [id])
 
   // Backfield for the 1:1 favourite list relation (singular)
   favouritedByUser User? @relation("FavouriteListRelation")
@@ -107,7 +108,8 @@ model VocabList {
   items VocabListItem[]
 
   // A user cannot have two lists with the same name
-  @@unique([uid, list_name])
+  @@unique([userId, list_name])
+  @@index([userId])
   @@index([uid])
 }
 

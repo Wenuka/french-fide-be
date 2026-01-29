@@ -85,16 +85,19 @@ router.put("/profile", requireAuth, async (req: Request, res: Response) => {
         }
 
         // Check if user has custom vocab or has generated default lists
-        const [hasCustomVocab, userProfile] = await Promise.all([
-            prisma.customVocab.findFirst({
-                where: { uid },
-                select: { custom_vocab_id: true }
-            }),
-            prisma.user.findUnique({
-                where: { uid },
-                select: { has_generated_default_lists: true }
-            })
-        ]);
+        const userProfile = await prisma.user.findUnique({
+            where: { uid },
+            select: { id: true, has_generated_default_lists: true }
+        });
+
+        if (!userProfile) {
+            return res.status(404).json({ error: "User profile not found" });
+        }
+
+        const hasCustomVocab = await prisma.customVocab.findFirst({
+            where: { userId: userProfile.id },
+            select: { custom_vocab_id: true }
+        });
 
         if (hasCustomVocab) {
             return res.status(400).json({

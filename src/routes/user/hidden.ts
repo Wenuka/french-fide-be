@@ -56,7 +56,7 @@ router.post("/hidden", requireAuth, async (req: Request, res: Response) => {
     const { refId, refKind } = validation;
 
     const vocabId = await resolveWordReferenceToVocabId(
-      uid,
+      user.id,
       refId,
       refKind
     );
@@ -68,7 +68,7 @@ router.post("/hidden", requireAuth, async (req: Request, res: Response) => {
     }
 
     await prisma.hiddenVocab.createMany({
-      data: [{ uid, userId: user.id, vocab_id: vocabId }],
+      data: [{ userId: user.id, vocab_id: vocabId }],
       skipDuplicates: true,
     });
 
@@ -126,7 +126,7 @@ router.delete("/hidden", requireAuth, async (req: Request, res: Response) => {
     const { refId, refKind } = validation;
 
     const vocabId = await resolveWordReferenceToVocabId(
-      uid,
+      user.id,
       refId,
       refKind
     );

@@ -175,7 +175,7 @@ router.post("/words", requireAuth, async (req: Request, res: Response) => {
 
     const userRecord = await prisma.user.findUnique({
       where: { uid },
-      select: { favourite_list: true },
+      select: { id: true, favourite_list: true },
     });
 
     if (!userRecord) {
@@ -196,7 +196,7 @@ router.post("/words", requireAuth, async (req: Request, res: Response) => {
       // Verify ownership of requested lists
       const ownedListsRaw = await prisma.vocabList.findMany({
         where: {
-          uid,
+          userId: userRecord.id,
           list_id: { in: targetListIds },
         },
         select: { list_id: true },
@@ -233,7 +233,7 @@ router.post("/words", requireAuth, async (req: Request, res: Response) => {
 
       // Fetch ALL list memberships for this user
       const allListItemsRaw = await prisma.vocabListItem.findMany({
-        where: { listRef: { uid } },
+        where: { listRef: { userId: userRecord.id } },
         select: { vocab_id: true, list_id: true },
       });
       const allListItems = Array.isArray(allListItemsRaw) ? allListItemsRaw : [];
@@ -254,7 +254,7 @@ router.post("/words", requireAuth, async (req: Request, res: Response) => {
       fetchVocabMetadataForIds(uniqueVocabIds),
       prisma.hiddenVocab.findMany({
         where: {
-          uid,
+          userId: userRecord.id,
           vocab_id: { in: uniqueVocabIds },
         },
         select: { vocab_id: true },
@@ -269,7 +269,7 @@ router.post("/words", requireAuth, async (req: Request, res: Response) => {
         })
         : Promise.resolve([]),
       prisma.vocabList.findMany({
-        where: { uid },
+        where: { userId: userRecord.id },
         select: { list_id: true, list_name: true },
       }),
     ]);
@@ -398,8 +398,7 @@ router.post("/custom-words", requireAuth, async (req: Request, res: Response) =>
 
     const customEntry = await prisma.customVocab.create({
       data: {
-        uid,
-        userId: userRecord.id,
+        userId: userRecord.id, // Removed uid
         source_lang: finalSourceLang,
         target_lang: finalTargetLang,
         source_text: sourceText.trim(),
@@ -468,6 +467,7 @@ router.get("/custom-words", requireAuth, async (req: Request, res: Response) => 
     const userRecord = await prisma.user.findUnique({
       where: { uid },
       select: {
+        id: true,
         favourite_list: true,
       },
     });
@@ -481,7 +481,7 @@ router.get("/custom-words", requireAuth, async (req: Request, res: Response) => 
     const customVocabRows = await prisma.vocab.findMany({
       where: {
         reference_kind: "CUSTOM",
-        customVocab: { uid },
+        customVocab: { userId: userRecord.id },
       },
       select: {
         vocab_id: true,
@@ -509,7 +509,7 @@ router.get("/custom-words", requireAuth, async (req: Request, res: Response) => 
     const [hiddenRows, favouriteRows, listMembershipRows] = await Promise.all([
       prisma.hiddenVocab.findMany({
         where: {
-          uid,
+          userId: userRecord.id,
           vocab_id: { in: vocabIds },
         },
         select: { vocab_id: true },
@@ -526,7 +526,7 @@ router.get("/custom-words", requireAuth, async (req: Request, res: Response) => 
       prisma.vocabListItem.findMany({
         where: {
           vocab_id: { in: vocabIds },
-          listRef: { uid },
+          listRef: { userId: userRecord.id },
         },
         select: {
           vocab_id: true,

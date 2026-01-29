@@ -137,8 +137,8 @@ router.post("/login", requireAuth, async (req: Request, res: Response) => {
 
       const favouriteList = await tx.vocabList.upsert({
         where: {
-          uid_list_name: {
-            uid,
+          userId_list_name: {
+            userId: dbUser.id,
             list_name: FAVOURITES_LIST_NAME,
           },
         },
@@ -146,7 +146,6 @@ router.post("/login", requireAuth, async (req: Request, res: Response) => {
           userId: dbUser.id,
         },
         create: {
-          uid,
           userId: dbUser.id,
           list_name: FAVOURITES_LIST_NAME,
         },

@@ -72,6 +72,9 @@ router.post("/createList", requireAuth, async (req: Request, res: Response) => {
 
     const trimmedName = listName.trim();
 
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     let wordIds: number[] = [];
     if (words !== undefined) {
       if (!Array.isArray(words)) {
@@ -93,7 +96,7 @@ router.post("/createList", requireAuth, async (req: Request, res: Response) => {
         }
 
         const resolvedId = await resolveWordReferenceToVocabId(
-          uid,
+          user.id,
           refId,
           refKindRaw as "DEFAULT" | "CUSTOM"
         );
@@ -109,13 +112,9 @@ router.post("/createList", requireAuth, async (req: Request, res: Response) => {
 
     wordIds = Array.from(new Set(wordIds)) as number[];
 
-    const user = await prisma.user.findUnique({ where: { uid } });
-    if (!user) return res.status(401).json({ error: "User not found" });
-
     const createdList = await prisma.$transaction(async (tx) => {
       const list = await tx.vocabList.create({
         data: {
-          uid,
           userId: user.id,
           list_name: trimmedName,
         },
@@ -203,8 +202,14 @@ router.get("/lists", requireAuth, async (req: Request, res: Response) => {
     const uid = extractUidFromRequest(req);
     if (!uid) return res.status(400).json({ error: "Invalid token payload (uid missing)" });
 
-    const lists = await prisma.vocabList.findMany({
+    const user = await prisma.user.findUnique({
       where: { uid },
+      select: { id: true, has_generated_default_lists: true },
+    });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
+    const lists = await prisma.vocabList.findMany({
+      where: { userId: user.id },
       orderBy: { list_id: "asc" },
       include: {
         items: {
@@ -221,15 +226,9 @@ router.get("/lists", requireAuth, async (req: Request, res: Response) => {
     }
     const metadataMap = await fetchVocabMetadataForIds(Array.from(allVocabIds));
 
-    // Refetch user to get the flag
-    const userRef = await prisma.user.findUnique({
-      where: { uid },
-      select: { has_generated_default_lists: true },
-    });
-
     res.json({
       ok: true,
-      hasGeneratedDefaultLists: userRef?.has_generated_default_lists ?? false,
+      hasGeneratedDefaultLists: user.has_generated_default_lists,
       lists: lists.map((list) => ({
         id: list.list_id,
         name: list.list_name,
@@ -388,14 +387,13 @@ router.post("/lists/generate-defaults", requireAuth, async (req: Request, res: R
 
         // 1. Create list
         const existing = await tx.vocabList.findFirst({
-          where: { uid, list_name: topicName }
+          where: { userId: user.id, list_name: topicName }
         });
 
         let listId = existing?.list_id;
         if (!listId) {
           const created = await tx.vocabList.create({
             data: {
-              uid,
               userId: user.id,
               list_name: topicName
             }
@@ -522,11 +520,14 @@ router.post("/lists/:listId/words", requireAuth, async (req: Request, res: Respo
       });
     }
     const uniqueWordIds = Array.from(new Set(vocabIds)) as number[];
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const list = await prisma.vocabList.findUnique({
       where: { list_id: listId },
-      select: { list_id: true, list_name: true, uid: true },
+      select: { list_id: true, list_name: true, userId: true },
     });
-    if (!list || list.uid !== uid) {
+    if (!list || list.userId !== user.id) {
       return res.status(404).json({ error: "List not found" });
     }
     const existingListItems = await prisma.vocabListItem.findMany({
@@ -642,11 +643,14 @@ router.delete("/lists/:listId/words", requireAuth, async (req: Request, res: Res
       });
     }
     const uniqueWordIds = Array.from(new Set(vocabIds)) as number[];
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const list = await prisma.vocabList.findUnique({
       where: { list_id: listId },
-      select: { list_id: true, list_name: true, uid: true },
+      select: { list_id: true, list_name: true, userId: true },
     });
-    if (!list || list.uid !== uid) {
+    if (!list || list.userId !== user.id) {
       return res.status(404).json({ error: "List not found" });
     }
 
@@ -785,11 +789,14 @@ router.patch("/lists/:listId/items/:itemId", requireAuth, async (req: Request, r
       });
     }
 
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const vocabListItem = await prisma.vocabListItem.findUnique({
       where: { id: itemId },
       include: {
         listRef: {
-          select: { uid: true, list_id: true, list_name: true },
+          select: { userId: true, list_id: true, list_name: true },
         },
       },
     });
@@ -798,7 +805,7 @@ router.patch("/lists/:listId/items/:itemId", requireAuth, async (req: Request, r
       return res.status(404).json({ error: "Vocab list item not found" });
     }
 
-    if (vocabListItem.listRef?.uid !== uid) {
+    if (vocabListItem.listRef?.userId !== user.id) {
       return res.status(403).json({ error: "You do not have access to this vocab list item" });
     }
 

@@ -65,21 +65,10 @@ router.post("/favourites", requireAuth, async (req: Request, res: Response) => {
     }
     const { refId, refKind } = validation;
 
-    const targetVocabId = await resolveWordReferenceToVocabId(
-      uid,
-      refId,
-      refKind
-    );
-
-    if (!targetVocabId) {
-      return res.status(404).json({
-        error: "Word not found for the specified identifier",
-      });
-    }
-
     const userRecord = await prisma.user.findUnique({
       where: { uid },
       select: {
+        id: true,
         favourite_list: true,
         favouriteList: {
           select: {
@@ -92,6 +81,18 @@ router.post("/favourites", requireAuth, async (req: Request, res: Response) => {
 
     if (!userRecord || !userRecord.favourite_list || !userRecord.favouriteList) {
       return res.status(404).json({ error: "Favourites list not found" });
+    }
+
+    const targetVocabId = await resolveWordReferenceToVocabId(
+      userRecord.id,
+      refId,
+      refKind
+    );
+
+    if (!targetVocabId) {
+      return res.status(404).json({
+        error: "Word not found for the specified identifier",
+      });
     }
 
     const favouriteListId = userRecord.favourite_list;
@@ -168,10 +169,22 @@ router.delete("/favourites", requireAuth, async (req: Request, res: Response) =>
     if (!validation.ok) {
       return res.status(validation.status).json({ error: validation.error });
     }
+    const userRecord = await prisma.user.findUnique({
+      where: { uid },
+      select: {
+        id: true,
+        favourite_list: true,
+      },
+    });
+
+    if (!userRecord || !userRecord.favourite_list) {
+      return res.status(404).json({ error: "Favourites list not found" });
+    }
+
     const { refId, refKind } = validation;
 
     const targetVocabId = await resolveWordReferenceToVocabId(
-      uid,
+      userRecord.id,
       refId,
       refKind
     );
@@ -180,17 +193,6 @@ router.delete("/favourites", requireAuth, async (req: Request, res: Response) =>
       return res.status(404).json({
         error: "Word not found for the specified identifier",
       });
-    }
-
-    const userRecord = await prisma.user.findUnique({
-      where: { uid },
-      select: {
-        favourite_list: true,
-      },
-    });
-
-    if (!userRecord || !userRecord.favourite_list) {
-      return res.status(404).json({ error: "Favourites list not found" });
     }
 
     const deletion = await prisma.vocabListItem.deleteMany({

@@ -276,7 +276,7 @@ export const buildVocabMetadataPayload = (vocabId: number, metadataMap: Map<numb
 };
 
 export const resolveWordReferenceToVocabId = async (
-  uid: string,
+  userId: number,
   refId: number,
   refKind: "DEFAULT" | "CUSTOM",
   tx?: Prisma.TransactionClient
@@ -299,7 +299,7 @@ export const resolveWordReferenceToVocabId = async (
       reference_kind: "CUSTOM",
       custom_vocab_id: refId,
       customVocab: {
-        uid,
+        userId,
       },
     },
     select: { vocab_id: true },
