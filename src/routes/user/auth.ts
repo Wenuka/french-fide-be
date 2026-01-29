@@ -63,7 +63,7 @@ router.post("/login", requireAuth, async (req: Request, res: Response) => {
     const email: string | undefined = user?.email ?? undefined;
     const emailVerified: boolean = Boolean(user?.email_verified);
 
-    const { sourceLang, targetLang } = req.body ?? {};
+    const { sourceLang, targetLang, communicateImportantUpdates } = req.body ?? {};
 
     // Validate languages if provided
     const allowedLangs = new Set(["EN", "FR", "DE"]);
@@ -83,10 +83,13 @@ router.post("/login", requireAuth, async (req: Request, res: Response) => {
     type LoginUserRecord = Pick<User, "id" | "favourite_list" | "source_lang" | "target_lang">;
     let userRecord: LoginUserRecord | null = null;
 
+    const commsUpdateVal = typeof communicateImportantUpdates === 'boolean' ? communicateImportantUpdates : undefined;
+
     await prisma.$transaction(async (tx) => {
       // 1. Upsert user:
       //    - Create: Set languages if provided
       //    - Update: DO NOT update languages (immutable), only email/verified status
+      //    - Update: Update communicate_important_updates if provided (allows user to toggle later via this endpoint if needed, or just on signup)
       const dbUser = await tx.user.upsert({
         where: { uid },
         create: {
@@ -95,10 +98,12 @@ router.post("/login", requireAuth, async (req: Request, res: Response) => {
           emailVerified,
           source_lang: validatedSourceLang,
           target_lang: validatedTargetLang,
+          communicate_important_updates: commsUpdateVal, // If undefined, uses default (true)
         },
         update: {
           email,
           emailVerified,
+          communicate_important_updates: commsUpdateVal,
         },
         select: {
           id: true,

@@ -37,6 +37,7 @@ model User {
   source_lang    Language  @default(EN)
   target_lang    Language  @default(FR)
   has_generated_default_lists Boolean @default(false)
+  communicate_important_updates Boolean @default(true)
 
   // One-to-one favourite list pointer (unique makes it 1:1)
   favourite_list Int?      @unique
