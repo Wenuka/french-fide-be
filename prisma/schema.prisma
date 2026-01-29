@@ -54,11 +54,14 @@ model User {
 model CustomVocab {
   custom_vocab_id Int       @id @default(autoincrement())
   uid             String
+  userId          Int?      // New optional field for migration
   target_lang     Language
   source_lang     Language
   source_text     String
   target_text     String
   user  User   @relation(fields: [uid], references: [uid])
+  // userRel User? @relation("NewUserRelation", fields: [userId], references: [id]) // Optional: Add this later or now if needed, but for now just the column is enough for backfill logic? No, better not to add relation yet to avoid confusion or just add column.
+  // Actually, for backfill we just need the column. We can add relation later.
   vocab Vocab[]
 
   @@index([uid])
@@ -69,7 +72,7 @@ model Vocab {
   reference_id    Int?                // If DEFAULT: id (0..9999) from external JSON
   reference_kind  VocabReferenceKind
   custom_vocab_id Int?                // If CUSTOM: FK to CustomVocab
-
+  
   customVocab CustomVocab?  @relation(fields: [custom_vocab_id], references: [custom_vocab_id])
   listItems   VocabListItem[]
   hiddenBy    HiddenVocab[]
@@ -80,6 +83,7 @@ model Vocab {
 
 model HiddenVocab {
   uid      String
+  userId   Int?     // New optional field
   vocab_id Int
 
   user  User  @relation(fields: [uid], references: [uid])
@@ -91,6 +95,7 @@ model HiddenVocab {
 model VocabList {
   list_id   Int      @id @default(autoincrement())
   uid       String
+  userId    Int?     // New optional field
   list_name String
 
   // Owner side of 1:N (must share relation name with User.lists)
