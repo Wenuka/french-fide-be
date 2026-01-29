@@ -269,4 +269,57 @@ router.get("/profile", requireAuth, async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @swagger
+ * /user/delete:
+ *   delete:
+ *     summary: Anonymize user account
+ *     description: Anonymizes the user's data in the database. The actual Firebase user should be deleted by the client.
+ *     tags:
+ *       - Authentication
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User anonymized successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+router.delete("/delete", requireAuth, async (req: Request, res: Response) => {
+  try {
+    const uid = extractUidFromRequest(req);
+    if (!uid) return res.status(401).json({ error: "Invalid token payload (uid missing)" });
+
+    await prisma.$transaction(async (tx) => {
+      // Check if user exists first
+      const user = await tx.user.findUnique({ where: { uid } });
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const randomId = crypto.randomUUID();
+      const newEmail = `del_${randomId}@d.m`;
+
+      // We only update the email to anonymize PII.
+      // We keep the UID as is (hashed/random string) but since Auth user is deleted, it is effectively orphaned.
+      // This avoids the need for complex FK updates or Schema changes.
+      await tx.user.update({
+        where: { id: user.id },
+        data: {
+          email: newEmail,
+          emailVerified: false,
+          communicate_important_updates: false,
+        },
+      });
+    });
+
+    res.json({ ok: true, message: "User anonymized successfully" });
+  } catch (err: any) {
+    console.error("Delete user error:", err);
+    res.status(500).json({ error: "Internal Server Error", message: err?.message });
+  }
+});
+
 export default router;

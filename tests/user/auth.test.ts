@@ -83,4 +83,38 @@ describe("Auth routes", () => {
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ error: "User not found" });
   });
+
+  test("DELETE /user/delete anonymizes user", async () => {
+    const app = createApp();
+
+    const existingUser = {
+      id: 1,
+      uid: "test-user",
+      email: "test@example.com",
+    };
+
+    // findUnique inside transaction logic
+    mockPrisma.user.findUnique.mockResolvedValue(existingUser);
+    // update inside transaction
+    mockPrisma.user.update.mockResolvedValue({ ...existingUser, email: "del_xyz@d.m" });
+
+    const response = await request(app).delete("/user/delete");
+
+    expect(response.status).toBe(200);
+    expect(response.body.ok).toBe(true);
+    expect(mockPrisma.$transaction).toHaveBeenCalled();
+    // Verify update called with correct params
+    expect(mockPrisma.user.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 1 },
+        data: expect.objectContaining({
+          emailVerified: false,
+          communicate_important_updates: false,
+        }),
+      })
+    );
+    // Ensure uid is NOT updated
+    const updateCall = mockPrisma.user.update.mock.calls[0][0];
+    expect(updateCall.data.uid).toBeUndefined();
+  });
 });
