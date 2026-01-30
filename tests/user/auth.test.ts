@@ -63,6 +63,7 @@ describe("Auth routes", () => {
     expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({
       where: { uid: "test-user" },
       select: {
+        id: true,
         uid: true,
         email: true,
         emailVerified: true,

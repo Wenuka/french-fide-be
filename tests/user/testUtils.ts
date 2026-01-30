@@ -97,6 +97,17 @@ const resetAllMocks = () => {
   mockedHelpers.buildVocabListItemResponse.mockReset();
   mockedHelpers.buildVocabMetadataPayload.mockReset();
   mockedHelpers.resolveWordReferenceToVocabId.mockReset();
+
+  // Default mock for user lookups (migrated to use integer ID)
+  mockPrisma.user.findUnique.mockResolvedValue({
+    id: 1,
+    uid: "test-user",
+    email: "test@example.com",
+    source_lang: "EN",
+    target_lang: "FR",
+    has_generated_default_lists: false,
+    favourite_list: null,
+  });
 };
 
 const createApp = () => {

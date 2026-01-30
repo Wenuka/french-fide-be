@@ -19,7 +19,7 @@ describe("User word routes", () => {
   };
 
   const primeWordMocks = () => {
-    mockPrisma.user.findUnique.mockResolvedValue({ uid: "test-user" });
+    mockPrisma.user.findUnique.mockResolvedValue({ id: 1, uid: "test-user" });
 
     mockedHelpers.fetchVocabMetadataForIds.mockResolvedValue(
       new Map([
@@ -163,6 +163,7 @@ describe("User word routes", () => {
     const app = createApp();
 
     mockPrisma.user.findUnique.mockResolvedValue({
+      id: 1,
       source_lang: "EN",
       target_lang: "FR",
     });
@@ -190,7 +191,7 @@ describe("User word routes", () => {
     expect(response.status).toBe(201);
     expect(mockPrisma.customVocab.create).toHaveBeenCalledWith({
       data: expect.objectContaining({
-        uid: "test-user",
+        userId: 1,
         source_text: "hello",
         target_text: "bonjour",
         source_lang: "EN",

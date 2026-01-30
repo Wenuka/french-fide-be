@@ -195,21 +195,46 @@ const configurePrismaMocks = (db: MockDb) => {
       }
     }
     if (select.uid) result.uid = row.uid;
+    if (select.id) result.id = row.id;
+    if (select.id) result.id = row.id;
     if (select.email) result.email = row.email ?? null;
     if (select.emailVerified) result.emailVerified = row.emailVerified ?? false;
     return result;
   });
 
   mockPrisma.vocabList.upsert.mockImplementation(async ({ where, create }: any) => {
-    const key = getListKey(where.uid_list_name.uid, where.uid_list_name.list_name);
+    let uid: string;
+    let listName: string;
+
+    if (where.uid_list_name) {
+      uid = where.uid_list_name.uid;
+      listName = where.uid_list_name.list_name;
+    } else if (where.userId_list_name) {
+      const u = db.usersById.get(where.userId_list_name.userId);
+      if (!u) throw new Error("User not found for upsert (where)");
+      uid = u.uid;
+      listName = where.userId_list_name.list_name;
+    } else {
+      throw new Error("Unsupported upsert unique key");
+    }
+
+    const key = getListKey(uid, listName);
     const existingId = db.listByUidName.get(key);
     if (existingId) {
       const list = db.listsById.get(existingId)!;
       return { ...list };
     }
+
+    let createUid = create.uid;
+    if (!createUid && create.userId) {
+      const u = db.usersById.get(create.userId);
+      if (!u) throw new Error("User not found for upsert (create)");
+      createUid = u.uid;
+    }
+
     const row: ListRow = {
       list_id: db.listIdCounter++,
-      uid: create.uid,
+      uid: createUid,
       list_name: create.list_name,
     };
     db.listsById.set(row.list_id, row);
@@ -218,9 +243,16 @@ const configurePrismaMocks = (db: MockDb) => {
   });
 
   mockPrisma.vocabList.create.mockImplementation(async ({ data }: any) => {
+    let uid = data.uid;
+    if (!uid && data.userId) {
+      const u = db.usersById.get(data.userId);
+      if (!u) throw new Error("User not found for create");
+      uid = u.uid;
+    }
+
     const row: ListRow = {
       list_id: db.listIdCounter++,
-      uid: data.uid,
+      uid,
       list_name: data.list_name,
     };
     db.listsById.set(row.list_id, row);
@@ -578,7 +610,7 @@ describe("User routes component flow", () => {
         }),
       ])
     );
-    
+
     // Custom words endpoint exposes custom vocab metadata and favourite flag.
     const customRes = await request(app).get("/user/custom-words");
     expect(customRes.status).toBe(200);

@@ -78,7 +78,7 @@ describe("User hidden vocab routes", () => {
     expect(response.body).toEqual({ ok: true, removed: 1 });
     expect(mockPrisma.hiddenVocab.deleteMany).toHaveBeenCalledWith({
       where: {
-        uid: "test-user",
+        userId: 1,
         vocab_id: { in: [610] },
       },
     });

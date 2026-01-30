@@ -110,6 +110,7 @@ describe("User list routes", () => {
       list_id: 9,
       list_name: "Practice",
       uid: "test-user",
+      userId: 1,
     });
     mockPrisma.vocabListItem.findMany.mockResolvedValue([]);
     mockPrisma.vocabListItem.createMany.mockResolvedValue({ count: 1 });
@@ -128,11 +129,13 @@ describe("User list routes", () => {
   test("PATCH /user/lists/:listId/items/:itemId updates list item status", async () => {
     const app = createApp();
 
+    mockPrisma.user.findUnique.mockResolvedValue({ id: 1, uid: "test-user" });
+
     mockPrisma.vocabListItem.findUnique.mockResolvedValue({
       id: 14,
       vocab_id: 300,
       list_id: 4,
-      listRef: { uid: "test-user", list_id: 4, list_name: "Review" },
+      listRef: { uid: "test-user", list_id: 4, list_name: "Review", userId: 1 },
     });
     mockPrisma.vocabListItem.update.mockResolvedValue({
       id: 14,
@@ -261,6 +264,8 @@ describe("User list routes", () => {
   test("DELETE /user/lists/:listId/words removes words from list", async () => {
     const app = createApp();
 
+    mockPrisma.user.findUnique.mockResolvedValue({ id: 1, uid: "test-user" });
+
     mockedHelpers.resolveVocabIdentifiersToIds.mockResolvedValue({
       vocabIds: [205],
       missingVocabIds: [],
@@ -272,6 +277,7 @@ describe("User list routes", () => {
       list_id: 9,
       list_name: "Practice",
       uid: "test-user",
+      userId: 1,
     });
     mockPrisma.vocabListItem.deleteMany.mockResolvedValue({ count: 1 });
 
