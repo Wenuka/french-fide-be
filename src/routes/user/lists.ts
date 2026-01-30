@@ -960,11 +960,14 @@ router.post("/lists/:listId/items/bulk-progress", requireAuth, async (req: Reque
       normalizedUpdates.push({ itemId, data: updatePayload });
     }
 
+    const user = await prisma.user.findUnique({ where: { uid } });
+    if (!user) return res.status(401).json({ error: "User not found" });
+
     const targetItems = await prisma.vocabListItem.findMany({
       where: { id: { in: normalizedUpdates.map((entry) => entry.itemId) } },
       include: {
         listRef: {
-          select: { uid: true, list_id: true },
+          select: { userId: true, list_id: true },
         },
       },
     });
@@ -974,7 +977,7 @@ router.post("/lists/:listId/items/bulk-progress", requireAuth, async (req: Reque
     }
 
     for (const item of targetItems) {
-      if (item.listRef?.uid !== uid) {
+      if (item.listRef?.userId !== user.id) {
         return res.status(403).json({ error: "You do not have access to one or more vocab list items" });
       }
       if (item.listRef?.list_id !== listId) {

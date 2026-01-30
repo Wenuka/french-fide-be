@@ -240,9 +240,10 @@ describe("User list routes", () => {
   test("POST /user/lists/:listId/items/bulk-progress updates multiple items", async () => {
     const app = createApp();
 
+    mockPrisma.user.findUnique.mockResolvedValue({ id: 1, uid: "test-user" });
     mockPrisma.vocabListItem.findMany.mockResolvedValue([
-      { id: 101, listRef: { uid: "test-user", list_id: 5 } },
-      { id: 102, listRef: { uid: "test-user", list_id: 5 } },
+      { id: 101, listRef: { userId: 1, list_id: 5 } },
+      { id: 102, listRef: { userId: 1, list_id: 5 } },
     ]);
     mockPrisma.vocabListItem.update.mockResolvedValue({});
 
@@ -257,6 +258,7 @@ describe("User list routes", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ ok: true, updated: 2 });
+    expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({ where: { uid: "test-user" } });
     expect(mockPrisma.vocabListItem.findMany).toHaveBeenCalled();
     expect(mockPrisma.vocabListItem.update).toHaveBeenCalledTimes(2);
   });
