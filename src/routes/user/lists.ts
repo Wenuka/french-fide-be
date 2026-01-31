@@ -1046,11 +1046,11 @@ router.delete("/lists/:listId", requireAuth, async (req: Request, res: Response)
     const [userRecord, list] = await Promise.all([
       prisma.user.findUnique({
         where: { uid },
-        select: { favourite_list: true },
+        select: { id: true, favourite_list: true },
       }),
       prisma.vocabList.findUnique({
         where: { list_id: listId },
-        select: { list_id: true, list_name: true, uid: true },
+        select: { list_id: true, list_name: true, userId: true },
       }),
     ]);
 
@@ -1058,7 +1058,7 @@ router.delete("/lists/:listId", requireAuth, async (req: Request, res: Response)
       return res.status(404).json({ error: "User profile not found" });
     }
 
-    if (!list || list.uid !== uid) {
+    if (!list || list.userId !== userRecord.id) {
       return res.status(404).json({ error: "List not found" });
     }
 

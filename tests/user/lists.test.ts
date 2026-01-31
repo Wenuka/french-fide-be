@@ -195,11 +195,11 @@ describe("User list routes", () => {
   test("DELETE /user/lists/:listId deletes list and its items when allowed", async () => {
     const app = createApp();
 
-    mockPrisma.user.findUnique.mockResolvedValue({ favourite_list: 99 });
+    mockPrisma.user.findUnique.mockResolvedValue({ id: 1, favourite_list: 99 });
     mockPrisma.vocabList.findUnique.mockResolvedValue({
       list_id: 12,
       list_name: "Practice",
-      uid: "test-user",
+      userId: 1,
     });
     mockPrisma.vocabListItem.deleteMany.mockResolvedValue({ count: 3 });
     mockPrisma.vocabList.delete.mockResolvedValue({ list_id: 12 });
@@ -210,7 +210,7 @@ describe("User list routes", () => {
     expect(response.body).toEqual({ ok: true, deletedListId: 12 });
     expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({
       where: { uid: "test-user" },
-      select: { favourite_list: true },
+      select: { id: true, favourite_list: true },
     });
     expect(mockPrisma.vocabListItem.deleteMany).toHaveBeenCalledWith({
       where: { list_id: 12 },
@@ -223,11 +223,11 @@ describe("User list routes", () => {
   test("DELETE /user/lists/:listId rejects deletion of favourites list", async () => {
     const app = createApp();
 
-    mockPrisma.user.findUnique.mockResolvedValue({ favourite_list: 7 });
+    mockPrisma.user.findUnique.mockResolvedValue({ id: 1, favourite_list: 7 });
     mockPrisma.vocabList.findUnique.mockResolvedValue({
       list_id: 7,
       list_name: FAVOURITES_LIST_NAME,
-      uid: "test-user",
+      userId: 1,
     });
 
     const response = await request(app).delete("/user/lists/7");

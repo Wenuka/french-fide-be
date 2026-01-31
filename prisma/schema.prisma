@@ -53,7 +53,6 @@ model User {
 
 model CustomVocab {
   custom_vocab_id Int       @id @default(autoincrement())
-  uid             String?   @db.VarChar(255) // Deprecated: Kept for safety
   userId          Int      // Converted to required Int
   target_lang     Language
   source_lang     Language
@@ -64,7 +63,6 @@ model CustomVocab {
   vocab Vocab[]
 
   @@index([userId])
-  @@index([uid])
 }
 
 model Vocab {
@@ -82,7 +80,6 @@ model Vocab {
 }
 
 model HiddenVocab {
-  uid      String?  @db.VarChar(255) // Deprecated: Kept for safety
   userId   Int      // Converted to required Int
   vocab_id Int
 
@@ -90,12 +87,10 @@ model HiddenVocab {
   vocab Vocab @relation(fields: [vocab_id], references: [vocab_id])
 
   @@id([userId, vocab_id])
-  @@index([uid])
 }
 
 model VocabList {
   list_id   Int      @id @default(autoincrement())
-  uid       String?  @db.VarChar(255) // Deprecated: Kept for safety
   userId    Int      // Converted to required Int
   list_name String
 
@@ -110,7 +105,6 @@ model VocabList {
   // A user cannot have two lists with the same name
   @@unique([userId, list_name])
   @@index([userId])
-  @@index([uid])
 }
 
 model VocabListItem {
