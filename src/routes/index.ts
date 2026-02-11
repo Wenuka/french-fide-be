@@ -35,9 +35,12 @@ router.get('', (_, res) => {
   });
 });
 
+import contactRouter from './contact';
+
 // Mount other routes
 router.use('/user', usersRouter);
 router.use('/health', healthRouter);
 router.use('/progress', progressRouter);
+router.use('/contact', contactRouter);
 
 export default router;
