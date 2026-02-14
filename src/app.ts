@@ -10,6 +10,7 @@ const app = express();
 import indexRouter from "./routes";
 import healthRouter from "./routes/health";
 import eventsRouter from "./routes/user";
+import examRouter from "./routes/exam";
 import swaggerSpec from "./config/swagger";
 
 // Middleware
@@ -34,5 +35,6 @@ app.use('/api-docs',
 app.use('/', indexRouter);
 app.use('/health', healthRouter);
 app.use('/api/events', eventsRouter);
+app.use('/api/exam', examRouter);
 
 export default app;

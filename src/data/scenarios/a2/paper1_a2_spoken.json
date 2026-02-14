@@ -1,0 +1,111 @@
+{
+    "level": "A2",
+    "sectionId": "paper1_a2_spoken",
+    "title": "Spoken – A2 (Initial Evaluation)",
+    "estimatedTime": "5 minutes",
+    "items": [
+        {
+            "id": "a2_intro",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "Bonjour ! Comment allez-vous ? Est-ce que vous pouvez vous présenter en quelques mots ?",
+            "tips": [
+                "L’examinateur/trice vous souhaite la bienvenue et vous explique le déroulement du test.",
+                "Speak clearly",
+                "Maintain eye contact",
+                "Don't hesitate to ask to repeat if you don't understand"
+            ],
+            "sampleAnswer": "Bonjour ! Je vais très bien, merci. Je m'appelle [Nom], j'habite à [Lieu] et je travaille comme [Profession].",
+            "audioId": "a2_audio_intro",
+            "recordable": true,
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60
+        },
+        {
+            "id": "a2_task_01",
+            "type": "open_question",
+            "image": "images/a2/1-1.png",
+            "prompt": "Nous allons parler du sujet appartements. Que voyez-vous ? Décrivez l’image. Selon vous, où est cette personne ? Qu’est-ce qui se passe ?",
+            "sampleAnswer": "Je vois une femme devant un immeuble. Elle téléphone et regarde sa montre. Son vélo est à terre, il est cassé. Elle a un problème pour son rendez-vous.",
+            "audioId": "a2_audio_task1_prompt",
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 120,
+            "recordable": true
+        },
+        {
+            "id": "a2_dialog_intro",
+            "type": "intro",
+            "image": "images/a2/1-1.png",
+            "prompt": "Voilà la situation : Cette femme a rendez-vous pour visiter un appartement, mais elle a eu un problème avec son vélo. Elle doit annuler le rendez-vous. La femme appelle la gérance et explique la situation.\n\nQue dit la femme au téléphone ? Nous allons jouer la situation : Vous êtes cette personne et moi, je travaille pour la gérance de l'immeuble. Je décroche le téléphone.",
+            "audioId": "a2_audio_greeting_intro"
+        },
+        {
+            "id": "a2_dialog_01",
+            "type": "dialog_steps",
+            "image": "images/a2/1-1.png",
+            "tips": [
+                "State your name clearly",
+                "Explain the problem",
+                "Be polite"
+            ],
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "steps": [
+                {
+                    "step": 1,
+                    "prompt": "'Immo SA, bonjour. Je vous écoute.'",
+                    "sampleAnswer": "Bonjour, je m'appelle [Nom]. J'ai un rendez-vous pour visiter l'appartement à 14h, mais mon vélo est cassé. Je ne peux pas venir, je dois annuler.",
+                    "audioId": "a2_audio_agency_call"
+                }
+            ]
+        },
+        {
+            "id": "a2_discussion_intro",
+            "type": "intro",
+            "image": "images/instructor.png",
+            "prompt": "J'ai maintenant quelques questions supplémentaires à vous poser. ",
+            "audioId": "a2_audio_discussion_intro"
+        },
+        {
+            "id": "a2_discussion_01",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "Qu'est-ce qui est important pour vous dans un appartement ? ... Pourquoi ?",
+            "sampleAnswer": "Le plus important pour moi est le calme et une cuisine moderne parce que j'aime cuisiner.",
+            "audioId": "a2_audio_discussion_01",
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "recordable": true
+        },
+        {
+            "id": "a2_discussion_02",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "Avez-vous (ou quelqu'un que vous connaissez) déjà cherché un appartement ? Comment avez-vous fait ?",
+            "sampleAnswer": "Oui, j'ai cherché sur Internet et j'ai visité plusieurs appartements.",
+            "audioId": "a2_audio_discussion_02",
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "recordable": true
+        },
+        {
+            "id": "a2_discussion_03",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "Qu'avez-vous fait après avoir emménagé dans votre nouvel appartement ?",
+            "sampleAnswer": "J'ai organisé une petite fête avec mes amis pour pendre la crémaillère.",
+            "audioId": "a2_audio_discussion_03",
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "recordable": true
+        },
+        {
+            "id": "a2_end",
+            "type": "intro",
+            "image": "images/instructor.png",
+            "text": "La première partie de l'examen est terminée. Pour la deuxième partie, je vous suggère de choisir le niveau A1 ou B1. Sur l'écran suivant, vous pourrez sélectionner le niveau que vous préférez. !",
+            "audioId": "a2_audio_end",
+            "recordable": false
+        }
+    ]
+}

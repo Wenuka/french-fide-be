@@ -1,0 +1,60 @@
+{
+    "level": "B1",
+    "sectionId": "b1_formation",
+    "title": "Spoken – B1 (Formation)",
+    "estimatedTime": "7 minutes",
+    "items": [
+        {
+            "id": "b1_formation_work_history",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "Pouvez-vous nous dire : Où travaillez-vous ? / où avez-vous travaillé ? Comment avez-vous appris ce travail ?",
+            "sampleAnswer": "Je travaille comme infirmier. J'ai fait une école d'infirmiers pendant 3 ans.",
+            "audioId": "b1_audio_formation_work",
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 90,
+            "recordable": true
+        },
+        {
+            "id": "b1_formation_course",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "Avez-vous déjà suivi un cours de formation continue ? Racontez-nous comment c’était !",
+            "sampleAnswer": "Oui, j'ai suivi un cours de français. C'était très intéressant et utile pour mon travail.",
+            "audioId": "b1_audio_formation_course",
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 90,
+            "recordable": true
+        },
+        {
+            "id": "b1_formation_pros_cons_v2",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "À votre avis, quels sont les côtés positifs et négatifs de suivre une formation en plus de son travail ?",
+            "sampleAnswer": "Le positif, c'est d'apprendre. Le négatif, c'est la fatigue et le manque de temps libre.",
+            "audioId": "b1_audio_formation_pros_cons_v2",
+            "estimatedTime": "2-3 minutes",
+            "timerSeconds": 150,
+            "recordable": true
+        },
+        {
+            "id": "b1_formation_hypothetical_v2",
+            "type": "open_question",
+            "image": "images/instructor.png",
+            "prompt": "Pourriez-vous envisager d’apprendre un nouveau métier ? Pourquoi ? Pourquoi pas ?",
+            "sampleAnswer": "Oui, pourquoi pas, si je ne trouve plus de travail dans mon domaine actuel.",
+            "audioId": "b1_audio_formation_hypothetical_v2",
+            "estimatedTime": "2 minutes",
+            "timerSeconds": 120,
+            "recordable": true
+        },
+        {
+            "id": "b1_end",
+            "type": "intro",
+            "image": "images/instructor.png",
+            "text": "L'examen est terminé. Merci beaucoup et au revoir !",
+            "audioId": "b1_audio_end",
+            "recordable": false
+        }
+    ]
+}
