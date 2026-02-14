@@ -15,7 +15,7 @@ const client = mailgun.client({ username: 'api', key: apiKey || '', url });
 router.post('/', async (req, res) => {
     const { user_name, user_email, message } = req.body;
 
-    if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+    if (!apiKey || !domain) {
         console.error('Mailgun configuration missing');
         return res.status(500).json({ error: 'Server configuration error' });
     }
