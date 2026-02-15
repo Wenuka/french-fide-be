@@ -161,7 +161,7 @@ model ScenarioA1 {
   title       String
   contentJson String @db.Text // Storing the full JSON content or path if needed
   
-  sections    MockExamSectionA1[]
+  mockExams   MockExam[] @relation("A1Scenario")
 }
 
 model ScenarioA2 {
@@ -169,7 +169,7 @@ model ScenarioA2 {
   title       String
   contentJson String @db.Text
   
-  sections    MockExamSectionA2[]
+  mockExams   MockExam[] @relation("A2Scenario")
 }
 
 model ScenarioB1 {
@@ -177,34 +177,9 @@ model ScenarioB1 {
   title       String
   contentJson String @db.Text
   
-  sections    MockExamSectionB1[]
-}
-
-// Exam Sections (Instances of an exam attempt)
-model MockExamSectionA1 {
-  id          String @id @default(uuid())
-  scenarioId  String
-  scenario    ScenarioA1 @relation(fields: [scenarioId], references: [id])
-  
-  mockExam    MockExam?
-}
-
-model MockExamSectionA2 {
-  id          String @id @default(uuid())
-  scenarioId  String
-  scenario    ScenarioA2 @relation(fields: [scenarioId], references: [id])
-  
-  mockExam    MockExam?
-}
-
- model MockExamSectionB1 {
-  id          String @id @default(uuid())
-  scenarioId  String
-  scenario    ScenarioB1 @relation(fields: [scenarioId], references: [id])
-  
-  mockExamSelected MockExam? @relation("B1Selected")
-  mockExamOption1  MockExam? @relation("B1Option1")
-  mockExamOption2  MockExam? @relation("B1Option2")
+  mockExamsSelected MockExam[] @relation("B1Selected")
+  mockExamsOption1  MockExam[] @relation("B1Option1")
+  mockExamsOption2  MockExam[] @relation("B1Option2")
 }
 
 enum ExamPath {
@@ -221,23 +196,23 @@ model MockExam {
   // Explicitly track which path the user took
   selected_path ExamPath?
 
-  // Links to specific section instances
-  section_a2_id String? @unique
-  section_a2    MockExamSectionA2? @relation(fields: [section_a2_id], references: [id])
+  // Direct links to scenarios
+  scenario_a2_id String
+  scenario_a2    ScenarioA2 @relation("A2Scenario", fields: [scenario_a2_id], references: [id])
   
-  section_a1_id String? @unique
-  section_a1    MockExamSectionA1? @relation(fields: [section_a1_id], references: [id])
+  scenario_a1_id String?
+  scenario_a1    ScenarioA1? @relation("A1Scenario", fields: [scenario_a1_id], references: [id])
   
   // B1 Options: Pre-created when exam starts
-  section_b1_option1_id String? @unique
-  section_b1_option1    MockExamSectionB1? @relation("B1Option1", fields: [section_b1_option1_id], references: [id])
+  scenario_b1_option1_id String?
+  scenario_b1_option1    ScenarioB1? @relation("B1Option1", fields: [scenario_b1_option1_id], references: [id])
   
-  section_b1_option2_id String? @unique
-  section_b1_option2    MockExamSectionB1? @relation("B1Option2", fields: [section_b1_option2_id], references: [id])
+  scenario_b1_option2_id String?
+  scenario_b1_option2    ScenarioB1? @relation("B1Option2", fields: [scenario_b1_option2_id], references: [id])
   
-  // B1 Selected: Points to which B1 option was chosen (will be one of the above)
-  section_b1_id String? @unique
-  section_b1    MockExamSectionB1? @relation("B1Selected", fields: [section_b1_id], references: [id])
+  // B1 Selected: Points to which B1 option was chosen
+  scenario_b1_id String?
+  scenario_b1    ScenarioB1? @relation("B1Selected", fields: [scenario_b1_id], references: [id])
 
   answersA1     MockExamAnswerA1[]
   answersA2     MockExamAnswerA2[]

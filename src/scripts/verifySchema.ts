@@ -19,34 +19,33 @@ async function checkSchema() {
         console.log(`Testing with user ID: ${user.id}`);
 
         // 2. Get scenarios
-        const scenarios = await prisma.scenarioB1.findMany();
-        if (scenarios.length < 2) {
-            console.log('Not enough B1 scenarios to test.');
+        const scenariosA2 = await prisma.scenarioA2.findMany();
+        const scenariosB1 = await prisma.scenarioB1.findMany();
+
+        if (scenariosA2.length < 1 || scenariosB1.length < 2) {
+            console.log('Not enough scenarios to test.');
             return;
         }
 
-        // 3. Create mock exam with options
-        const section1 = await prisma.mockExamSectionB1.create({ data: { scenarioId: scenarios[0].id } });
-        const section2 = await prisma.mockExamSectionB1.create({ data: { scenarioId: scenarios[1].id } });
-
+        // 3. Create mock exam with direct scenario links
         const exam = await prisma.mockExam.create({
             data: {
                 user_id: user.id,
-                section_b1_option1_id: section1.id,
-                section_b1_option2_id: section2.id,
+                scenario_a2_id: scenariosA2[0].id,
+                scenario_b1_option1_id: scenariosB1[0].id,
+                scenario_b1_option2_id: scenariosB1[1].id,
                 status: "TEST_VERIFICATION"
             }
         });
 
-        console.log('✅ Successfully created exam with B1 options!');
+        console.log('✅ Successfully created exam with direct scenario links!');
         console.log('Exam ID:', exam.id);
-        console.log('Option 1 ID:', exam.section_b1_option1_id);
-        console.log('Option 2 ID:', exam.section_b1_option2_id);
+        console.log('A2 Scenario ID:', exam.scenario_a2_id);
+        console.log('B1 Option 1 ID:', exam.scenario_b1_option1_id);
+        console.log('B1 Option 2 ID:', exam.scenario_b1_option2_id);
 
         // Cleanup
         await prisma.mockExam.delete({ where: { id: exam.id } });
-        await prisma.mockExamSectionB1.delete({ where: { id: section1.id } });
-        await prisma.mockExamSectionB1.delete({ where: { id: section2.id } });
         console.log('✅ Verification cleanup done.');
 
     } catch (error) {

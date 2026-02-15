@@ -47,6 +47,96 @@ async function getUserId(req: Request) {
     return user ? user.id : null;
 }
 
+// Helper to get least-used scenarios for a user
+async function getLeastUsedScenarios(
+    userId: number,
+    level: 'A1' | 'A2' | 'B1',
+    count: number = 1
+): Promise<string[]> {
+    // Get all scenarios for this level
+    let allScenarios: { id: string }[] = [];
+    if (level === 'A1') {
+        allScenarios = await prisma.scenarioA1.findMany({ select: { id: true } });
+    } else if (level === 'A2') {
+        allScenarios = await prisma.scenarioA2.findMany({ select: { id: true } });
+    } else if (level === 'B1') {
+        allScenarios = await prisma.scenarioB1.findMany({ select: { id: true } });
+    }
+
+    if (allScenarios.length === 0) {
+        throw new Error(`No ${level} scenarios available`);
+    }
+
+    // If we need more scenarios than available, we'll have to duplicate
+    // This is okay - user wants variety but accepts duplicates when necessary
+    if (count > allScenarios.length) {
+        console.log(`[SMART_SELECTION] Requested ${count} ${level} scenarios but only ${allScenarios.length} available. Will duplicate.`);
+    }
+
+    // Get user's exam history to count scenario usage
+    const userExams = await prisma.mockExam.findMany({
+        where: { user_id: userId },
+        select: {
+            scenario_a1_id: true,
+            scenario_a2_id: true,
+            scenario_b1_id: true,
+            scenario_b1_option1_id: true,
+            scenario_b1_option2_id: true
+        }
+    });
+
+    // Count usage for each scenario
+    const usageCount: Record<string, number> = {};
+    allScenarios.forEach(s => usageCount[s.id] = 0);
+
+    userExams.forEach(exam => {
+        if (level === 'A1' && exam.scenario_a1_id) {
+            usageCount[exam.scenario_a1_id] = (usageCount[exam.scenario_a1_id] || 0) + 1;
+        } else if (level === 'A2' && exam.scenario_a2_id) {
+            usageCount[exam.scenario_a2_id] = (usageCount[exam.scenario_a2_id] || 0) + 1;
+        } else if (level === 'B1') {
+            // Count B1 selected scenarios and options shown
+            if (exam.scenario_b1_id) {
+                usageCount[exam.scenario_b1_id] = (usageCount[exam.scenario_b1_id] || 0) + 1;
+            }
+            // Also count options that were shown (even if not selected)
+            if (exam.scenario_b1_option1_id) {
+                usageCount[exam.scenario_b1_option1_id] = (usageCount[exam.scenario_b1_option1_id] || 0) + 0.5;
+            }
+            if (exam.scenario_b1_option2_id) {
+                usageCount[exam.scenario_b1_option2_id] = (usageCount[exam.scenario_b1_option2_id] || 0) + 0.5;
+            }
+        }
+    });
+
+    // Sort scenarios by usage count (ascending)
+    const sortedScenarios = allScenarios
+        .map(s => ({ id: s.id, count: usageCount[s.id] }))
+        .sort((a, b) => a.count - b.count);
+
+    // Get the minimum usage count
+    const minUsage = sortedScenarios[0].count;
+
+    // Get all scenarios with minimum usage
+    const leastUsedScenarios = sortedScenarios
+        .filter(s => s.count === minUsage)
+        .map(s => s.id);
+
+    // Shuffle the least-used scenarios
+    const shuffled = leastUsedScenarios.sort(() => 0.5 - Math.random());
+
+    // If we don't have enough unique least-used scenarios, we need to fill with duplicates
+    const result: string[] = [];
+    for (let i = 0; i < count; i++) {
+        // Use modulo to cycle through available scenarios if we need duplicates
+        result.push(shuffled[i % shuffled.length]);
+    }
+
+    console.log(`[SMART_SELECTION] Selected ${count} ${level} scenarios: ${result.join(', ')}`);
+    return result;
+}
+
+
 // GET /api/exam/history
 router.get("/history", requireAuth, async (req: Request, res: Response) => {
     try {
@@ -62,9 +152,9 @@ router.get("/history", requireAuth, async (req: Request, res: Response) => {
             where: { user_id: userId },
             orderBy: { createdAt: "desc" },
             include: {
-                section_a2: { include: { scenario: true } },
-                section_a1: { include: { scenario: true } },
-                section_b1: { include: { scenario: true } },
+                scenario_a2: true,
+                scenario_a1: true,
+                scenario_b1: true,
                 // Use plural names as defined in schema relations
                 answersA1: true,
                 answersA2: true,
@@ -91,9 +181,9 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
         const exam = await prisma.mockExam.findUnique({
             where: { id: examId },
             include: {
-                section_a2: { include: { scenario: true } },
-                section_a1: { include: { scenario: true } },
-                section_b1: { include: { scenario: true } },
+                scenario_a2: true,
+                scenario_a1: true,
+                scenario_b1: true,
                 answersA1: true,
                 answersA2: true,
                 answersB1: true,
@@ -108,30 +198,30 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
         const scenarios: any[] = [];
 
         // A2
-        if (exam.section_a2) {
-            const content = loadScenarioContent("A2", exam.section_a2.scenarioId);
+        if (exam.scenario_a2) {
+            const content = loadScenarioContent("A2", exam.scenario_a2.id);
             scenarios.push({
                 level: "A2",
-                items: content ? content.items : JSON.parse(exam.section_a2.scenario.contentJson || "{}").items
+                items: content ? content.items : JSON.parse(exam.scenario_a2.contentJson || "{}").items
             });
         }
 
         // A1 or B1
         // Determine path using explicit selection if available, otherwise heuristic
         if (exam.selected_path === "B1") {
-            if (exam.section_b1) {
-                const content = loadScenarioContent("B1", exam.section_b1.scenarioId);
+            if (exam.scenario_b1) {
+                const content = loadScenarioContent("B1", exam.scenario_b1.id);
                 scenarios.push({
                     level: "B1",
-                    items: content ? content.items : JSON.parse(exam.section_b1.scenario.contentJson || "{}").items
+                    items: content ? content.items : JSON.parse(exam.scenario_b1.contentJson || "{}").items
                 });
             }
         } else if (exam.selected_path === "A1") {
-            if (exam.section_a1) {
-                const content = loadScenarioContent("A1", exam.section_a1.scenarioId);
+            if (exam.scenario_a1) {
+                const content = loadScenarioContent("A1", exam.scenario_a1.id);
                 scenarios.push({
                     level: "A1",
-                    items: content ? content.items : JSON.parse(exam.section_a1.scenario.contentJson || "{}").items
+                    items: content ? content.items : JSON.parse(exam.scenario_a1.contentJson || "{}").items
                 });
             }
         }
@@ -180,9 +270,9 @@ router.post("/start", requireAuth, async (req: Request, res: Response) => {
                 where: resumeWhere,
                 orderBy: { createdAt: 'desc' },
                 include: {
-                    section_a2: { include: { scenario: true } },
-                    section_a1: { include: { scenario: true } },
-                    section_b1: { include: { scenario: true } },
+                    scenario_a2: true,
+                    scenario_a1: true,
+                    scenario_b1: true,
                     answersA1: true,
                     answersA2: true,
                     answersB1: true
@@ -193,24 +283,24 @@ router.post("/start", requireAuth, async (req: Request, res: Response) => {
                 console.log(`Resuming exam ${existingExam.id} for user ${userId}`);
 
                 const scenarios: any[] = [];
-                if (existingExam.section_a2) {
+                if (existingExam.scenario_a2) {
                     scenarios.push({
                         section: "A2",
-                        scenario: loadScenarioContent("A2", existingExam.section_a2.scenarioId) || JSON.parse(existingExam.section_a2.scenario?.contentJson || "{}")
+                        scenario: loadScenarioContent("A2", existingExam.scenario_a2.id) || JSON.parse(existingExam.scenario_a2?.contentJson || "{}")
                     });
                 }
 
-                if (existingExam.section_a1 && existingExam.answersA1.length > 0) {
+                if (existingExam.scenario_a1 && existingExam.answersA1.length > 0) {
                     scenarios.push({
                         section: "A1",
-                        scenario: loadScenarioContent("A1", existingExam.section_a1.scenarioId) || JSON.parse(existingExam.section_a1.scenario?.contentJson || "{}")
+                        scenario: loadScenarioContent("A1", existingExam.scenario_a1.id) || JSON.parse(existingExam.scenario_a1?.contentJson || "{}")
                     });
                 }
 
-                if (existingExam.section_b1 && existingExam.answersB1.length > 0) {
+                if (existingExam.scenario_b1 && existingExam.answersB1.length > 0) {
                     scenarios.push({
                         section: "B1",
-                        scenario: loadScenarioContent("B1", existingExam.section_b1.scenarioId) || JSON.parse(existingExam.section_b1.scenario?.contentJson || "{}")
+                        scenario: loadScenarioContent("B1", existingExam.scenario_b1.id) || JSON.parse(existingExam.scenario_b1?.contentJson || "{}")
                     });
                 }
 
@@ -228,57 +318,23 @@ router.post("/start", requireAuth, async (req: Request, res: Response) => {
         // --- NEW EXAM FLOW ---
         // (Previously deleted all history here - removed to preserve completed exams)
 
-        // Pre-create BOTH A1 and A2 sections (B1 will be created only when selected)
-        const scenarios_A1 = await prisma.scenarioA1.findMany();
-        const scenarios_A2 = await prisma.scenarioA2.findMany();
+        // Use smart selection to get least-used A2 scenario
+        const [leastUsedA2Id] = await getLeastUsedScenarios(userId, 'A2', 1);
+        const scenarioA2 = await prisma.scenarioA2.findUnique({
+            where: { id: leastUsedA2Id }
+        });
 
-        if (scenarios_A1.length === 0) {
-            return res.status(500).json({ error: "No A1 scenarios available" });
-        }
-        if (scenarios_A2.length === 0) {
+        if (!scenarioA2) {
             return res.status(500).json({ error: "No A2 scenarios available" });
         }
 
-        // Random selection for both
-        const scenarioA1 = scenarios_A1[Math.floor(Math.random() * scenarios_A1.length)];
-        const scenarioA2 = scenarios_A2[Math.floor(Math.random() * scenarios_A2.length)];
-
-        // Create Section instances
-        const sectionA1 = await prisma.mockExamSectionA1.create({
-            data: { scenarioId: scenarioA1.id }
-        });
-
-        const sectionA2 = await prisma.mockExamSectionA2.create({
-            data: { scenarioId: scenarioA2.id }
-        });
-
-        // Pre-create B1 Options (2 random scenarios)
-        const scenarios_B1 = await prisma.scenarioB1.findMany();
-        if (scenarios_B1.length < 2) {
-            return res.status(500).json({ error: "Not enough B1 scenarios available" });
-        }
-
-        // Shuffle and pick 2 unique scenarios
-        const shuffledB1 = scenarios_B1.sort(() => 0.5 - Math.random());
-        const selectedB1 = shuffledB1.slice(0, 2);
-
-        // Create Section instances for B1 options
-        const sectionB1_Option1 = await prisma.mockExamSectionB1.create({
-            data: { scenarioId: selectedB1[0].id }
-        });
-
-        const sectionB1_Option2 = await prisma.mockExamSectionB1.create({
-            data: { scenarioId: selectedB1[1].id }
-        });
-
-        // Create MockExam with ALL sections pre-populated (A1, A2, and B1 Options)
+        // Create MockExam with only A2 set
+        // A1 and B1 will be set when user selects their path
         const exam = await prisma.mockExam.create({
             data: {
                 user_id: userId,
-                section_a1_id: sectionA1.id,
-                section_a2_id: sectionA2.id,
-                section_b1_option1_id: sectionB1_Option1.id,
-                section_b1_option2_id: sectionB1_Option2.id,
+                scenario_a2_id: scenarioA2.id,
+                // Leave A1 and B1 empty - they'll be set in select-path
                 status: "IN_PROGRESS"
             }
         });
@@ -391,10 +447,8 @@ router.post("/:examId/decision", requireAuth, async (req: Request, res: Response
         const existingExam = await prisma.mockExam.findUnique({
             where: { id: examId },
             include: {
-                section_a1: { include: { scenario: true } },
-                section_b1: { include: { scenario: true } },
-                section_b1_option1: { include: { scenario: true } },
-                section_b1_option2: { include: { scenario: true } }
+                scenario_a1: true,
+                scenario_b1: true
             }
         });
 
@@ -406,31 +460,52 @@ router.post("/:examId/decision", requireAuth, async (req: Request, res: Response
         let scenarioContentJson = null;
 
         if (choice === "A1") {
-            // User selected A1
-            if (!existingExam.section_a1 || !existingExam.section_a1.scenario) {
-                return res.status(500).json({ error: "A1 section not properly initialized" });
-            }
+            // User selected A1 - use smart selection to get least-used A1 scenario
+            const [leastUsedA1Id] = await getLeastUsedScenarios(userId, 'A1', 1);
 
-            freshContent = loadScenarioContent("A1", existingExam.section_a1.scenario.id);
-            scenarioContentJson = existingExam.section_a1.scenario.contentJson;
-
-            // Mark path as A1
+            // Update exam with selected A1 scenario
             await prisma.mockExam.update({
                 where: { id: examId },
-                data: { selected_path: "A1" }
+                data: {
+                    scenario_a1_id: leastUsedA1Id,
+                    selected_path: "A1"
+                }
             });
-            console.log(`[DECISION] ✓ Updated exam ${examId} with selected_path="A1"`);
 
-        } else if (choice === "B1") {
-            // User selected B1 -> Show Topic Selection Options
+            const scenarioA1 = await prisma.scenarioA1.findUnique({
+                where: { id: leastUsedA1Id }
+            });
 
-            if (!existingExam.section_b1_option1 || !existingExam.section_b1_option2) {
-                return res.status(500).json({ error: "B1 options missing for this exam" });
+            if (!scenarioA1) {
+                return res.status(500).json({ error: "A1 scenario not found" });
             }
 
-            const option1Scenario = existingExam.section_b1_option1.scenario;
-            const option2Scenario = existingExam.section_b1_option2.scenario;
+            freshContent = loadScenarioContent("A1", scenarioA1.id);
+            scenarioContentJson = scenarioA1.contentJson;
 
+            console.log(`[DECISION] ✓ Updated exam ${examId} with selected_path="A1" and scenario_a1_id="${leastUsedA1Id}"`);
+
+        } else if (choice === "B1") {
+            // User selected B1 - use smart selection to get 2 least-used B1 scenarios
+            const [option1Id, option2Id] = await getLeastUsedScenarios(userId, 'B1', 2);
+
+            // Update exam with B1 options
+            await prisma.mockExam.update({
+                where: { id: examId },
+                data: {
+                    scenario_b1_option1_id: option1Id,
+                    scenario_b1_option2_id: option2Id
+                }
+            });
+
+            const option1Scenario = await prisma.scenarioB1.findUnique({ where: { id: option1Id } });
+            const option2Scenario = await prisma.scenarioB1.findUnique({ where: { id: option2Id } });
+
+            if (!option1Scenario || !option2Scenario) {
+                return res.status(500).json({ error: "B1 scenarios not found" });
+            }
+
+            // Return topic selection UI
             return res.json({
                 examId,
                 section: "B1",
@@ -462,30 +537,49 @@ router.post("/:examId/decision", requireAuth, async (req: Request, res: Response
             // Choice is a specific B1 Scenario ID (Topic Selection)
             console.log(`[DECISION] User selected B1 topic: ${choice}`);
 
-            let selectedSectionId = null;
-            let scenario = null;
+            // Fetch the B1 options from the exam to validate the choice
+            const examWithOptions = await prisma.mockExam.findUnique({
+                where: { id: examId },
+                select: {
+                    scenario_b1_option1_id: true,
+                    scenario_b1_option2_id: true
+                }
+            });
 
-            if (existingExam.section_b1_option1 && existingExam.section_b1_option1.scenario.id === choice) {
-                selectedSectionId = existingExam.section_b1_option1.id;
-                scenario = existingExam.section_b1_option1.scenario;
-            } else if (existingExam.section_b1_option2 && existingExam.section_b1_option2.scenario.id === choice) {
-                selectedSectionId = existingExam.section_b1_option2.id;
-                scenario = existingExam.section_b1_option2.scenario;
+            if (!examWithOptions || !examWithOptions.scenario_b1_option1_id || !examWithOptions.scenario_b1_option2_id) {
+                return res.status(500).json({ error: "B1 options not set for this exam" });
+            }
+
+            // Validate that the choice matches one of the options
+            let selectedScenarioId = null;
+            if (choice === examWithOptions.scenario_b1_option1_id) {
+                selectedScenarioId = choice;
+            } else if (choice === examWithOptions.scenario_b1_option2_id) {
+                selectedScenarioId = choice;
             } else {
                 return res.status(404).json({ error: "Invalid B1 topic selection" });
             }
 
-            console.log(`[DECISION] Matched choice ${choice} to section ID: ${selectedSectionId}`);
+            // Fetch the selected scenario
+            const scenario = await prisma.scenarioB1.findUnique({
+                where: { id: selectedScenarioId }
+            });
 
-            // Update exam with B1 section and path
+            if (!scenario) {
+                return res.status(500).json({ error: "B1 scenario not found" });
+            }
+
+            console.log(`[DECISION] Matched choice ${choice} to scenario ID: ${selectedScenarioId}`);
+
+            // Update exam with B1 scenario and path
             await prisma.mockExam.update({
                 where: { id: examId },
                 data: {
-                    section_b1_id: selectedSectionId,
+                    scenario_b1_id: selectedScenarioId,
                     selected_path: "B1"
                 }
             });
-            console.log(`[DECISION] ✓ Updated exam ${examId} with selected B1 section and selected_path="B1"`);
+            console.log(`[DECISION] ✓ Updated exam ${examId} with selected B1 scenario and selected_path="B1"`);
 
             freshContent = loadScenarioContent("B1", scenario.id);
             scenarioContentJson = scenario.contentJson;

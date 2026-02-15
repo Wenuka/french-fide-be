@@ -19,15 +19,6 @@ async function cleanupAllMockExams() {
         const deletedExams = await prisma.mockExam.deleteMany({});
         console.log(`Deleted ${deletedExams.count} mock exams`);
 
-        const deletedSectionsA1 = await prisma.mockExamSectionA1.deleteMany({});
-        console.log(`Deleted ${deletedSectionsA1.count} A1 sections`);
-
-        const deletedSectionsA2 = await prisma.mockExamSectionA2.deleteMany({});
-        console.log(`Deleted ${deletedSectionsA2.count} A2 sections`);
-
-        const deletedSectionsB1 = await prisma.mockExamSectionB1.deleteMany({});
-        console.log(`Deleted ${deletedSectionsB1.count} B1 sections`);
-
         console.log('✅ All mock exam data cleared successfully!');
     } catch (error) {
         console.error('Error cleaning up mock exams:', error);

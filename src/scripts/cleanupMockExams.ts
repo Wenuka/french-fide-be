@@ -14,11 +14,6 @@ async function cleanup() {
         // Delete MockExam sessions
         await prisma.mockExam.deleteMany();
 
-        // Delete sections
-        await prisma.mockExamSectionA1.deleteMany();
-        await prisma.mockExamSectionA2.deleteMany();
-        await prisma.mockExamSectionB1.deleteMany();
-
         console.log("Cleanup complete.");
     } catch (err) {
         console.error("Cleanup failed:", err);

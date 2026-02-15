@@ -16,12 +16,6 @@ async function cleanupExams() {
     const exams = await prisma.mockExam.deleteMany({});
     console.log(`Deleted ${exams.count} MockExam records.`);
 
-    // 3. Delete Section instances (these are created per exam session)
-    const secA1 = await prisma.mockExamSectionA1.deleteMany({});
-    const secA2 = await prisma.mockExamSectionA2.deleteMany({});
-    const secB1 = await prisma.mockExamSectionB1.deleteMany({});
-    console.log(`Deleted section instances: A1(${secA1.count}), A2(${secA2.count}), B1(${secB1.count})`);
-
     console.log('Cleanup completed successfully.');
 }
 
