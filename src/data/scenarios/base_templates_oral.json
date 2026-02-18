@@ -1,0 +1,196 @@
+{
+    "fr": {
+        "a2_0_i": {
+            "type": "intro",
+            "subSection": "intro",
+            "image": "images/instructor.png",
+            "prompt": "Bonjour et bienvenue à l’examen oral FIDE. Je suis votre examinateur. Nous allons commencer par une première partie avec des questions simples. Quand vous êtes prêt, cliquez sur « Suivant ».",
+            "tips": [
+                "Parlez calmement et clairement. Ce n’est pas grave si vous faites des erreurs.",
+                "Les examinateurs savent que votre niveau est entre A2 et B1. Détendez-vous.",
+                "Si vous ne comprenez pas une question, vous pouvez demander de répéter."
+            ],
+            "audioId": "base_fr_mock_a2_0_i"
+        },
+        "a2_0_q": {
+            "type": "open_question",
+            "subSection": "intro",
+            "image": "images/instructor.png",
+            "prompt": "Est-ce que vous pouvez vous présenter en quelques mots ?",
+            "tips": [
+                "Utilisez une réponse préparée pour vous présenter.",
+                "Si vous utilisez plus de temps dans votre réponse, votre niveau semble plus élevé."
+            ],
+            "sampleAnswer": "Bonjour, je m’appelle Mark, j’ai 32 ans et je suis comptable. Je viens d’Espagne et je suis en Suisse depuis cinq ans. Au début, je suis venu pour le travail. Quand j’étais petit, je voulais visiter la Suisse, mais je ne pensais pas vivre ici un jour. Maintenant, je suis marié et j’habite à Lausanne. J’aime la qualité de vie ici. Dans le futur, j’aimerais rester en Suisse et peut-être devenir suisse.",
+            "answerAudioId": "base_fr_answer_a2_0_q",
+            "audioId": "base_fr_mock_a2_0_q",
+            "recordable": true,
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 90
+        },
+        "a2_1_i": {
+            "type": "intro",
+            "subSection": "task 1",
+            "image": "images/instructor.png",
+            "prompt": "Très bien. Maintenant, je vais vous montrer une image. Vous devez décrire ce que vous voyez sur cette image.",
+            "audioId": "base_fr_mock_a2_1_i"
+        },
+        "a2_1_q": {
+            "type": "open_question",
+            "subSection": "task 1",
+            "prompt": "Décrivez ce que vous voyez sur l’image.",
+            "tips": [
+                "Vous pouvez dire : « Sur cette image, je vois… », « En haut à droite, je peux voir… »",
+                "Parlez des personnes, de leurs vêtements, du lieu et de l’action."
+            ],
+            "audioId": "base_fr_mock_a2_1_q",
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "recordable": true
+        },
+        "a2_2_i": {
+            "type": "intro",
+            "subSection": "task 2",
+            "image": "images/instructor.png",
+            "prompt": "D’accord. Maintenant, nous allons faire un petit dialogue. Vous allez jouer un rôle et moi, je vais jouer l’autre personne.",
+            "audioId": "base_fr_mock_a2_2_i"
+        },
+        "a2_2_q": {
+            "type": "open_question",
+            "note": "Pour le moment, pratiquez ce dialogue tout seul. Nous sommes en train d’ajouter la réponse de l’examinateur.",
+            "subSection": "task 2",
+            "tips": [
+                "Choses à pratiquer : Quoi dire au début et à la fin d’un appel. Comment fixer ou annuler un rendez-vous.",
+                "Essayez de parler le plus possible."
+            ],
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "recordable": true
+        },
+        "a2_3_i": {
+            "type": "intro",
+            "subSection": "task 3",
+            "image": "images/instructor.png",
+            "prompt": "Très bien. Maintenant, j’ai encore quelques questions pour vous. Êtes-vous prêt ?",
+            "audioId": "base_fr_mock_a2_3_i"
+        },
+        "a2_3_qi": {
+            "type": "open_question",
+            "subSection": "task 3",
+            "image": "images/instructor.png",
+            "tips": [
+                "Essayez d’utiliser le passé, le présent et le futur.",
+                "Donnez votre opinion si possible.",
+                "Il est plus important de parler facilement que de parler parfaitement."
+            ],
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "recordable": true,
+            "note": "L’examinateur peut ignorer cette question si le temps est déjà fini."
+        },
+        "a2_end": {
+            "type": "intro",
+            "subSection": "end",
+            "image": "images/instructor.png",
+            "prompt": "La première partie de l’examen est terminée. Pour la deuxième partie, normalement je vous propose un niveau, A1, ou B1. Mais sur l’écran suivant, vous pouvez choisir le niveau que vous préférez.",
+            "audioId": "base_fr_mock_a2_end"
+        }
+    },
+    "de": {
+        "a2_0_i": {
+            "type": "intro",
+            "subSection": "intro",
+            "image": "images/instructor.png",
+            "prompt": "Guten Tag und willkommen zur mündlichen FIDE-Prüfung. Ich bin Ihr Prüfer. Wir beginnen mit einem ersten Teil mit einfachen Fragen. Wenn Sie bereit sind, klicken Sie auf „Weiter“.",
+            "tips": [
+                "Sprechen Sie ruhig und klar. Fehler sind kein Problem.",
+                "Die Prüfer wissen, dass Ihr Niveau zwischen A2 und B1 liegt. Bleiben Sie entspannt.",
+                "Wenn Sie eine Frage nicht verstehen, können Sie sagen: „Können Sie bitte wiederholen?“"
+            ],
+            "audioId": "base_de_mock_a2_0_i"
+        },
+        "a2_0_q": {
+            "type": "open_question",
+            "subSection": "intro",
+            "image": "images/instructor.png",
+            "prompt": "Können Sie sich bitte kurz vorstellen?",
+            "tips": [
+                "Benutzen Sie eine vorbereitete Antwort.",
+                "Wenn Sie über Vergangenheit, Gegenwart und Zukunft sprechen, wirkt Ihr Niveau höher."
+            ],
+            "sampleAnswer": "Guten Tag, ich heiße Mark, ich bin 32 Jahre alt und ich bin Buchhalter. Ich komme aus Spanien und ich bin seit fünf Jahren in der Schweiz. Am Anfang bin ich wegen der Arbeit gekommen. Als ich klein war, wollte ich die Schweiz besuchen, aber ich dachte nicht, dass ich hier leben würde. Jetzt bin ich verheiratet und ich wohne in Lausanne. Ich mag die Lebensqualität hier. In der Zukunft möchte ich in der Schweiz bleiben und vielleicht Schweizer werden.",
+            "answerAudioId": "base_de_answer_a2_0_q",
+            "audioId": "base_de_mock_a2_0_q",
+            "recordable": true,
+            "estimatedTime": "1-2 Minuten",
+            "timerSeconds": 90
+        },
+        "a2_1_i": {
+            "type": "intro",
+            "subSection": "task 1",
+            "image": "images/instructor.png",
+            "prompt": "Sehr gut. Jetzt zeige ich Ihnen ein Bild. Bitte beschreiben Sie, was Sie auf dem Bild sehen.",
+            "audioId": "base_de_mock_a2_1_i"
+        },
+        "a2_1_q": {
+            "type": "open_question",
+            "subSection": "task 1",
+            "prompt": "Beschreiben Sie, was Sie auf dem Bild sehen.",
+            "tips": [
+                "Sie können sagen: „Auf dem Bild sehe ich…“, „Oben rechts sehe ich…“",
+                "Sprechen Sie über die Personen, ihre Kleidung, den Ort und die Situation."
+            ],
+            "audioId": "base_de_mock_a2_1_q",
+            "estimatedTime": "1 Minute",
+            "timerSeconds": 60,
+            "recordable": true
+        },
+        "a2_2_i": {
+            "type": "intro",
+            "subSection": "task 2",
+            "image": "images/instructor.png",
+            "prompt": "Gut. Jetzt machen wir einen kleinen Dialog. Sie spielen eine Rolle und ich spiele die andere Person.",
+            "audioId": "base_de_mock_a2_2_i"
+        },
+        "a2_2_q": {
+            "type": "open_question",
+            "note": "Im Moment üben Sie diesen Dialog allein. Wir arbeiten noch an der Antwort des Prüfers.",
+            "subSection": "task 2",
+            "tips": [
+                "Üben Sie: Was sagt man am Anfang und am Ende eines Anrufs? Wie kann man einen Termin vereinbaren oder absagen?",
+                "Versuchen Sie, so viel wie möglich zu sprechen."
+            ],
+            "estimatedTime": "1 Minute",
+            "timerSeconds": 60,
+            "recordable": true
+        },
+        "a2_3_i": {
+            "type": "intro",
+            "subSection": "task 3",
+            "image": "images/instructor.png",
+            "prompt": "Sehr gut. Jetzt habe ich noch ein paar Fragen. Sind Sie bereit?",
+            "audioId": "base_de_mock_a2_3_i"
+        },
+        "a2_3_qi": {
+            "type": "open_question",
+            "subSection": "task 3",
+            "image": "images/instructor.png",
+            "tips": [
+                "Versuchen Sie, Vergangenheit, Gegenwart und Zukunft zu benutzen.",
+                "Sagen Sie Ihre Meinung, wenn es passt.",
+                "Es ist wichtiger, flüssig zu sprechen als perfekt."
+            ],
+            "estimatedTime": "1 Minute",
+            "timerSeconds": 60,
+            "recordable": true,
+            "note": "Der Prüfer kann diese Frage ignorieren, wenn die Zeit schon vorbei ist."
+        },
+        "a2_end": {
+            "type": "intro",
+            "subSection": "end",
+            "image": "images/instructor.png",
+            "prompt": "Der erste Teil der Prüfung ist abgeschlossen. Normalerweise schlage ich Ihnen ein Niveau vor, A1 oder B1. Aber auf dem nächsten Bildschirm können Sie selbst das Niveau wählen.",
+            "audioId": "base_de_mock_a2_end"
+        }
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "level": "A2",
+    "language": "de",
+    "paperId": 1,
+    "sectionName": "paper1_a2_spoken",
+    "title": "Sprechen - Teil 1",
+    "estimatedTime": "7-10 Minuten",
+    "items": [
+        {
+            "id": 0,
+            "template": "a2_0_i"
+        },
+        {
+            "id": 1,
+            "template": "a2_0_q"
+        },
+        {
+            "id": 2,
+            "template": "a2_1_i"
+        },
+        {
+            "id": 3,
+            "template": "a2_1_q",
+            "image": "image_a2_1_task1.png",
+            "sampleAnswer": "Auf diesem Bild sehe ich eine Frau, die draußen auf dem Boden sitzt. Sie trägt einen Fahrradhelm, eine Jacke und eine lange Hose. Neben ihr liegt ein kaputtes Fahrrad. Es sieht so aus, als hätte sie einen Unfall oder eine Panne gehabt. Sie hält ein Handy in der Hand und ruft jemanden an. In der Gedankenblase sieht man einen gut gekleideten Mann, vielleicht einen Immobilienmakler oder Vermieter, der vor einem Haus telefoniert. Die Frau sieht ein bisschen besorgt aus.",
+            "answerAudioId": "de_answers_a2_1_task1"
+        },
+        {
+            "id": 4,
+            "template": "a2_2_i"
+        },
+        {
+            "id": 5,
+            "template": "a2_2_q",
+            "image": "image_a2_1_task1.png",
+            "prompt": "Sie müssen die folgende Situation spielen: Diese Frau hat einen Termin für eine Wohnungsbesichtigung, aber sie hatte ein Problem mit ihrem Fahrrad. Sie muss den Termin absagen. Sie rufen die Verwaltung an, um die Situation zu erklären. Ich spiele den Immobilienmakler (C1), Sie spielen die Frau (C2).",
+            "sampleCharacters": "C1: Immobilienmakler (Mann, 40 Jahre alt), C2: Frau (25 Jahre alt)",
+            "audioId": "de_mock_a2_1_task2",
+            "sampleAnswer": "C1: Guten Tag. Hier ist Patrick. Was kann ich für Sie tun?\nC2: Guten Tag. Ich heiße Frau Mia. Ich hatte heute um 14 Uhr einen Termin mit Ihnen, um die Wohnung in der Bahnhofstraße zu besichtigen.\nC1: Ah ja, guten Tag Frau Mia. Ich erwarte Sie.\nC2: Es tut mir sehr leid, aber ich hatte auf dem Weg ein Problem mit meinem Fahrrad. Es ist kaputt und ich kann nicht pünktlich kommen.\nC1: Oh, das ist ärgerlich. Ich hoffe, Sie sind nicht verletzt?\nC2: Nein, es geht mir gut, danke. Aber ich muss unseren Termin absagen. Ich kann heute nicht kommen.\nC1: Ich verstehe. Das ist kein Problem. Möchten Sie einen neuen Termin vereinbaren?\nC2: Ja, bitte. Wäre es möglich, den Termin auf morgen oder übermorgen zu verschieben?\nC1: Lassen Sie mich in meinen Kalender schauen... Morgen um 10 Uhr, passt Ihnen das?\nC2: Ja, das ist perfekt. Vielen Dank für Ihr Verständnis.\nC1: Gern geschehen. Bis morgen dann. Auf Wiederhören.\nC2: Auf Wiederhören.",
+            "answerAudioId": "de_answers_a2_1_task2"
+        },
+        {
+            "id": 6,
+            "template": "a2_3_i"
+        },
+        {
+            "id": 7,
+            "template": "a2_3_qi",
+            "prompt": "Was ist Ihnen bei einer Wohnung wichtig? ... Warum?",
+            "audioId": "de_mock_a2_1_task3_part1",
+            "sampleAnswer": "Für mich ist bei einer Wohnung das Licht am wichtigsten. Ich brauche einen hellen Ort mit großen Fenstern, denn das gibt mir Energie und es ist viel angenehmer, dort zu leben. Dann ist mir auch die Küche sehr wichtig. Ich koche gerne für meine Familie und Freunde, deshalb brauche ich eine Küche, die groß genug und gut ausgestattet ist, um gutes Essen zuzubereiten. Schließlich suche ich auch eine ruhige Gegend, weit weg vom Verkehrslärm, damit ich gut schlafen und mich nach der Arbeit ausruhen kann.",
+            "answerAudioId": "de_answers_a2_1_task3_part1",
+            "note": ""
+        },
+        {
+            "id": 8,
+            "template": "a2_3_qi",
+            "prompt": "Haben Sie (oder jemand, den Sie kennen) schon einmal eine Wohnung gesucht? Wie haben Sie das gemacht?",
+            "audioId": "de_mock_a2_1_task3_part2",
+            "sampleAnswer": "Ja, natürlich. Ich habe meine Wohnung letztes Jahr gesucht. Zuerst habe ich mir Anzeigen im Internet angesehen, auf Seiten wie FlatFox. Das ist sehr praktisch. Ich habe auch meine Freunde und Kollegen gefragt, ob sie freie Wohnungen kennen. Ich habe fünf Wohnungen besichtigt, bis ich die gefunden habe, die mir wirklich gefiel und nicht zu teuer war.",
+            "answerAudioId": "de_answers_a2_1_task3_part2"
+        },
+        {
+            "id": 9,
+            "template": "a2_3_qi",
+            "prompt": "Was haben Sie gemacht, nachdem Sie in Ihre neue Wohnung eingezogen sind?",
+            "audioId": "de_mock_a2_1_task3_part3",
+            "sampleAnswer": "Nach dem Einzug habe ich zuerst die ganze Wohnung geputzt. Dann habe ich meine Kartons ausgepackt und meine Sachen in die Schränke geräumt. Das hat lange gedauert! Ich habe auch ein paar neue Möbel gekauft, zum Beispiel ein Sofa für das Wohnzimmer. Als alles fertig war, habe ich meine Freunde und meine Familie zu einer kleinen Party in mein neues Zuhause eingeladen.",
+            "answerAudioId": "de_answers_a2_1_task3_part3"
+        },
+        {
+            "id": 10,
+            "template": "a2_end"
+        }
+    ]
+}

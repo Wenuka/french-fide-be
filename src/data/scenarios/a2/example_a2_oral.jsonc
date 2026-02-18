@@ -1,0 +1,92 @@
+// This file serves as a reference/template to generate an A2 oral mock exam JSON file.
+//
+// REQUIRED INPUTS for generation:
+// 1. language: "fr" (French) or "de" (German)
+// 2. paperId: integer (e.g., 0, 1, 2...)
+// 3. image_description: string (Description of the image for Task 1) // to use in the sample answer
+// 4. situation: string (Scenario for Task 2 involving two characters - C1: Examiner, C2: User). define C1, C2.
+// 5. questions: array of 3 strings (Three distinct questions for Task 3)
+// Note: All "Generated Content" should be in the language specified by the `language` field.
+// Allways use easy vocabulary (A2-B1 user), do not use complex grammar like subjunctive.
+// Name the file as f"{language}_paper{paperId}_a2_oral.json"
+{
+    "level": "A2",
+    "language": "fr", // Input: language
+    "paperId": 0, // Input: paperId
+    "sectionName": "paper0_a2_spoken", // pattern: f"paper{paperId}_a2_spoken"
+    "title": "Oral - Section 1",
+    "estimatedTime": "7-10 minutes",
+    "items": [
+        // Intro
+        {
+            "id": 0,
+            "template": "a2_0_i"
+        },
+        {
+            "id": 1,
+            "template": "a2_0_q"
+        },
+        // Task 1: Image Description
+        {
+            "id": 2,
+            "template": "a2_1_i"
+        },
+        {
+            "id": 3,
+            "template": "a2_1_q",
+            "image": "image_a2_0_task1.png", // pattern: f"image_a2_{paperId}_task1.png"
+            "sampleAnswer": "xxxxx", // Generate Content: Create a sample answer based on `image_description`. Start with "In this image, I see xxxx."
+            "answerAudioId": "fr_answers_a2_0_task1" // pattern: f"{language}_answers_a2_{paperId}_task1"
+        },
+        // Task 2: Roleplay / Dialogue
+        {
+            "id": 4,
+            "template": "a2_2_i"
+        },
+        {
+            "id": 5,
+            "template": "a2_2_q",
+            "image": "image_a2_0_task1.png", // pattern: f"image_a2_{paperId}_task1.png"
+            "prompt": "xxxxx", // Generate Content: "Examiner asks the user to play the local situation: {situation}. Mention roles: 'I play agent (C1), you play user (C2)'."
+            "sampleCharacters": "C1: Agent (man, 40 years old), C2: user (women 25 years old)", // Generate Content: Define C1/C2 based on situation or user input. Gender and age of each character is important.
+            "audioId": "fr_mock_a2_0_task2", // pattern: f"{language}_mock_a2_{paperId}_task2"
+            "sampleAnswer": "xxxxx", // Generate Content: Create a sample dialogue based on `situation` between C1 and C2. Format: "C1: ..., C2: ..., C1: ...". each dialogue should be not too long (max 10-12 words per turn). Total length 45-60 seconds.
+            "answerAudioId": "fr_answers_a2_0_task2" // pattern: f"{language}_answers_a2_{paperId}_task2"
+        },
+        // Task 3: Questions
+        {
+            "id": 6,
+            "template": "a2_3_i"
+        },
+        {
+            "id": 7,
+            "template": "a2_3_qi",
+            "prompt": "xxxxx", // Input: questions[0]
+            "audioId": "fr_mock_a2_0_task3_part1", // pattern: f"{language}_mock_a2_{paperId}_task3_part1"
+            "sampleAnswer": "xxxxx", // Generate Content: Create sample answer for questions[0]. ~50-70 words. Use day to day easy vocabulary.
+            "answerAudioId": "fr_answers_a2_0_task3_part1", // pattern: f"{language}_answers_a2_{paperId}_task3_part1"
+            "note": ""
+        },
+        {
+            "id": 8,
+            "template": "a2_3_qi",
+            "prompt": "xxxxx", // Input: questions[1]
+            "audioId": "fr_mock_a2_0_task3_part2", // pattern: f"{language}_mock_a2_{paperId}_task3_part2"
+            "sampleAnswer": "xxxxx", // Generate Content: Create sample answer for questions[1]. ~50-70 words. Use day to day easy vocabulary. Try to use different tenses (as required in the question).
+            "answerAudioId": "fr_answers_a2_0_task3_part2" // pattern: f"{language}_answers_a2_{paperId}_task3_part2"
+        },
+        {
+            "id": 9,
+            "template": "a2_3_qi",
+            "prompt": "xxxxx", // Input: questions[2]
+            "audioId": "fr_mock_a2_0_task3_part3", // pattern: f"{language}_mock_a2_{paperId}_task3_part3"
+            "sampleAnswer": "xxxxx", // Generate Content: Create sample answer for questions[2]. ~50-70 words. Use day to day easy vocabulary. Try to use different tenses (as required in the question).
+            "answerAudioId": "fr_answers_a2_0_task3_part3" // pattern: f"{language}_answers_a2_{paperId}_task3_part3"
+        },
+        // End
+        {
+            "id": 10,
+            "template": "a2_end"
+        }
+    ]
+}

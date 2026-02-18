@@ -1,0 +1,76 @@
+{
+    "level": "A2",
+    "language": "fr",
+    "paperId": 1,
+    "sectionName": "paper1_a2_spoken",
+    "title": "Oral - Section 1",
+    "estimatedTime": "7-10 minutes",
+    "items": [
+        {
+            "id": 0,
+            "template": "a2_0_i"
+        },
+        {
+            "id": 1,
+            "template": "a2_0_q"
+        },
+        {
+            "id": 2,
+            "template": "a2_1_i"
+        },
+        {
+            "id": 3,
+            "template": "a2_1_q",
+            "image": "image_a2_1_task1.png",
+            "sampleAnswer": "Sur cette image, je vois une femme assise par terre à l'extérieur. Elle porte un casque de vélo, une veste et un pantalon long. À côté d'elle, il y a un vélo cassé. Elle semble avoir eu un accident ou une panne. Elle tient un téléphone portable et elle est en train d'appeler quelqu'un. Dans la bulle, on voit un homme bien habillé, peut-être un agent immobilier ou un propriétaire, qui répond au téléphone devant une maison. La femme a l'air un peu embêtée.",
+            "answerAudioId": "fr_answers_a2_1_task1"
+        },
+        {
+            "id": 4,
+            "template": "a2_2_i"
+        },
+        {
+            "id": 5,
+            "template": "a2_2_q",
+            "image": "image_a2_1_task1.png",
+            "prompt": "Vous devez jouer la situation suivante : Cette femme a rendez-vous pour visiter un appartement, mais elle a eu un problème avec son vélo. Elle doit annuler le rendez-vous. Vous appelez la gérance pour expliquer la situation. Je joue le rôle de l'agent immobilier (C1), vous jouez le rôle de la femme (C2).",
+            "sampleCharacters": "C1: Agent immobilier (homme, 40 ans), C2: Femme (25 ans)",
+            "audioId": "fr_mock_a2_1_task2",
+            "sampleAnswer": "C1: Bonjour. Patrick à l'appareil. Que puis-je faire pour vous ?\nC2: Bonjour Monsieur. Je m'appelle Madame Mia. J'avais rendez-vous avec vous aujourd'hui à 14h pour visiter l'appartement rue de la Gare.\nC1: Ah oui, bonjour Madame Mia. Je vous attends.\nC2: Je suis vraiment désolée, mais j'ai eu un problème avec mon vélo en venant. Il est cassé et je ne peux pas arriver à l'heure.\nC1: Oh, c'est embêtant. Vous n'êtes pas blessée j'espère ?\nC2: Non, ça va, merci. Mais je dois annuler notre rendez-vous. Je ne pourrai pas venir aujourd'hui.\nC1: Je comprends. Ce n'est pas grave. Voulez-vous fixer une autre date ?\nC2: Oui, s'il vous plaît. Est-ce qu'il serait possible de le reporter à demain ou après-demain ?\nC1: Laissez-moi regarder mon agenda... Demain à 10h, cela vous convient ?\nC2: Oui, c'est parfait. Merci beaucoup de votre compréhension, Monsieur.\nC1: Je vous en prie. À demain alors. Au revoir Madame.\nC2: Au revoir Monsieur.",
+            "answerAudioId": "fr_answers_a2_1_task2"
+        },
+        {
+            "id": 6,
+            "template": "a2_3_i"
+        },
+        {
+            "id": 7,
+            "template": "a2_3_qi",
+            "prompt": "Qu’est-ce qui est important pour vous dans un appartement ? … Pourquoi ?",
+            "audioId": "fr_mock_a2_1_task3_part1",
+            "sampleAnswer": "Pour moi, le plus important dans un appartement, c'est d'abord la lumière. J'ai besoin d'un endroit lumineux avec de grandes fenêtres, car cela me donne de l'énergie et c'est beaucoup plus agréable pour vivre au quotidien. Ensuite, la cuisine est aussi très importante pour moi. J'adore cuisiner pour ma famille et mes amis, donc j'ai besoin d'une cuisine assez grande et bien équipée pour préparer de bons repas. Enfin, je cherche aussi un quartier calme, loin du bruit de la circulation, pour pouvoir bien dormir et me reposer après le travail.",
+            "answerAudioId": "fr_answers_a2_1_task3_part1",
+            "note": ""
+        },
+        {
+            "id": 8,
+            "template": "a2_3_qi",
+            "prompt": "Avez-vous (ou quelqu’un que vous connaissez) déjà cherché un appartement ? Comment avez-vous fait ?",
+            "audioId": "fr_mock_a2_1_task3_part2",
+            "sampleAnswer": "Oui, bien sûr. J'ai cherché mon appartement l'année dernière. J'ai commencé par regarder les annonces sur internet, sur des sites comme FlatFox. C'est très pratique. J'ai aussi demandé à mes amis et mes collègues s'ils connaissaient des appartements libres. J'ai visité cinq appartements avant de trouver celui qui me plaisait vraiment et qui n'était pas trop cher.",
+            "answerAudioId": "fr_answers_a2_1_task3_part2"
+        },
+        {
+            "id": 9,
+            "template": "a2_3_qi",
+            "prompt": "Qu'avez-vous fait après avoir emménagé dans votre nouvel appartement ?",
+            "audioId": "fr_mock_a2_1_task3_part3",
+            "sampleAnswer": "Après avoir emménagé, j'ai d'abord nettoyé tout l'appartement. Ensuite, j'ai défait mes cartons et rangé mes affaires dans les placards. C'était long ! J'ai aussi acheté quelques nouveaux meubles, comme un canapé pour le salon. Une fois que tout était terminé, j'ai invité mes amis et ma famille pour une petite fête dans mon nouveau chez-moi.",
+            "answerAudioId": "fr_answers_a2_1_task3_part3"
+        },
+        {
+            "id": 10,
+            "template": "a2_end"
+        }
+    ]
+}
