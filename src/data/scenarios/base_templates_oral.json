@@ -19,7 +19,7 @@
             "prompt": "Est-ce que vous pouvez vous présenter en quelques mots ?",
             "tips": [
                 "Utilisez une réponse préparée pour vous présenter.",
-                "Si vous utilisez plus de temps dans votre réponse, votre niveau semble plus élevé."
+                "Si vous utilisez différents temps dans votre réponse, votre niveau semble plus élevé."
             ],
             "sampleAnswer": "Bonjour, je m’appelle Mark, j’ai 32 ans et je suis comptable. Je viens d’Espagne et je suis en Suisse depuis cinq ans. Au début, je suis venu pour le travail. Quand j’étais petit, je voulais visiter la Suisse, mais je ne pensais pas vivre ici un jour. Maintenant, je suis marié et j’habite à Lausanne. J’aime la qualité de vie ici. Dans le futur, j’aimerais rester en Suisse et peut-être devenir suisse.",
             "answerAudioId": "base_fr_answer_a2_0_q",
@@ -30,14 +30,14 @@
         },
         "a2_1_i": {
             "type": "intro",
-            "subSection": "task 1",
+            "subSection": "Tâche 1",
             "image": "images/instructor.png",
             "prompt": "Très bien. Maintenant, je vais vous montrer une image. Vous devez décrire ce que vous voyez sur cette image.",
             "audioId": "base_fr_mock_a2_1_i"
         },
         "a2_1_q": {
             "type": "open_question",
-            "subSection": "task 1",
+            "subSection": "Tâche 1",
             "prompt": "Décrivez ce que vous voyez sur l’image.",
             "tips": [
                 "Vous pouvez dire : « Sur cette image, je vois… », « En haut à droite, je peux voir… »",
@@ -50,7 +50,7 @@
         },
         "a2_2_i": {
             "type": "intro",
-            "subSection": "task 2",
+            "subSection": "Tâche 2",
             "image": "images/instructor.png",
             "prompt": "D’accord. Maintenant, nous allons faire un petit dialogue. Vous allez jouer un rôle et moi, je vais jouer l’autre personne.",
             "audioId": "base_fr_mock_a2_2_i"
@@ -58,7 +58,7 @@
         "a2_2_q": {
             "type": "open_question",
             "note": "Pour le moment, pratiquez ce dialogue tout seul. Nous sommes en train d’ajouter la réponse de l’examinateur.",
-            "subSection": "task 2",
+            "subSection": "Tâche 2",
             "tips": [
                 "Choses à pratiquer : Quoi dire au début et à la fin d’un appel. Comment fixer ou annuler un rendez-vous.",
                 "Essayez de parler le plus possible."
@@ -69,14 +69,14 @@
         },
         "a2_3_i": {
             "type": "intro",
-            "subSection": "task 3",
+            "subSection": "Tâche 3",
             "image": "images/instructor.png",
             "prompt": "Très bien. Maintenant, j’ai encore quelques questions pour vous. Êtes-vous prêt ?",
             "audioId": "base_fr_mock_a2_3_i"
         },
         "a2_3_qi": {
             "type": "open_question",
-            "subSection": "task 3",
+            "subSection": "Tâche 3",
             "image": "images/instructor.png",
             "tips": [
                 "Essayez d’utiliser le passé, le présent et le futur.",
@@ -94,6 +94,74 @@
             "image": "images/instructor.png",
             "prompt": "La première partie de l’examen est terminée. Pour la deuxième partie, normalement je vous propose un niveau, A1, ou B1. Mais sur l’écran suivant, vous pouvez choisir le niveau que vous préférez.",
             "audioId": "base_fr_mock_a2_end"
+        },
+        "b1_intro": {
+            "type": "intro",
+            "subSection": "intro",
+            "image": "images/instructor.png",
+            "prompt": "Bonjour. Nous passons maintenant à la partie B1 de l'examen. Êtes-vous prêt ?",
+            "audioId": "base_fr_mock_b1_intro",
+            "tips": [
+                "Essayez de donner des réponses détaillées et de justifier votre opinion.",
+                "Essayez d'utiliser différents temps.",
+                "Utilisez des connecteurs logiques (pour relier deux phrases)."
+            ],
+            "note": "Il y a 4 questions dans cette section. La première est une question générale sur le sujet. Ensuite, il y a une question de comparaison, une question sur le passé et une question sur le futur ou une situation hypothétique. Essayez d'utiliser les temps appropriés pour chaque question. L'ordre des questions peut bien sûr changer."
+        },
+        "b1_q1": {
+            "type": "open_question",
+            "subSection": "Question 1",
+            "image": "images/instructor.png",
+            "tips": [
+                "Normalement, c'est une question générale pour introduire le sujet."
+            ],
+            "estimatedTime": "30-60 seconds",
+            "timerSeconds": 45,
+            "recordable": true
+        },
+        "b1_q2": {
+            "type": "open_question",
+            "subSection": "Question 2",
+            "image": "images/instructor.png",
+            "tips": [
+                "Comme celle-ci, une des questions sera une comparaison."
+            ],
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 90,
+            "recordable": true
+        },
+        "b1_q3": {
+            "type": "open_question",
+            "subSection": "Question 3",
+            "image": "images/instructor.png",
+            "tips": [
+                "Comme celle-ci, une des questions portera sur le passé.",
+                "Essayez d'utiliser le passé composé ou l'imparfait."
+            ],
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 90,
+            "recordable": true
+        },
+        "b1_q4": {
+            "type": "open_question",
+            "subSection": "Question 4",
+            "image": "images/instructor.png",
+            "tips": [
+                "Comme celle-ci, une des questions portera sur le futur ou une situation hypothétique.",
+                "Essayez d'utiliser le futur ou le conditionnel."
+            ],
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 90,
+            "recordable": true,
+            "note": "Il n'y a pas de règle stricte imposant seulement 4 questions dans cette section. Si l'examinateur estime qu'il reste du temps, il peut poser des questions supplémentaires."
+        },
+        "b1_end": {
+            "type": "intro",
+            "subSection": "end",
+            "image": "images/instructor.png",
+            "prompt": "C'est la fin de l'examen oral. Merci beaucoup pour votre participation. On se retrouve pour la partie Compréhension.",
+            "audioId": "base_fr_mock_b1_end",
+            "note": "La partie Compréhension de l'examen n'est pas encore prête. Nous l'ajouterons bientôt."
         }
     },
     "de": {
@@ -127,14 +195,14 @@
         },
         "a2_1_i": {
             "type": "intro",
-            "subSection": "task 1",
+            "subSection": "Aufgabe 1",
             "image": "images/instructor.png",
             "prompt": "Sehr gut. Jetzt zeige ich Ihnen ein Bild. Bitte beschreiben Sie, was Sie auf dem Bild sehen.",
             "audioId": "base_de_mock_a2_1_i"
         },
         "a2_1_q": {
             "type": "open_question",
-            "subSection": "task 1",
+            "subSection": "Aufgabe 1",
             "prompt": "Beschreiben Sie, was Sie auf dem Bild sehen.",
             "tips": [
                 "Sie können sagen: „Auf dem Bild sehe ich…“, „Oben rechts sehe ich…“",
@@ -147,7 +215,7 @@
         },
         "a2_2_i": {
             "type": "intro",
-            "subSection": "task 2",
+            "subSection": "Aufgabe 2",
             "image": "images/instructor.png",
             "prompt": "Gut. Jetzt machen wir einen kleinen Dialog. Sie spielen eine Rolle und ich spiele die andere Person.",
             "audioId": "base_de_mock_a2_2_i"
@@ -155,7 +223,7 @@
         "a2_2_q": {
             "type": "open_question",
             "note": "Im Moment üben Sie diesen Dialog allein. Wir arbeiten noch an der Antwort des Prüfers.",
-            "subSection": "task 2",
+            "subSection": "Aufgabe 2",
             "tips": [
                 "Üben Sie: Was sagt man am Anfang und am Ende eines Anrufs? Wie kann man einen Termin vereinbaren oder absagen?",
                 "Versuchen Sie, so viel wie möglich zu sprechen."
@@ -166,14 +234,14 @@
         },
         "a2_3_i": {
             "type": "intro",
-            "subSection": "task 3",
+            "subSection": "Aufgabe 3",
             "image": "images/instructor.png",
             "prompt": "Sehr gut. Jetzt habe ich noch ein paar Fragen. Sind Sie bereit?",
             "audioId": "base_de_mock_a2_3_i"
         },
         "a2_3_qi": {
             "type": "open_question",
-            "subSection": "task 3",
+            "subSection": "Aufgabe 3",
             "image": "images/instructor.png",
             "tips": [
                 "Versuchen Sie, Vergangenheit, Gegenwart und Zukunft zu benutzen.",
@@ -191,6 +259,75 @@
             "image": "images/instructor.png",
             "prompt": "Der erste Teil der Prüfung ist abgeschlossen. Normalerweise schlage ich Ihnen ein Niveau vor, A1 oder B1. Aber auf dem nächsten Bildschirm können Sie selbst das Niveau wählen.",
             "audioId": "base_de_mock_a2_end"
+        },
+        "b1_intro": {
+            "type": "intro",
+            "subSection": "intro",
+            "image": "images/instructor.png",
+            "prompt": "Guten Tag. Wir kommen nun zum Teil B1 der Prüfung. Sind Sie bereit?",
+            "audioId": "base_de_mock_b1_intro",
+            "tips": [
+                "Versuchen Sie, detaillierte Antworten zu geben und Ihre Meinung zu begründen.",
+                "Versuchen Sie, verschiedene Zeitformen zu verwenden.",
+                "Verwenden Sie Verbindungswörter (um zwei Sätze zu verbinden)."
+            ],
+            "note": "In diesem Teil gibt es 4 Fragen. Die erste ist eine allgemeine Frage zum Thema. Danach gibt es eine Vergleichsfrage, eine Frage zur Vergangenheit und eine Frage zur Zukunft oder eine hypothetische Frage. Versuchen Sie, für jede Frage die passenden Zeitformen zu verwenden. Die Reihenfolge kann sich natürlich ändern."
+        },
+        "b1_q1": {
+            "type": "open_question",
+            "subSection": "Frage 1",
+            "image": "images/instructor.png",
+            "tips": [
+                "Dies ist eine allgemeine Frage, um das Thema einzuleiten.",
+                "Sagen Sie Ihre persönliche Meinung oder erzählen Sie eine einfache Anekdote."
+            ],
+            "estimatedTime": "30-60 Sekunden",
+            "timerSeconds": 45,
+            "recordable": true
+        },
+        "b1_q2": {
+            "type": "open_question",
+            "subSection": "Frage 2",
+            "image": "images/instructor.png",
+            "tips": [
+                "Ähnlich wie diese Frage wird eine der Fragen eine Vergleichsfrage sein."
+            ],
+            "estimatedTime": "1-2 Minuten",
+            "timerSeconds": 90,
+            "recordable": true
+        },
+        "b1_q3": {
+            "type": "open_question",
+            "subSection": "Frage 3",
+            "image": "images/instructor.png",
+            "tips": [
+                "Ähnlich wie diese Frage wird eine der Fragen sich auf die Vergangenheit beziehen.",
+                "Versuchen Sie, das Perfekt oder Präteritum zu verwenden."
+            ],
+            "estimatedTime": "1-2 Minuten",
+            "timerSeconds": 90,
+            "recordable": true
+        },
+        "b1_q4": {
+            "type": "open_question",
+            "subSection": "Frage 4",
+            "image": "images/instructor.png",
+            "tips": [
+                "Ähnlich wie diese Frage wird eine der Fragen sich auf die Zukunft oder eine hypothetische Situation beziehen.",
+                "Versuchen Sie, das Futur oder den Konjunktiv zu verwenden."
+            ],
+            "estimatedTime": "1-2 Minuten",
+            "timerSeconds": 90,
+            "recordable": true,
+            "note": "Es gibt keine strikte Regel, dass es in diesem Teil nur 4 Fragen gibt. Wenn der Prüfer der Meinung ist, dass noch Zeit übrig ist, kann er weitere Fragen stellen."
+        },
+        "b1_end": {
+            "type": "intro",
+            "subSection": "end",
+            "image": "images/instructor.png",
+            "prompt": "Das ist das Ende der mündlichen Prüfung. Vielen Dank für Ihre Teilnahme. Wir sehen uns beim Teil Verständnis.",
+            "audioId": "base_de_mock_b1_end",
+            "note": "Der Teil 'Verständnis' der Prüfung ist noch nicht fertig. Wir werden ihn bald hinzufügen."
         }
     }
 }
