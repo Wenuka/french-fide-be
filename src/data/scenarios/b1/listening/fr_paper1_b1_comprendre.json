@@ -25,7 +25,7 @@
             "id": 1,
             "recordingId": "F_014",
             "audioFile": "F_014.mp3",
-            "type": "listening_free_text",
+            "type": "listening_oral_answer",
             "question": "Question 1 sur la situation",
             "correctAnswer": null,
             "timerSeconds": 60
@@ -34,7 +34,7 @@
             "id": 2,
             "recordingId": "F_015",
             "audioFile": "F_015.mp3",
-            "type": "listening_free_text",
+            "type": "listening_oral_answer",
             "question": "Question 2 sur la situation",
             "correctAnswer": null,
             "timerSeconds": 60
@@ -43,7 +43,7 @@
             "id": 3,
             "recordingId": "F_016",
             "audioFile": "F_016.mp3",
-            "type": "listening_free_text",
+            "type": "listening_oral_answer",
             "question": "Question 3 sur la situation",
             "correctAnswer": null,
             "timerSeconds": 60
@@ -52,7 +52,7 @@
             "id": 4,
             "recordingId": "F_017",
             "audioFile": "F_017.mp3",
-            "type": "listening_free_text",
+            "type": "listening_oral_answer",
             "question": "Question 4 sur la situation",
             "correctAnswer": null,
             "timerSeconds": 60
@@ -61,7 +61,7 @@
             "id": 5,
             "recordingId": "F_018",
             "audioFile": "F_018.mp3",
-            "type": "listening_free_text",
+            "type": "listening_oral_answer",
             "question": "Question 5 sur la situation",
             "correctAnswer": null,
             "timerSeconds": 60
@@ -70,7 +70,7 @@
             "id": 6,
             "recordingId": "F_019",
             "audioFile": "F_019.mp3",
-            "type": "listening_free_text",
+            "type": "listening_oral_answer",
             "question": "Question 6 sur la situation",
             "correctAnswer": null,
             "timerSeconds": 60
