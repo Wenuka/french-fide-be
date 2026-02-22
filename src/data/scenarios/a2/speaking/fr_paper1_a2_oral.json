@@ -21,7 +21,7 @@
         {
             "id": 3,
             "template": "a2_1_q",
-            "image": "image_a2_1_task1.png",
+            "image": "image_a2_1_task1.jpg",
             "sampleAnswer": "Sur cette image, je vois une femme assise par terre à l'extérieur. Elle porte un casque de vélo, une veste et un pantalon long. À côté d'elle, il y a un vélo cassé. Elle semble avoir eu un accident ou une panne. Elle tient un téléphone portable et elle est en train d'appeler quelqu'un. Dans la bulle, on voit un homme bien habillé, peut-être un agent immobilier ou un propriétaire, qui répond au téléphone devant une maison. La femme a l'air un peu embêtée.",
             "answerAudioId": "fr_answers_a2_1_task1"
         },
@@ -32,7 +32,7 @@
         {
             "id": 5,
             "template": "a2_2_q",
-            "image": "image_a2_1_task1.png",
+            "image": "image_a2_1_task1.jpg",
             "prompt": "Vous devez jouer la situation suivante : Cette femme a rendez-vous pour visiter un appartement, mais elle a eu un problème avec son vélo. Elle doit annuler le rendez-vous. Vous appelez la gérance pour expliquer la situation. Je joue le rôle de l'agent immobilier (C1), vous jouez le rôle de la femme (C2).",
             "sampleCharacters": "C1: Agent immobilier (homme, 40 ans), C2: Femme (25 ans)",
             "audioId": "fr_mock_a2_1_task2",

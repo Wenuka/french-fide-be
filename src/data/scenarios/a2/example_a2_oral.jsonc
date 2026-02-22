@@ -34,7 +34,7 @@
         {
             "id": 3,
             "template": "a2_1_q",
-            "image": "image_a2_0_task1.png", // pattern: f"image_a2_{paperId}_task1.png"
+            "image": "image_a2_0_task1.jpg", // pattern: f"image_a2_{paperId}_task1.jpg"
             "sampleAnswer": "xxxxx", // Generate Content: Create a sample answer based on `image_description`. Start with "In this image, I see xxxx."
             "answerAudioId": "fr_answers_a2_0_task1" // pattern: f"{language}_answers_a2_{paperId}_task1"
         },
@@ -46,7 +46,7 @@
         {
             "id": 5,
             "template": "a2_2_q",
-            "image": "image_a2_0_task1.png", // pattern: f"image_a2_{paperId}_task1.png"
+            "image": "image_a2_0_task1.jpg", // pattern: f"image_a2_{paperId}_task1.jpg"
             "prompt": "xxxxx", // Generate Content: "Examiner asks the user to play the local situation: {situation}. Mention roles: 'I play agent (C1), you play user (C2)'."
             "sampleCharacters": "C1: Agent (man, 40 years old), C2: user (women 25 years old)", // Generate Content: Define C1/C2 based on situation or user input. Gender and age of each character is important.
             "audioId": "fr_mock_a2_0_task2", // pattern: f"{language}_mock_a2_{paperId}_task2"

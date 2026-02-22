@@ -3,7 +3,7 @@
         "a1_intro": {
             "type": "intro",
             "subSection": "Introduction",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Maintenant, nous allons commencer la deuxième partie de l'examen. Continuez quand vous êtes prêt.",
             "tips": [
                 "Détendez-vous et prenez votre temps. Demandez à l'examinateur de répéter si vous ne comprenez pas.",
@@ -35,7 +35,7 @@
         "a1_4_q": {
             "type": "open_question",
             "subSection": "Tâche 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "estimatedTime": "1 minute",
             "timerSeconds": 60,
             "recordable": true,
@@ -46,7 +46,7 @@
         "a1_end": {
             "type": "intro",
             "subSection": "end",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "C'est la fin de l'examen oral. Merci beaucoup pour votre participation. On se retrouve pour la partie Compréhension.",
             "audioId": "base_fr_mock_a1_end",
             "note": "La partie Compréhension de l'examen n'est pas encore prête. Nous l'ajouterons bientôt."
@@ -54,7 +54,7 @@
         "a2_0_i": {
             "type": "intro",
             "subSection": "intro",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Bonjour et bienvenue à l’examen oral FIDE. Je suis votre examinateur. Nous allons commencer par une première partie avec des questions simples. Quand vous êtes prêt, cliquez sur « Suivant ».",
             "tips": [
                 "Parlez calmement et clairement. Ce n’est pas grave si vous faites des erreurs.",
@@ -66,7 +66,7 @@
         "a2_0_q": {
             "type": "open_question",
             "subSection": "intro",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Est-ce que vous pouvez vous présenter en quelques mots ?",
             "tips": [
                 "Utilisez une réponse préparée pour vous présenter.",
@@ -82,7 +82,7 @@
         "a2_1_i": {
             "type": "intro",
             "subSection": "Tâche 1",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Très bien. Maintenant, je vais vous montrer une image. Vous devez décrire ce que vous voyez sur cette image.",
             "audioId": "base_fr_mock_a2_1_i"
         },
@@ -102,7 +102,7 @@
         "a2_2_i": {
             "type": "intro",
             "subSection": "Tâche 2",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "D’accord. Maintenant, nous allons faire un petit dialogue. Vous allez jouer un rôle et moi, je vais jouer l’autre personne.",
             "audioId": "base_fr_mock_a2_2_i"
         },
@@ -121,14 +121,14 @@
         "a2_3_i": {
             "type": "intro",
             "subSection": "Tâche 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Très bien. Maintenant, j’ai encore quelques questions pour vous. Êtes-vous prêt ?",
             "audioId": "base_fr_mock_a2_3_i"
         },
         "a2_3_qi": {
             "type": "open_question",
             "subSection": "Tâche 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Essayez d’utiliser le passé, le présent et le futur.",
                 "Donnez votre opinion si possible.",
@@ -142,14 +142,14 @@
         "a2_end": {
             "type": "intro",
             "subSection": "end",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "La première partie de l’examen est terminée. Pour la deuxième partie, normalement je vous propose un niveau, A1, ou B1. Mais sur l’écran suivant, vous pouvez choisir le niveau que vous préférez.",
             "audioId": "base_fr_mock_a2_end"
         },
         "b1_intro": {
             "type": "intro",
             "subSection": "intro",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Bonjour. Nous passons maintenant à la partie B1 de l'examen. Êtes-vous prêt ?",
             "audioId": "base_fr_mock_b1_intro",
             "tips": [
@@ -162,7 +162,7 @@
         "b1_q1": {
             "type": "open_question",
             "subSection": "Question 1",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Normalement, c'est une question générale pour introduire le sujet."
             ],
@@ -173,7 +173,7 @@
         "b1_q2": {
             "type": "open_question",
             "subSection": "Question 2",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Comme celle-ci, une des questions sera une comparaison."
             ],
@@ -184,7 +184,7 @@
         "b1_q3": {
             "type": "open_question",
             "subSection": "Question 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Comme celle-ci, une des questions portera sur le passé.",
                 "Essayez d'utiliser le passé composé ou l'imparfait."
@@ -196,7 +196,7 @@
         "b1_q4": {
             "type": "open_question",
             "subSection": "Question 4",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Comme celle-ci, une des questions portera sur le futur ou une situation hypothétique.",
                 "Essayez d'utiliser le futur ou le conditionnel."
@@ -209,7 +209,7 @@
         "b1_end": {
             "type": "intro",
             "subSection": "end",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "C'est la fin de l'examen oral. Merci beaucoup pour votre participation. On se retrouve pour la partie Compréhension.",
             "audioId": "base_fr_mock_b1_end",
             "note": "La partie Compréhension de l'examen n'est pas encore prête. Nous l'ajouterons bientôt."
@@ -219,7 +219,7 @@
         "a1_intro": {
             "type": "intro",
             "subSection": "Einleitung",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Wir beginnen nun mit dem zweiten Teil der Prüfung. Fahren Sie fort, wenn Sie bereit sind.",
             "tips": [
                 "Entspannen Sie sich und lassen Sie sich Zeit. Bitten Sie den Prüfer zu wiederholen, wenn Sie etwas nicht verstehen.",
@@ -251,7 +251,7 @@
         "a1_4_q": {
             "type": "open_question",
             "subSection": "Aufgabe 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "estimatedTime": "1 Minute",
             "timerSeconds": 60,
             "recordable": true,
@@ -262,7 +262,7 @@
         "a1_end": {
             "type": "intro",
             "subSection": "end",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Das ist das Ende der mündlichen Prüfung. Vielen Dank für Ihre Teilnahme. Wir sehen uns beim Teil Verständnis.",
             "audioId": "base_de_mock_a1_end",
             "note": "Der Teil 'Verständnis' der Prüfung ist noch nicht fertig. Wir werden ihn bald hinzufügen."
@@ -270,7 +270,7 @@
         "a2_0_i": {
             "type": "intro",
             "subSection": "intro",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Guten Tag und willkommen zur mündlichen FIDE-Prüfung. Ich bin Ihr Prüfer. Wir beginnen mit einem ersten Teil mit einfachen Fragen. Wenn Sie bereit sind, klicken Sie auf „Weiter“.",
             "tips": [
                 "Sprechen Sie ruhig und klar. Fehler sind kein Problem.",
@@ -282,7 +282,7 @@
         "a2_0_q": {
             "type": "open_question",
             "subSection": "intro",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Können Sie sich bitte kurz vorstellen?",
             "tips": [
                 "Benutzen Sie eine vorbereitete Antwort.",
@@ -298,7 +298,7 @@
         "a2_1_i": {
             "type": "intro",
             "subSection": "Aufgabe 1",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Sehr gut. Jetzt zeige ich Ihnen ein Bild. Bitte beschreiben Sie, was Sie auf dem Bild sehen.",
             "audioId": "base_de_mock_a2_1_i"
         },
@@ -318,7 +318,7 @@
         "a2_2_i": {
             "type": "intro",
             "subSection": "Aufgabe 2",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Gut. Jetzt machen wir einen kleinen Dialog. Sie spielen eine Rolle und ich spiele die andere Person.",
             "audioId": "base_de_mock_a2_2_i"
         },
@@ -337,14 +337,14 @@
         "a2_3_i": {
             "type": "intro",
             "subSection": "Aufgabe 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Sehr gut. Jetzt habe ich noch ein paar Fragen. Sind Sie bereit?",
             "audioId": "base_de_mock_a2_3_i"
         },
         "a2_3_qi": {
             "type": "open_question",
             "subSection": "Aufgabe 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Versuchen Sie, Vergangenheit, Gegenwart und Zukunft zu benutzen.",
                 "Sagen Sie Ihre Meinung, wenn es passt.",
@@ -358,14 +358,14 @@
         "a2_end": {
             "type": "intro",
             "subSection": "end",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Der erste Teil der Prüfung ist abgeschlossen. Normalerweise schlage ich Ihnen ein Niveau vor, A1 oder B1. Aber auf dem nächsten Bildschirm können Sie selbst das Niveau wählen.",
             "audioId": "base_de_mock_a2_end"
         },
         "b1_intro": {
             "type": "intro",
             "subSection": "intro",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Guten Tag. Wir kommen nun zum Teil B1 der Prüfung. Sind Sie bereit?",
             "audioId": "base_de_mock_b1_intro",
             "tips": [
@@ -378,7 +378,7 @@
         "b1_q1": {
             "type": "open_question",
             "subSection": "Frage 1",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Dies ist eine allgemeine Frage, um das Thema einzuleiten.",
                 "Sagen Sie Ihre persönliche Meinung oder erzählen Sie eine einfache Anekdote."
@@ -390,7 +390,7 @@
         "b1_q2": {
             "type": "open_question",
             "subSection": "Frage 2",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Ähnlich wie diese Frage wird eine der Fragen eine Vergleichsfrage sein."
             ],
@@ -401,7 +401,7 @@
         "b1_q3": {
             "type": "open_question",
             "subSection": "Frage 3",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Ähnlich wie diese Frage wird eine der Fragen sich auf die Vergangenheit beziehen.",
                 "Versuchen Sie, das Perfekt oder Präteritum zu verwenden."
@@ -413,7 +413,7 @@
         "b1_q4": {
             "type": "open_question",
             "subSection": "Frage 4",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "tips": [
                 "Ähnlich wie diese Frage wird eine der Fragen sich auf die Zukunft oder eine hypothetische Situation beziehen.",
                 "Versuchen Sie, das Futur oder den Konjunktiv zu verwenden."
@@ -426,7 +426,7 @@
         "b1_end": {
             "type": "intro",
             "subSection": "end",
-            "image": "images/instructor.png",
+            "image": "images/instructor.jpg",
             "prompt": "Das ist das Ende der mündlichen Prüfung. Vielen Dank für Ihre Teilnahme. Wir sehen uns beim Teil Verständnis.",
             "audioId": "base_de_mock_b1_end",
             "note": "Der Teil 'Verständnis' der Prüfung ist noch nicht fertig. Wir werden ihn bald hinzufügen."
