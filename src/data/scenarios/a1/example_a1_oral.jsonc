@@ -1,0 +1,107 @@
+// This file serves as a reference/template to generate an A1 oral mock exam JSON file.
+//
+// REQUIRED INPUTS for generation:
+// 1. language: "fr" (French) or "de" (German)
+// 2. paperId: integer (e.g., 0, 1, 2...)
+// 3. subject: string (Subject for Task 1, e.g., "at the supermarket", "in the kitchen")
+// 4. image_description: string (Description of the images for Task 1)
+// 5. image_scenarios: array of 4 strings (Description of the images for Task 1 and situation for Task 2)
+// 6. examiners_character: string (Description of the examiner's character for Task 2 dialogue)
+// 7. task3_question: string (Question for Task 3)
+// Note: All "Generated Content" should be in the language specified by the `language` field.
+// Always use easy vocabulary (A1-A2 user), do not use complex grammar.
+// Name the file as f"{language}_paper{paperId}_a1_oral.json"
+{
+    "level": "A1",
+    "language": "fr", // Input: language
+    "paperId": 0, // Input: paperId
+    "title": "xxx", // In Target language: subject (or from image_scenarios) (should be very short, e.g. "At the supermarket")
+    "estimatedTime": "4-5 minutes",
+    "items": [
+        // Intro
+        {
+            "id": 0,
+            "template": "a1_intro"
+        },
+        // Task 1: Image Description
+        {
+            "id": 1,
+            "template": "a1_1_q",
+            "images": [
+                "image_a1_0_1.jpg", // pattern: f"image_a1_{paperId}_1.jpg"
+                "image_a1_0_2.jpg", // pattern: f"image_a1_{paperId}_2.jpg"
+                "image_a1_0_3.jpg", // pattern: f"image_a1_{paperId}_3.jpg"
+                "image_a1_0_4.jpg" // pattern: f"image_a1_{paperId}_4.jpg"
+            ],
+            "prompt": "xxxxx", // Generate Content: In Target language: "Now we are going to talk about {subject}. What do you see in the images? Where are they? What is happening here?"
+            "audioId": "fr_mock_a1_0_task1", // pattern: f"{language}_mock_a1_{paperId}_task1"
+            "sampleAnswer": "xxxxx", // Generate Content: Based on `image_description`, describe only what is visible (people, clothes, objects, setting). The user may guess what's happening but should not explain the full story. ~6-7 sentences, <70 words.
+            "answerAudioId": "fr_answers_a1_0_task1" // pattern: f"{language}_answers_a1_{paperId}_task1"
+        },
+        // Task 2: Roleplay / Dialogue
+        {
+            "id": 2,
+            "template": "a1_2_i",
+            "images": [ // same images as above
+                "image_a1_0_1.jpg",
+                "image_a1_0_2.jpg",
+                "image_a1_0_3.jpg",
+                "image_a1_0_4.jpg"
+            ],
+            "prompt": "xxxxx", // Generate Content: In Target language: "Okay, this is the situation: {brief 1-2 line summary, NOT a step-by-step recap}. I will play {examiners_character} and you play the other role."
+            "audioId": "fr_mock_a1_0_task2_intro" // pattern: f"{language}_mock_a1_{paperId}_task2_intro"
+        },
+        {
+            "id": 3,
+            "template": "a1_3_d",
+            "steps": [
+                {
+                    "step": 1,
+                    "image": "image_a1_0_1.jpg", // pattern: f"image_a1_{paperId}_1.jpg"
+                    "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 1, based on image_scenarios[0] and examiners_character.
+                    "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 1. Simple sentence.
+                    "audioId": "fr_mock_a1_0_task2_1", // pattern: f"{language}_mock_a1_{paperId}_task2_1"
+                    "answerAudioId": "fr_answers_a1_0_task2_1" // pattern: f"{language}_answers_a1_{paperId}_task2_1"
+                },
+                {
+                    "step": 2,
+                    "image": "image_a1_0_2.jpg", // pattern: f"image_a1_{paperId}_2.jpg"
+                    "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 2, based on image_scenarios[1] and examiners_character.
+                    "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 2. Simple sentence.
+                    "audioId": "fr_mock_a1_0_task2_2", // pattern: f"{language}_mock_a1_{paperId}_task2_2"
+                    "answerAudioId": "fr_answers_a1_0_task2_2" // pattern: f"{language}_answers_a1_{paperId}_task2_2"
+                },
+                {
+                    "step": 3,
+                    "image": "image_a1_0_3.jpg", // pattern: f"image_a1_{paperId}_3.jpg"
+                    "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 3, based on image_scenarios[2] and examiners_character.
+                    "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 3. Simple sentence.
+                    "audioId": "fr_mock_a1_0_task2_3", // pattern: f"{language}_mock_a1_{paperId}_task2_3"
+                    "answerAudioId": "fr_answers_a1_0_task2_3" // pattern: f"{language}_answers_a1_{paperId}_task2_3"
+                },
+                {
+                    "step": 4,
+                    "image": "image_a1_0_4.jpg", // pattern: f"image_a1_{paperId}_4.jpg"
+                    "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 4, based on image_scenarios[3] and examiners_character.
+                    "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 4. Simple sentence.
+                    "audioId": "fr_mock_a1_0_task2_4", // pattern: f"{language}_mock_a1_{paperId}_task2_4"
+                    "answerAudioId": "fr_answers_a1_0_task2_4" // pattern: f"{language}_answers_a1_{paperId}_task2_4"
+                }
+            ]
+        },
+        // Task 3: Open Question
+        {
+            "id": 4,
+            "template": "a1_4_q",
+            "prompt": "xxxx", // Generate Content: In Target language: `task3_question`
+            "sampleAnswer": "xxxx", // Generate Content: In Target language: sample answer for `task3_question`. Use simple day-to-day vocabulary. // ~4-5 sentences. < 70 words
+            "audioId": "fr_mock_a1_0_task3", // pattern: f"{language}_mock_a1_{paperId}_task3"
+            "answerAudioId": "fr_answers_a1_0_task3" // pattern: f"{language}_answers_a1_{paperId}_task3"
+        },
+        // End
+        {
+            "id": 5,
+            "template": "a1_end"
+        }
+    ]
+}

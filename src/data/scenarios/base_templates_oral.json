@@ -1,5 +1,56 @@
 {
     "fr": {
+        "a1_intro": {
+            "type": "intro",
+            "subSection": "Introduction",
+            "image": "images/instructor.png",
+            "prompt": "Maintenant, nous allons commencer la deuxième partie de l'examen. Continuez quand vous êtes prêt.",
+            "tips": [
+                "Détendez-vous et prenez votre temps. Demandez à l'examinateur de répéter si vous ne comprenez pas.",
+                "Dans cette section, on testera votre vocabulaire de base et votre grammaire."
+            ],
+            "audioId": "base_fr_mock_a1_intro"
+        },
+        "a1_1_q": {
+            "type": "open_question",
+            "subSection": "Tâche 1",
+            "estimatedTime": "1-2 minutes",
+            "timerSeconds": 90
+        },
+        "a1_2_i": {
+            "type": "intro",
+            "subSection": "Tâche 2"
+        },
+        "a1_3_d": {
+            "type": "dialog_steps",
+            "subSection": "Tâche 2",
+            "estimatedTime": "2-3 minute",
+            "timerSeconds": 120,
+            "tips": [
+                "Répondez à la réponse de l'examinateur.",
+                "Utilisez des phrases simples. Vous pouvez utiliser des expressions de tous les jours."
+            ],
+            "note": "Répondez à la réponse de l'examinateur."
+        },
+        "a1_4_q": {
+            "type": "open_question",
+            "subSection": "Tâche 3",
+            "image": "images/instructor.png",
+            "estimatedTime": "1 minute",
+            "timerSeconds": 60,
+            "recordable": true,
+            "tips": [
+                "Normalement, l'idée ici est de tester votre vocabulaire."
+            ]
+        },
+        "a1_end": {
+            "type": "intro",
+            "subSection": "end",
+            "image": "images/instructor.png",
+            "prompt": "C'est la fin de l'examen oral. Merci beaucoup pour votre participation. On se retrouve pour la partie Compréhension.",
+            "audioId": "base_fr_mock_a1_end",
+            "note": "La partie Compréhension de l'examen n'est pas encore prête. Nous l'ajouterons bientôt."
+        },
         "a2_0_i": {
             "type": "intro",
             "subSection": "intro",
@@ -165,6 +216,57 @@
         }
     },
     "de": {
+        "a1_intro": {
+            "type": "intro",
+            "subSection": "Einleitung",
+            "image": "images/instructor.png",
+            "prompt": "Wir beginnen nun mit dem zweiten Teil der Prüfung. Fahren Sie fort, wenn Sie bereit sind.",
+            "tips": [
+                "Entspannen Sie sich und lassen Sie sich Zeit. Bitten Sie den Prüfer zu wiederholen, wenn Sie etwas nicht verstehen.",
+                "In diesem Abschnitt werden Ihr Grundwortschatz und Ihre Grammatik getestet."
+            ],
+            "audioId": "base_de_mock_a1_intro"
+        },
+        "a1_1_q": {
+            "type": "open_question",
+            "subSection": "Aufgabe 1",
+            "estimatedTime": "1-2 Minuten",
+            "timerSeconds": 90
+        },
+        "a1_2_i": {
+            "type": "intro",
+            "subSection": "Aufgabe 2"
+        },
+        "a1_3_d": {
+            "type": "dialog_steps",
+            "subSection": "Aufgabe 2",
+            "estimatedTime": "2-3 Minuten",
+            "timerSeconds": 120,
+            "tips": [
+                "Antworten Sie auf die Reaktion des Prüfers.",
+                "Verwenden Sie einfache Sätze. Sie können alltägliche Ausdrücke verwenden."
+            ],
+            "note": "Antworten Sie auf die Reaktion des Prüfers."
+        },
+        "a1_4_q": {
+            "type": "open_question",
+            "subSection": "Aufgabe 3",
+            "image": "images/instructor.png",
+            "estimatedTime": "1 Minute",
+            "timerSeconds": 60,
+            "recordable": true,
+            "tips": [
+                "Normalerweise geht es hier darum, Ihren Wortschatz zu testen."
+            ]
+        },
+        "a1_end": {
+            "type": "intro",
+            "subSection": "end",
+            "image": "images/instructor.png",
+            "prompt": "Das ist das Ende der mündlichen Prüfung. Vielen Dank für Ihre Teilnahme. Wir sehen uns beim Teil Verständnis.",
+            "audioId": "base_de_mock_a1_end",
+            "note": "Der Teil 'Verständnis' der Prüfung ist noch nicht fertig. Wir werden ihn bald hinzufügen."
+        },
         "a2_0_i": {
             "type": "intro",
             "subSection": "intro",

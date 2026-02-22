@@ -1,0 +1,89 @@
+{
+    "level": "A1",
+    "language": "fr",
+    "paperId": 1,
+    "title": "Au supermarché",
+    "estimatedTime": "4-5 minutes",
+    "items": [
+        {
+            "id": 0,
+            "template": "a1_intro"
+        },
+        {
+            "id": 1,
+            "template": "a1_1_q",
+            "images": [
+                "image_a1_1_1.jpg",
+                "image_a1_1_2.jpg",
+                "image_a1_1_3.jpg",
+                "image_a1_1_4.jpg"
+            ],
+            "prompt": "Maintenant, nous allons parler du supermarché. Que voyez-vous sur les images ? Où sont les personnes ? Qu'est-ce qui se passe ?",
+            "audioId": "fr_mock_a1_1_task1",
+            "sampleAnswer": "Je vois une femme derrière la caisse d'un supermarché. Elle a les cheveux courts et elle porte une chemise. Elle sourit. Devant elle, il y a un homme en t-shirt. Il tient une bouteille de vin à la main. Je pense qu'il veut acheter cette bouteille. Il paye avec de l'argent.",
+            "answerAudioId": "fr_answers_a1_1_task1"
+        },
+        {
+            "id": 2,
+            "template": "a1_2_i",
+            "images": [
+                "image_a1_1_1.jpg",
+                "image_a1_1_2.jpg",
+                "image_a1_1_3.jpg",
+                "image_a1_1_4.jpg"
+            ],
+            "prompt": "Voilà la situation : Un client achète une bouteille de vin au supermarché. Je joue le rôle de la caissière et vous jouez le rôle du client.",
+            "audioId": "fr_mock_a1_1_task2_intro"
+        },
+        {
+            "id": 3,
+            "template": "a1_3_d",
+            "steps": [
+                {
+                    "step": 1,
+                    "image": "image_a1_1_1.jpg",
+                    "prompt": "Bonjour Monsieur, bienvenue ! Qu'est-ce que je peux faire pour vous ?",
+                    "sampleAnswer": "Bonjour Madame. Je voudrais acheter cette bouteille de vin, s'il vous plaît.",
+                    "audioId": "fr_mock_a1_1_task2_1",
+                    "answerAudioId": "fr_answers_a1_1_task2_1"
+                },
+                {
+                    "step": 2,
+                    "image": "image_a1_1_2.jpg",
+                    "prompt": "Bien sûr. Est-ce que je peux voir votre carte d'identité, s'il vous plaît ?",
+                    "sampleAnswer": "Oui, bien sûr. Voici ma carte d'identité.",
+                    "audioId": "fr_mock_a1_1_task2_2",
+                    "answerAudioId": "fr_answers_a1_1_task2_2"
+                },
+                {
+                    "step": 3,
+                    "image": "image_a1_1_3.jpg",
+                    "prompt": "Merci. C'est bon. Ça fait huit francs cinquante. Comment voulez-vous payer ?",
+                    "sampleAnswer": "Je paye en espèces. Voici un billet de dix francs.",
+                    "audioId": "fr_mock_a1_1_task2_3",
+                    "answerAudioId": "fr_answers_a1_1_task2_3"
+                },
+                {
+                    "step": 4,
+                    "image": "image_a1_1_4.jpg",
+                    "prompt": "Voici votre monnaie et votre ticket de caisse. Merci et bonne journée !",
+                    "sampleAnswer": "Merci beaucoup, Madame. Au revoir et bonne journée !",
+                    "audioId": "fr_mock_a1_1_task2_4",
+                    "answerAudioId": "fr_answers_a1_1_task2_4"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "template": "a1_4_q",
+            "prompt": "Est-ce que vous allez souvent au supermarché ? Quelles sont les choses qu'on peut voir près de la caisse du supermarché ?",
+            "sampleAnswer": "Oui, je vais au supermarché deux fois par semaine. Près de la caisse, on peut voir des sacs en plastique, des chewing-gums, des petits bonbons, des chocolats et des journaux. On peut aussi voir le tapis roulant pour poser les articles et l'écran qui montre les prix.",
+            "audioId": "fr_mock_a1_1_task3",
+            "answerAudioId": "fr_answers_a1_1_task3"
+        },
+        {
+            "id": 5,
+            "template": "a1_end"
+        }
+    ]
+}

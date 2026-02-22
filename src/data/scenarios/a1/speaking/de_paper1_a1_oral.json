@@ -1,0 +1,89 @@
+{
+    "level": "A1",
+    "language": "de",
+    "paperId": 1,
+    "title": "Im Supermarkt",
+    "estimatedTime": "4-5 minutes",
+    "items": [
+        {
+            "id": 0,
+            "template": "a1_intro"
+        },
+        {
+            "id": 1,
+            "template": "a1_1_q",
+            "images": [
+                "image_a1_1_1.jpg",
+                "image_a1_1_2.jpg",
+                "image_a1_1_3.jpg",
+                "image_a1_1_4.jpg"
+            ],
+            "prompt": "Jetzt sprechen wir über den Supermarkt. Was sehen Sie auf den Bildern? Wo sind die Personen? Was passiert hier?",
+            "audioId": "de_mock_a1_1_task1",
+            "sampleAnswer": "Ich sehe eine Frau hinter der Kasse in einem Supermarkt. Sie hat kurze Haare und trägt ein Hemd. Sie lächelt. Vor ihr steht ein Mann im T-Shirt. Er hat eine Flasche Wein in der Hand. Ich denke, er möchte die Flasche kaufen. Er bezahlt mit Bargeld.",
+            "answerAudioId": "de_answers_a1_1_task1"
+        },
+        {
+            "id": 2,
+            "template": "a1_2_i",
+            "images": [
+                "image_a1_1_1.jpg",
+                "image_a1_1_2.jpg",
+                "image_a1_1_3.jpg",
+                "image_a1_1_4.jpg"
+            ],
+            "prompt": "Das ist die Situation: Ein Kunde kauft eine Flasche Wein im Supermarkt. Ich spiele die Kassiererin und Sie spielen den Kunden.",
+            "audioId": "de_mock_a1_1_task2_intro"
+        },
+        {
+            "id": 3,
+            "template": "a1_3_d",
+            "steps": [
+                {
+                    "step": 1,
+                    "image": "image_a1_1_1.jpg",
+                    "prompt": "Guten Tag! Willkommen! Was kann ich für Sie tun?",
+                    "sampleAnswer": "Guten Tag. Ich möchte diese Flasche Wein kaufen, bitte.",
+                    "audioId": "de_mock_a1_1_task2_1",
+                    "answerAudioId": "de_answers_a1_1_task2_1"
+                },
+                {
+                    "step": 2,
+                    "image": "image_a1_1_2.jpg",
+                    "prompt": "Natürlich. Kann ich bitte Ihren Ausweis sehen?",
+                    "sampleAnswer": "Ja, natürlich. Hier ist mein Ausweis.",
+                    "audioId": "de_mock_a1_1_task2_2",
+                    "answerAudioId": "de_answers_a1_1_task2_2"
+                },
+                {
+                    "step": 3,
+                    "image": "image_a1_1_3.jpg",
+                    "prompt": "Danke. Alles in Ordnung. Das macht acht Franken fünfzig. Wie möchten Sie bezahlen?",
+                    "sampleAnswer": "Ich bezahle bar. Hier ist ein Zehn-Franken-Schein.",
+                    "audioId": "de_mock_a1_1_task2_3",
+                    "answerAudioId": "de_answers_a1_1_task2_3"
+                },
+                {
+                    "step": 4,
+                    "image": "image_a1_1_4.jpg",
+                    "prompt": "Hier ist Ihr Wechselgeld und Ihr Kassenbon. Danke und schönen Tag noch!",
+                    "sampleAnswer": "Vielen Dank. Auf Wiedersehen und schönen Tag noch!",
+                    "audioId": "de_mock_a1_1_task2_4",
+                    "answerAudioId": "de_answers_a1_1_task2_4"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "template": "a1_4_q",
+            "prompt": "Gehen Sie oft in den Supermarkt? Was kann man bei der Kasse im Supermarkt sehen?",
+            "sampleAnswer": "Ja, ich gehe zweimal pro Woche in den Supermarkt. Bei der Kasse kann man Plastiktüten, Kaugummis, kleine Bonbons, Schokolade und Zeitungen sehen. Man kann auch das Laufband für die Artikel und den Bildschirm mit den Preisen sehen.",
+            "audioId": "de_mock_a1_1_task3",
+            "answerAudioId": "de_answers_a1_1_task3"
+        },
+        {
+            "id": 5,
+            "template": "a1_end"
+        }
+    ]
+}
