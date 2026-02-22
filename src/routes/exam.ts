@@ -235,18 +235,16 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
         // Assemble full section items (speaking only)
         const sections: any[] = [];
 
-        // --- A2 Speaking ---
-        if (exam.speaking_a2) {
-            const oralContent = loadSectionContent("A2", "Speaking", exam.speaking_a2.json_id);
-            sections.push({
-                level: "A2",
-                type: "Speaking",
-                items: oralContent ? oralContent.items : []
-            });
-        }
-
         // --- A1 or B1 Speaking ---
         if (exam.selected_path === "B1") {
+            if (exam.speaking_a2) {
+                const oralContent = loadSectionContent("A2", "Speaking", exam.speaking_a2.json_id);
+                sections.push({
+                    level: "A2",
+                    type: "Speaking",
+                    items: oralContent ? oralContent.items : []
+                });
+            }
             if (exam.speaking_b1) {
                 const oralContent = loadSectionContent("B1", "Speaking", exam.speaking_b1.json_id);
                 sections.push({
@@ -260,6 +258,24 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
                 const oralContent = loadSectionContent("A1", "Speaking", exam.speaking_a1.json_id);
                 sections.push({
                     level: "A1",
+                    type: "Speaking",
+                    items: oralContent ? oralContent.items : []
+                });
+            }
+            if (exam.speaking_a2) {
+                const oralContent = loadSectionContent("A2", "Speaking", exam.speaking_a2.json_id);
+                sections.push({
+                    level: "A2",
+                    type: "Speaking",
+                    items: oralContent ? oralContent.items : []
+                });
+            }
+        } else {
+            // No path selected yet (e.g. only A2 done so far in normal start)
+            if (exam.speaking_a2) {
+                const oralContent = loadSectionContent("A2", "Speaking", exam.speaking_a2.json_id);
+                sections.push({
+                    level: "A2",
                     type: "Speaking",
                     items: oralContent ? oralContent.items : []
                 });
@@ -328,11 +344,33 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 console.log(`Resuming exam ${existingExam.id} for user ${userId}`);
 
                 const sections: any[] = [];
-                if (existingExam.speaking_a2) {
-                    sections.push({
-                        type: "Speaking",
-                        section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
-                    });
+
+                if (existingExam.selected_path === "A1") {
+                    if (existingExam.speaking_a1) {
+                        sections.push({
+                            type: "Speaking",
+                            section: loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id) || {}
+                        });
+                    }
+                    if (existingExam.speaking_a2) {
+                        sections.push({
+                            type: "Speaking",
+                            section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
+                        });
+                    }
+                } else {
+                    if (existingExam.speaking_a2) {
+                        sections.push({
+                            type: "Speaking",
+                            section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
+                        });
+                    }
+                    if (existingExam.selected_path === "B1" && existingExam.speaking_b1) {
+                        sections.push({
+                            type: "Speaking",
+                            section: loadSectionContent("B1", "Speaking", existingExam.speaking_b1.json_id) || {}
+                        });
+                    }
                 }
 
                 const allAnswers = [
@@ -382,6 +420,131 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// POST /api/exam/mock/start/listening
+// Starts a listening exam. Accepts optional `path` ('A1'|'B1') and `speakingExamId`.
+// When path is known upfront (either passed directly or inferred from a prior speaking exam),
+// both A2 and A1/B1 sections are loaded at once. Otherwise only A2 is returned.
+router.post("/mock/start/listening", requireAuth, async (req: Request, res: Response) => {
+    try {
+        const userId = await getUserId(req);
+        if (!userId) return res.status(401).json({ error: "User not found" });
+
+        const { forceNew, path: rawPath, speakingExamId: speakingExamIdStr } = req.body;
+        const speakingExamId = speakingExamIdStr ? parseInt(speakingExamIdStr) : undefined;
+
+        // Resolve path: from body param OR from a prior speaking exam's selected_path
+        let resolvedPath: 'A1' | 'B1' | null = rawPath
+            ? (rawPath.toUpperCase() as 'A1' | 'B1')
+            : null;
+
+        if (!resolvedPath && speakingExamId) {
+            const speakingExam = await prisma.mockExam.findUnique({
+                where: { id: speakingExamId },
+                select: { selected_path: true }
+            });
+            if (speakingExam?.selected_path) {
+                resolvedPath = speakingExam.selected_path as 'A1' | 'B1';
+            }
+        }
+
+        console.log(`[LISTEN_START] User ${userId} listening start. path: ${resolvedPath}, speakingExamId: ${speakingExamId}, forceNew: ${forceNew}`);
+
+        // Pick least-used sections
+        const [a2Id] = await getLeastUsedSections(userId, 'A2', 'Listening', 1);
+
+        let a1Id: number | undefined;
+        let b1Id: number | undefined;
+        if (resolvedPath === 'A1') {
+            [a1Id] = await getLeastUsedSections(userId, 'A1', 'Listening', 1);
+        } else if (resolvedPath === 'B1') {
+            [b1Id] = await getLeastUsedSections(userId, 'B1', 'Listening', 1);
+        }
+
+        // Create new listening exam (linked sections)
+        const examData: any = { user_id: userId, listening_a2_id: a2Id, status: 'IN_PROGRESS' };
+        if (a1Id) { examData.listening_a1_id = a1Id; examData.selected_path = 'A1'; }
+        if (b1Id) { examData.listening_b1_id = b1Id; examData.selected_path = 'B1'; }
+
+        const exam = await prisma.mockExam.create({
+            data: examData,
+            include: { listening_a2: true, listening_a1: true, listening_b1: true }
+        });
+
+        // Build ordered sections array
+        const sections: any[] = [];
+        const a2Content = loadSectionContent('A2', 'Listening', exam.listening_a2!.json_id);
+
+        if (resolvedPath === 'A1') {
+            if (a1Id && exam.listening_a1) {
+                const a1Content = loadSectionContent('A1', 'Listening', exam.listening_a1.json_id);
+                sections.push({ level: 'A1', type: 'Listening', section: a1Content || {} });
+            }
+            sections.push({ level: 'A2', type: 'Listening', section: a2Content || {} });
+        } else {
+            sections.push({ level: 'A2', type: 'Listening', section: a2Content || {} });
+            if (resolvedPath === 'B1' && b1Id && exam.listening_b1) {
+                const b1Content = loadSectionContent('B1', 'Listening', exam.listening_b1.json_id);
+                sections.push({ level: 'B1', type: 'Listening', section: b1Content || {} });
+            }
+        }
+
+        res.json({ examId: exam.id, sections, selectedPath: resolvedPath });
+
+    } catch (err: any) {
+        console.error("Failed to start listening exam:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+
+// POST /api/exam/mock/:examId/listening/decision
+// After A2 listening, load the A1 or B1 listening section based on selected_path
+router.post("/mock/:examId/listening/decision", requireAuth, async (req: Request, res: Response) => {
+    try {
+        const userId = await getUserId(req);
+        if (!userId) return res.status(401).json({ error: "User not found" });
+
+        const examId = parseInt(req.params.examId);
+        if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
+
+        const { choice } = req.body; // 'A1' or 'B1'
+        if (!choice || !['A1', 'B1'].includes(choice)) {
+            return res.status(400).json({ error: "Choice must be 'A1' or 'B1'" });
+        }
+
+        console.log(`[LISTEN_DECISION] User ${userId} chose ${choice} listening for exam ${examId}`);
+
+        const [sectionId] = await getLeastUsedSections(userId, choice as 'A1' | 'B1', 'Listening', 1);
+
+        const updateData: any = { selected_path: choice };
+        if (choice === 'A1') updateData.listening_a1_id = sectionId;
+        else updateData.listening_b1_id = sectionId;
+
+        await prisma.mockExam.update({ where: { id: examId }, data: updateData });
+
+        let sectionRecord: any;
+        if (choice === 'A1') {
+            sectionRecord = await prisma.a1SectionListening.findUnique({ where: { id: sectionId } });
+        } else {
+            sectionRecord = await prisma.b1SectionListening.findUnique({ where: { id: sectionId } });
+        }
+
+        const content = loadSectionContent(choice, "Listening", sectionRecord!.json_id);
+
+        return res.json({
+            examId,
+            sections: [{ level: choice, type: "Listening", section: content || {} }]
+        });
+
+    } catch (err: any) {
+        console.error("Failed to process listening decision", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 
 // POST /api/exam/mock/:examId/answer
 // Submit multiple answers for a section

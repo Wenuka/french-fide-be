@@ -1,0 +1,83 @@
+{
+    "level": "B1",
+    "language": "fr",
+    "paperId": 1,
+    "sectionName": "fr_paper1_b1_listening",
+    "title": "Compréhension orale - B1",
+    "estimatedTime": "10-15 minutes",
+    "audioBasePath": "/audio/fr/listening/",
+    "imageBasePath": "/images/listening/",
+    "intro": {
+        "type": "intro",
+        "prompt": "Vous allez écouter 6 courts enregistrements. Après chaque enregistrement, choisissez la bonne image (A, B ou C). Vous pouvez écouter deux fois."
+    },
+    "questions": [
+        {
+            "id": "intro_situation",
+            "recordingId": "F_013",
+            "audioFile": "F_013.mp3",
+            "type": "listening_situation",
+            "image": "instructor.png",
+            "prompt": "Écoutez la situation globale avant de répondre aux questions.",
+            "timerSeconds": 60
+        },
+        {
+            "id": 1,
+            "recordingId": "F_014",
+            "audioFile": "F_014.mp3",
+            "type": "listening_free_text",
+            "question": "Question 1 sur la situation",
+            "correctAnswer": null,
+            "timerSeconds": 60
+        },
+        {
+            "id": 2,
+            "recordingId": "F_015",
+            "audioFile": "F_015.mp3",
+            "type": "listening_free_text",
+            "question": "Question 2 sur la situation",
+            "correctAnswer": null,
+            "timerSeconds": 60
+        },
+        {
+            "id": 3,
+            "recordingId": "F_016",
+            "audioFile": "F_016.mp3",
+            "type": "listening_free_text",
+            "question": "Question 3 sur la situation",
+            "correctAnswer": null,
+            "timerSeconds": 60
+        },
+        {
+            "id": 4,
+            "recordingId": "F_017",
+            "audioFile": "F_017.mp3",
+            "type": "listening_free_text",
+            "question": "Question 4 sur la situation",
+            "correctAnswer": null,
+            "timerSeconds": 60
+        },
+        {
+            "id": 5,
+            "recordingId": "F_018",
+            "audioFile": "F_018.mp3",
+            "type": "listening_free_text",
+            "question": "Question 5 sur la situation",
+            "correctAnswer": null,
+            "timerSeconds": 60
+        },
+        {
+            "id": 6,
+            "recordingId": "F_019",
+            "audioFile": "F_019.mp3",
+            "type": "listening_free_text",
+            "question": "Question 6 sur la situation",
+            "correctAnswer": null,
+            "timerSeconds": 60
+        }
+    ],
+    "end": {
+        "type": "end",
+        "prompt": "La partie Compréhension orale B1 est terminée. Bravo !"
+    }
+}

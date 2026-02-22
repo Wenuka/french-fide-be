@@ -1,0 +1,157 @@
+{
+    "level": "A1",
+    "language": "fr",
+    "paperId": 1,
+    "sectionName": "fr_paper1_a1_listening",
+    "title": "Compréhension orale - A1",
+    "estimatedTime": "10-15 minutes",
+    "audioBasePath": "/audio/fr/listening/",
+    "imageBasePath": "/images/listening/",
+    "intro": {
+        "type": "intro",
+        "prompt": "Vous allez écouter 6 courts enregistrements. Après chaque enregistrement, choisissez la bonne image (A, B ou C)."
+    },
+    "questions": [
+        {
+            "id": "intro_situation",
+            "recordingId": "F_001",
+            "audioFile": "F_001.mp3",
+            "type": "listening_situation",
+            "image": "instructor.png",
+            "prompt": "Écoutez la situation globale avant de répondre aux questions.",
+            "timerSeconds": 60
+        },
+        {
+            "id": 1,
+            "recordingId": "F_002",
+            "audioFile": "F_002.mp3",
+            "question": "Quelle image correspond ?",
+            "choices": [
+                {
+                    "id": "A",
+                    "image": "/images/listening/F_002_a.png"
+                },
+                {
+                    "id": "B",
+                    "image": "/images/listening/F_002_b.png"
+                },
+                {
+                    "id": "C",
+                    "image": "/images/listening/F_002_c.png"
+                }
+            ],
+            "correctAnswer": "A",
+            "timerSeconds": 40
+        },
+        {
+            "id": 2,
+            "recordingId": "F_003",
+            "audioFile": "F_003.mp3",
+            "question": "Quelle image correspond ?",
+            "choices": [
+                {
+                    "id": "A",
+                    "image": "/images/listening/F_003_a.png"
+                },
+                {
+                    "id": "B",
+                    "image": "/images/listening/F_003_b.png"
+                },
+                {
+                    "id": "C",
+                    "image": "/images/listening/F_003_c.png"
+                }
+            ],
+            "correctAnswer": "A",
+            "timerSeconds": 40
+        },
+        {
+            "id": 3,
+            "recordingId": "F_004",
+            "audioFile": "F_004.mp3",
+            "question": "Quelle image correspond ?",
+            "choices": [
+                {
+                    "id": "A",
+                    "image": "/images/listening/F_004_a.png"
+                },
+                {
+                    "id": "B",
+                    "image": "/images/listening/F_004_b.png"
+                },
+                {
+                    "id": "C",
+                    "image": "/images/listening/F_004_c.png"
+                }
+            ],
+            "correctAnswer": "A",
+            "timerSeconds": 40
+        },
+        {
+            "id": 4,
+            "recordingId": "F_005",
+            "audioFile": "F_005.mp3",
+            "question": "Quelle image correspond ?",
+            "choices": [
+                {
+                    "id": "A",
+                    "image": "/images/listening/F_005_a.png"
+                },
+                {
+                    "id": "B",
+                    "image": "/images/listening/F_005_b.png"
+                },
+                {
+                    "id": "C",
+                    "image": "/images/listening/F_005_c.png"
+                }
+            ],
+            "correctAnswer": "A",
+            "timerSeconds": 40
+        },
+        {
+            "id": 5,
+            "recordingId": "F_006",
+            "audioFile": "F_006.mp3",
+            "question": "Quelle image correspond ?",
+            "choices": [
+                {
+                    "id": "A",
+                    "image": "/images/listening/F_006_a.png"
+                },
+                {
+                    "id": "B",
+                    "image": "/images/listening/F_006_b.png"
+                },
+                {
+                    "id": "C",
+                    "image": "/images/listening/F_006_c.png"
+                }
+            ],
+            "correctAnswer": "A",
+            "timerSeconds": 40
+        },
+        {
+            "id": 6,
+            "recordingId": "F_007",
+            "audioFile": "F_007.mp3",
+            "question": "Quelle image correspond ?",
+            "choices": [
+                {
+                    "id": "A",
+                    "image": "/images/listening/F_007_a.png"
+                },
+                {
+                    "id": "B",
+                    "image": "/images/listening/F_007_b.png"
+                },
+                {
+                    "id": "C",
+                    "image": "/images/listening/F_007_c.png"
+                }
+            ],
+            "correctAnswer": "A",
+            "timerSeconds": 40
+        }
+    ]
+}
