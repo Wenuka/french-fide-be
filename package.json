@@ -7,6 +7,7 @@
     "test": "jest",
     "build": "prisma migrate deploy && prisma generate && tsc -p tsconfig.json",
     "start": "node dist/index.js",
+    "prisma:generate": "prisma generate",
     "prisma:dev": "prisma migrate dev && prisma generate",
     "prisma:deploy": "prisma migrate deploy && prisma generate",
     "backfill:favourites": "ts-node src/scripts/backfillFavouriteLists.ts",
@@ -20,10 +21,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "form-data": "^4.0.5",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0",
-    "multer": "^2.0.2",
     "mailgun.js": "^12.7.0",
+    "multer": "^2.0.2",
     "zod": "^4.3.6"
   },
   "devDependencies": {

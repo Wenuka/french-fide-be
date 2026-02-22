@@ -17,15 +17,18 @@ jest.mock('../src/lib/prisma', () => ({
             findMany: jest.fn(),
             deleteMany: jest.fn(), // We will inspect this
         },
-        mockExamAnswerA1: { deleteMany: jest.fn() },
-        mockExamAnswerA2: { deleteMany: jest.fn() },
-        mockExamAnswerB1: { deleteMany: jest.fn() },
-        scenarioA1: { findMany: jest.fn() },
-        scenarioA2: { findMany: jest.fn() },
-        scenarioB1: { findMany: jest.fn() },
-        mockExamSectionA1: { create: jest.fn() },
-        mockExamSectionA2: { create: jest.fn() },
-        mockExamSectionB1: { create: jest.fn() },
+        a1SectionSpeakingAnswer: { deleteMany: jest.fn() },
+        a1SectionListeningAnswer: { deleteMany: jest.fn() },
+        a2SectionSpeakingAnswer: { deleteMany: jest.fn() },
+        a2SectionListeningAnswer: { deleteMany: jest.fn() },
+        b1SectionSpeakingAnswer: { deleteMany: jest.fn() },
+        b1SectionListeningAnswer: { deleteMany: jest.fn() },
+        a1SectionSpeaking: { findMany: jest.fn() },
+        a1SectionListening: { findMany: jest.fn() },
+        a2SectionSpeaking: { findMany: jest.fn() },
+        a2SectionListening: { findMany: jest.fn() },
+        b1SectionSpeaking: { findMany: jest.fn() },
+        b1SectionListening: { findMany: jest.fn() },
         $transaction: jest.fn(),
     },
 }));
@@ -70,25 +73,26 @@ describe('Exam API - Fix Verification', () => {
 
             // Setup: No IN_PROGRESS exam exists (so it creates a new one)
             mockPrisma.mockExam.findFirst.mockResolvedValue(null);
+            mockPrisma.mockExam.findMany.mockResolvedValue([]);
 
             // Setup Scenarios (needed for creation flow)
-            mockPrisma.scenarioA1.findMany.mockResolvedValue([{ id: 'a1_1', title: 'A1', contentJson: '{}' }]);
-            mockPrisma.scenarioA2.findMany.mockResolvedValue([{ id: 'a2_1', title: 'A2', contentJson: '{}' }]);
-            mockPrisma.scenarioB1.findMany.mockResolvedValue([
-                { id: 'b1_1', title: 'B1 1', contentJson: '{}' },
-                { id: 'b1_2', title: 'B1 2', contentJson: '{}' }
+            mockPrisma.a1SectionSpeaking.findMany.mockResolvedValue([{ id: 1, json_id: 'a1_1', title: 'A1' }]);
+            mockPrisma.a1SectionListening.findMany.mockResolvedValue([{ id: 1, json_id: 'a1_L_1', title: 'A1L' }]);
+            mockPrisma.a2SectionSpeaking.findMany.mockResolvedValue([{ id: 2, json_id: 'a2_1', title: 'A2' }]);
+            mockPrisma.a2SectionListening.findMany.mockResolvedValue([{ id: 2, json_id: 'a2_L_1', title: 'A2L' }]);
+            mockPrisma.b1SectionSpeaking.findMany.mockResolvedValue([
+                { id: 3, json_id: 'b1_1', title: 'B1 1' },
+                { id: 4, json_id: 'b1_2', title: 'B1 2' }
             ]);
-
-            // Setup Sections creation
-            mockPrisma.mockExamSectionA1.create.mockResolvedValue({ id: 'sec_a1' });
-            mockPrisma.mockExamSectionA2.create.mockResolvedValue({ id: 'sec_a2' });
-            mockPrisma.mockExamSectionB1.create.mockResolvedValue({ id: 'sec_b1' });
+            mockPrisma.b1SectionListening.findMany.mockResolvedValue([{ id: 3, json_id: 'b1_L_1', title: 'B1L' }]);
 
             // Setup Exam creation
             mockPrisma.mockExam.create.mockResolvedValue({
                 id: 'new_exam_id',
                 user_id: 123,
-                status: 'IN_PROGRESS'
+                status: 'IN_PROGRESS',
+                speaking_a2: { json_id: 'a2_1' },
+                listening_a2: { json_id: 'a2_L_1' }
             });
 
             // EXECUTE
@@ -100,9 +104,9 @@ describe('Exam API - Fix Verification', () => {
 
             // CRITICAL CHECK: deleteMany should NOT have been called
             expect(mockPrisma.mockExam.deleteMany).not.toHaveBeenCalled();
-            expect(mockPrisma.mockExamAnswerA1.deleteMany).not.toHaveBeenCalled();
-            expect(mockPrisma.mockExamAnswerA2.deleteMany).not.toHaveBeenCalled();
-            expect(mockPrisma.mockExamAnswerB1.deleteMany).not.toHaveBeenCalled();
+            expect(mockPrisma.a1SectionSpeakingAnswer.deleteMany).not.toHaveBeenCalled();
+            expect(mockPrisma.a2SectionSpeakingAnswer.deleteMany).not.toHaveBeenCalled();
+            expect(mockPrisma.b1SectionSpeakingAnswer.deleteMany).not.toHaveBeenCalled();
 
             // Also ensure transaction was not used to wrap deletions (if creating involved transaction it might be called, but with different args)
             // But in the original code, transaction was specifically for deletions. 

@@ -155,31 +155,67 @@ enum SectionType {
   B1
 }
 
-// Scenarios (JSON id storage)
-model ScenarioA1 {
-  id          String @id // This will match the ID in the JSON file (e.g., "paper1_a1_spoken")
+// Sections (JSON id storage)
+model A1SectionSpeaking {
+  id          Int      @id @default(autoincrement())
+  json_id     String   @unique
   title       String
-  contentJson String @db.Text // Storing the full JSON content or path if needed
+  language    Language @default(FR)
   
-  mockExams   MockExam[] @relation("A1Scenario")
+  answers     A1SectionSpeakingAnswer[]
+  mockExams   MockExam[]
 }
 
-model ScenarioA2 {
-  id          String @id
+model A1SectionListening {
+  id          Int      @id @default(autoincrement())
+  json_id     String   @unique
   title       String
-  contentJson String @db.Text
+  language    Language @default(FR)
   
-  mockExams   MockExam[] @relation("A2Scenario")
+  answers     A1SectionListeningAnswer[]
+  mockExams   MockExam[]
 }
 
-model ScenarioB1 {
-  id          String @id
+model A2SectionSpeaking {
+  id          Int      @id @default(autoincrement())
+  json_id     String   @unique
   title       String
-  contentJson String @db.Text
+  language    Language @default(FR)
   
-  mockExamsSelected MockExam[] @relation("B1Selected")
-  mockExamsOption1  MockExam[] @relation("B1Option1")
-  mockExamsOption2  MockExam[] @relation("B1Option2")
+  answers     A2SectionSpeakingAnswer[]
+  mockExams   MockExam[]
+}
+
+model A2SectionListening {
+  id          Int      @id @default(autoincrement())
+  json_id     String   @unique
+  title       String
+  language    Language @default(FR)
+  
+  answers     A2SectionListeningAnswer[]
+  mockExams   MockExam[]
+}
+
+model B1SectionSpeaking {
+  id          Int      @id @default(autoincrement())
+  json_id     String   @unique
+  title       String
+  language    Language @default(FR)
+  
+  answers           B1SectionSpeakingAnswer[]
+  mockExamsOption1  MockExam[] @relation("B1SpeakingOption1")
+  mockExamsOption2  MockExam[] @relation("B1SpeakingOption2")
+  mockExamsSelected MockExam[] @relation("B1SpeakingSelected")
+}
+
+model B1SectionListening {
+  id          Int      @id @default(autoincrement())
+  json_id     String   @unique
+  title       String
+  language    Language @default(FR)
+  
+  answers           B1SectionListeningAnswer[]
+  mockExams         MockExam[]
 }
 
 enum ExamPath {
@@ -189,34 +225,46 @@ enum ExamPath {
 
 // The Mock Exam Session
 model MockExam {
-  id          String @id @default(uuid())
+  id          Int    @id @default(autoincrement())
   user_id     Int
   user        User   @relation(fields: [user_id], references: [id])
   
   // Explicitly track which path the user took
   selected_path ExamPath?
 
-  // Direct links to scenarios
-  scenario_a2_id String
-  scenario_a2    ScenarioA2 @relation("A2Scenario", fields: [scenario_a2_id], references: [id])
+  // --- Speaking Components ---
+  speaking_a2_id Int?
+  speaking_a2    A2SectionSpeaking? @relation(fields: [speaking_a2_id], references: [id])
   
-  scenario_a1_id String?
-  scenario_a1    ScenarioA1? @relation("A1Scenario", fields: [scenario_a1_id], references: [id])
+  speaking_a1_id Int?
+  speaking_a1    A1SectionSpeaking? @relation(fields: [speaking_a1_id], references: [id])
   
-  // B1 Options: Pre-created when exam starts
-  scenario_b1_option1_id String?
-  scenario_b1_option1    ScenarioB1? @relation("B1Option1", fields: [scenario_b1_option1_id], references: [id])
+  speaking_b1_option1_id Int?
+  speaking_b1_option1    B1SectionSpeaking? @relation("B1SpeakingOption1", fields: [speaking_b1_option1_id], references: [id])
   
-  scenario_b1_option2_id String?
-  scenario_b1_option2    ScenarioB1? @relation("B1Option2", fields: [scenario_b1_option2_id], references: [id])
+  speaking_b1_option2_id Int?
+  speaking_b1_option2    B1SectionSpeaking? @relation("B1SpeakingOption2", fields: [speaking_b1_option2_id], references: [id])
   
-  // B1 Selected: Points to which B1 option was chosen
-  scenario_b1_id String?
-  scenario_b1    ScenarioB1? @relation("B1Selected", fields: [scenario_b1_id], references: [id])
+  speaking_b1_id Int?
+  speaking_b1    B1SectionSpeaking? @relation("B1SpeakingSelected", fields: [speaking_b1_id], references: [id])
 
-  answersA1     MockExamAnswerA1[]
-  answersA2     MockExamAnswerA2[]
-  answersB1     MockExamAnswerB1[]
+  // --- Listening Components ---
+  listening_a2_id Int?
+  listening_a2    A2SectionListening? @relation(fields: [listening_a2_id], references: [id])
+  
+  listening_a1_id Int?
+  listening_a1    A1SectionListening? @relation(fields: [listening_a1_id], references: [id])
+  
+  listening_b1_id Int?
+  listening_b1    B1SectionListening? @relation(fields: [listening_b1_id], references: [id])
+
+  // Answers Relations
+  answersSpeakingA1     A1SectionSpeakingAnswer[]
+  answersListeningA1 A1SectionListeningAnswer[]
+  answersSpeakingA2     A2SectionSpeakingAnswer[]
+  answersListeningA2 A2SectionListeningAnswer[]
+  answersSpeakingB1     B1SectionSpeakingAnswer[]
+  answersListeningB1 B1SectionListeningAnswer[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -224,47 +272,105 @@ model MockExam {
 }
 
 // Section-Specific Answers
-model MockExamAnswerA1 {
-  id            String      @id @default(uuid())
-  mock_exam_id  String
-  mockExam      MockExam    @relation(fields: [mock_exam_id], references: [id])
-  
+// When practicing standalone, mock_exam_id will be null.
+model A1SectionSpeakingAnswer {
   user_id       Int
+  mock_exam_id  Int         @default(-1)
+  section_id    Int
   question_id   String
+
+  mockExam      MockExam?   @relation(fields: [mock_exam_id], references: [id])
+  section       A1SectionSpeaking  @relation(fields: [section_id], references: [id])
+
   answer_text   String?     @db.Text
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
 
-  @@unique([user_id, mock_exam_id, question_id])
+  @@id([user_id, mock_exam_id, section_id, question_id])
 }
 
-model MockExamAnswerA2 {
-  id            String      @id @default(uuid())
-  mock_exam_id  String
-  mockExam      MockExam    @relation(fields: [mock_exam_id], references: [id])
-  
+model A1SectionListeningAnswer {
   user_id       Int
+  mock_exam_id  Int         @default(-1)
+  section_id    Int
   question_id   String
+
+  mockExam      MockExam?   @relation(fields: [mock_exam_id], references: [id])
+  section       A1SectionListening  @relation(fields: [section_id], references: [id])
+
   answer_text   String?     @db.Text
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
 
-  @@unique([user_id, mock_exam_id, question_id])
+  @@id([user_id, mock_exam_id, section_id, question_id])
 }
 
-model MockExamAnswerB1 {
-  id            String      @id @default(uuid())
-  mock_exam_id  String
-  mockExam      MockExam    @relation(fields: [mock_exam_id], references: [id])
-  
+model A2SectionSpeakingAnswer {
   user_id       Int
+  mock_exam_id  Int         @default(-1)
+  section_id    Int
   question_id   String
+
+  mockExam      MockExam?   @relation(fields: [mock_exam_id], references: [id])
+  section       A2SectionSpeaking  @relation(fields: [section_id], references: [id])
+
   answer_text   String?     @db.Text
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
 
-  @@unique([user_id, mock_exam_id, question_id])
+  @@id([user_id, mock_exam_id, section_id, question_id])
+}
+
+model A2SectionListeningAnswer {
+  user_id       Int
+  mock_exam_id  Int         @default(-1)
+  section_id    Int
+  question_id   String
+
+  mockExam      MockExam?   @relation(fields: [mock_exam_id], references: [id])
+  section       A2SectionListening  @relation(fields: [section_id], references: [id])
+
+  answer_text   String?     @db.Text
+  audio_url     String?     
+  
+  createdAt     DateTime    @default(now())
+
+  @@id([user_id, mock_exam_id, section_id, question_id])
+}
+
+model B1SectionSpeakingAnswer {
+  user_id       Int
+  mock_exam_id  Int         @default(-1)
+  section_id    Int
+  question_id   String
+
+  mockExam      MockExam?   @relation(fields: [mock_exam_id], references: [id])
+  section       B1SectionSpeaking  @relation(fields: [section_id], references: [id])
+
+  answer_text   String?     @db.Text
+  audio_url     String?     
+  
+  createdAt     DateTime    @default(now())
+
+  @@id([user_id, mock_exam_id, section_id, question_id])
+}
+
+model B1SectionListeningAnswer {
+  user_id       Int
+  mock_exam_id  Int         @default(-1)
+  section_id    Int
+  question_id   String
+
+  mockExam      MockExam?   @relation(fields: [mock_exam_id], references: [id])
+  section       B1SectionListening  @relation(fields: [section_id], references: [id])
+
+  answer_text   String?     @db.Text
+  audio_url     String?     
+  
+  createdAt     DateTime    @default(now())
+
+  @@id([user_id, mock_exam_id, section_id, question_id])
 }

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import FormData from 'form-data';
+// @ts-ignore
 import Mailgun from 'mailgun.js';
 
 const router = Router();
@@ -9,9 +10,6 @@ const domain = process.env.MAILGUN_DOMAIN || 'fideprep.ch';
 const url = process.env.MAILGUN_URL || 'https://api.eu.mailgun.net';
 const recipient = process.env.MAILGUN_RECIPIENT || 'info@fideprep.ch';
 
-const mailgun = new Mailgun(FormData);
-const client = mailgun.client({ username: 'api', key: apiKey || '', url });
-
 router.post('/', async (req, res) => {
     const { user_name, user_email, message } = req.body;
 
@@ -19,6 +17,10 @@ router.post('/', async (req, res) => {
         console.error('Mailgun configuration missing');
         return res.status(500).json({ error: 'Server configuration error' });
     }
+
+    // Lazily create client so server doesn't crash at startup when key is absent
+    const mailgun = new Mailgun(FormData as unknown as new (...args: any[]) => typeof FormData);
+    const client = mailgun.client({ username: 'api', key: apiKey, url });
 
     const emailData = {
         from: `FIDE Prep Contact Form <mailgun@${domain}>`,

@@ -26,15 +26,42 @@ const upload = multer({ storage });
 
 const router = Router();
 
-// Helper to load scenario content directly from files
-function loadScenarioContent(level: string, id: string) {
+// Helper to load section content directly from files
+function loadSectionContent(level: string, type: 'Speaking' | 'Listening', id: string) {
     try {
-        const filePath = path.join(__dirname, "..", "data", "scenarios", level.toLowerCase(), `${id}.json`);
+        const filePath = path.join(__dirname, "..", "data", "scenarios", level.toLowerCase(), type.toLowerCase(), `${id}.json`);
         if (fs.existsSync(filePath)) {
-            return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+            const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+            data.id = id;
+
+            // Apply templates if Speaking
+            if (type === 'Speaking' && data.items && Array.isArray(data.items)) {
+                try {
+                    const templatesPath = path.join(__dirname, "..", "data", "scenarios", "base_templates_oral.json");
+                    if (fs.existsSync(templatesPath)) {
+                        const templatesData = JSON.parse(fs.readFileSync(templatesPath, "utf-8"));
+                        const lang = data.language || 'fr';
+                        const langTemplates = templatesData[lang] || {};
+
+                        data.items = data.items.map((item: any) => {
+                            if (item.template && langTemplates[item.template]) {
+                                return {
+                                    ...langTemplates[item.template],
+                                    ...item
+                                };
+                            }
+                            return item;
+                        });
+                    }
+                } catch (e) {
+                    console.error("Failed to load or apply base templates for oral:", e);
+                }
+            }
+
+            return data;
         }
     } catch (err) {
-        console.error(`Failed to load scenario file for ${level}/${id}:`, err);
+        console.error(`Failed to load section file for ${level}/${type}/${id}:`, err);
     }
     return null;
 }
@@ -47,92 +74,103 @@ async function getUserId(req: Request) {
     return user ? user.id : null;
 }
 
-// Helper to get least-used scenarios for a user
-async function getLeastUsedScenarios(
+// Helper to get least-used sections for a user
+async function getLeastUsedSections(
     userId: number,
     level: 'A1' | 'A2' | 'B1',
+    type: 'Speaking' | 'Listening',
     count: number = 1
-): Promise<string[]> {
-    // Get all scenarios for this level
-    let allScenarios: { id: string }[] = [];
+): Promise<number[]> {
+    // Get all sections for this level and type
+    let allSections: { id: number }[] = [];
     if (level === 'A1') {
-        allScenarios = await prisma.scenarioA1.findMany({ select: { id: true } });
+        allSections = type === 'Speaking'
+            ? await prisma.a1SectionSpeaking.findMany({ select: { id: true } })
+            : await prisma.a1SectionListening.findMany({ select: { id: true } });
     } else if (level === 'A2') {
-        allScenarios = await prisma.scenarioA2.findMany({ select: { id: true } });
+        allSections = type === 'Speaking'
+            ? await prisma.a2SectionSpeaking.findMany({ select: { id: true } })
+            : await prisma.a2SectionListening.findMany({ select: { id: true } });
     } else if (level === 'B1') {
-        allScenarios = await prisma.scenarioB1.findMany({ select: { id: true } });
+        allSections = type === 'Speaking'
+            ? await prisma.b1SectionSpeaking.findMany({ select: { id: true } })
+            : await prisma.b1SectionListening.findMany({ select: { id: true } });
     }
 
-    if (allScenarios.length === 0) {
-        throw new Error(`No ${level} scenarios available`);
+    if (allSections.length === 0) {
+        throw new Error(`No ${level} ${type} sections available`);
     }
 
-    // If we need more scenarios than available, we'll have to duplicate
-    // This is okay - user wants variety but accepts duplicates when necessary
-    if (count > allScenarios.length) {
-        console.log(`[SMART_SELECTION] Requested ${count} ${level} scenarios but only ${allScenarios.length} available. Will duplicate.`);
-    }
-
-    // Get user's exam history to count scenario usage
+    // Get user's exam history to count section usage
     const userExams = await prisma.mockExam.findMany({
         where: { user_id: userId },
         select: {
-            scenario_a1_id: true,
-            scenario_a2_id: true,
-            scenario_b1_id: true,
-            scenario_b1_option1_id: true,
-            scenario_b1_option2_id: true
+            speaking_a1_id: true,
+            speaking_a2_id: true,
+            speaking_b1_id: true,
+            speaking_b1_option1_id: true,
+            speaking_b1_option2_id: true,
+            listening_a1_id: true,
+            listening_a2_id: true,
+            listening_b1_id: true
         }
     });
 
-    // Count usage for each scenario
-    const usageCount: Record<string, number> = {};
-    allScenarios.forEach(s => usageCount[s.id] = 0);
+    // Count usage for each section
+    const usageCount: Record<number, number> = {};
+    allSections.forEach(s => usageCount[s.id] = 0);
 
     userExams.forEach(exam => {
-        if (level === 'A1' && exam.scenario_a1_id) {
-            usageCount[exam.scenario_a1_id] = (usageCount[exam.scenario_a1_id] || 0) + 1;
-        } else if (level === 'A2' && exam.scenario_a2_id) {
-            usageCount[exam.scenario_a2_id] = (usageCount[exam.scenario_a2_id] || 0) + 1;
-        } else if (level === 'B1') {
-            // Count B1 selected scenarios and options shown
-            if (exam.scenario_b1_id) {
-                usageCount[exam.scenario_b1_id] = (usageCount[exam.scenario_b1_id] || 0) + 1;
+        if (type === 'Speaking') {
+            if (level === 'A1' && exam.speaking_a1_id) {
+                usageCount[exam.speaking_a1_id] = (usageCount[exam.speaking_a1_id] || 0) + 1;
+            } else if (level === 'A2' && exam.speaking_a2_id) {
+                usageCount[exam.speaking_a2_id] = (usageCount[exam.speaking_a2_id] || 0) + 1;
+            } else if (level === 'B1') {
+                if (exam.speaking_b1_id) {
+                    usageCount[exam.speaking_b1_id] = (usageCount[exam.speaking_b1_id] || 0) + 1;
+                }
+                if (exam.speaking_b1_option1_id) {
+                    usageCount[exam.speaking_b1_option1_id] = (usageCount[exam.speaking_b1_option1_id] || 0) + 0.5;
+                }
+                if (exam.speaking_b1_option2_id) {
+                    usageCount[exam.speaking_b1_option2_id] = (usageCount[exam.speaking_b1_option2_id] || 0) + 0.5;
+                }
             }
-            // Also count options that were shown (even if not selected)
-            if (exam.scenario_b1_option1_id) {
-                usageCount[exam.scenario_b1_option1_id] = (usageCount[exam.scenario_b1_option1_id] || 0) + 0.5;
-            }
-            if (exam.scenario_b1_option2_id) {
-                usageCount[exam.scenario_b1_option2_id] = (usageCount[exam.scenario_b1_option2_id] || 0) + 0.5;
+        } else {
+            // Listening
+            if (level === 'A1' && exam.listening_a1_id) {
+                usageCount[exam.listening_a1_id] = (usageCount[exam.listening_a1_id] || 0) + 1;
+            } else if (level === 'A2' && exam.listening_a2_id) {
+                usageCount[exam.listening_a2_id] = (usageCount[exam.listening_a2_id] || 0) + 1;
+            } else if (level === 'B1' && exam.listening_b1_id) {
+                usageCount[exam.listening_b1_id] = (usageCount[exam.listening_b1_id] || 0) + 1;
             }
         }
     });
 
-    // Sort scenarios by usage count (ascending)
-    const sortedScenarios = allScenarios
+    // Sort sections by usage count (ascending)
+    const sortedSections = allSections
         .map(s => ({ id: s.id, count: usageCount[s.id] }))
         .sort((a, b) => a.count - b.count);
 
     // Get the minimum usage count
-    const minUsage = sortedScenarios[0].count;
+    const minUsage = sortedSections[0].count;
 
-    // Get all scenarios with minimum usage
-    const leastUsedScenarios = sortedScenarios
+    // Get all sections with minimum usage
+    const leastUsedSections = sortedSections
         .filter(s => s.count === minUsage)
         .map(s => s.id);
 
-    // Shuffle the least-used scenarios
-    const shuffled = leastUsedScenarios.sort(() => 0.5 - Math.random());
+    // Shuffle the least-used sections
+    const shuffled = leastUsedSections.sort(() => 0.5 - Math.random());
 
-    // If we don't have enough unique least-used scenarios, we need to fill with duplicates
-    const result: string[] = [];
+    const result: number[] = [];
     for (let i = 0; i < count; i++) {
-        // Use modulo to cycle through available scenarios if we need duplicates
         result.push(shuffled[i % shuffled.length]);
     }
 
-    console.log(`[SMART_SELECTION] Selected ${count} ${level} scenarios: ${result.join(', ')}`);
+    console.log(`[SMART_SELECTION] Selected ${count} ${level} ${type} sections: ${result.join(', ')}`);
     return result;
 }
 
@@ -152,13 +190,12 @@ router.get("/history", requireAuth, async (req: Request, res: Response) => {
             where: { user_id: userId },
             orderBy: { createdAt: "desc" },
             include: {
-                scenario_a2: true,
-                scenario_a1: true,
-                scenario_b1: true,
-                // Use plural names as defined in schema relations
-                answersA1: true,
-                answersA2: true,
-                answersB1: true
+                speaking_a2: true,
+                speaking_a1: true,
+                speaking_b1: true,
+                answersSpeakingA1: true,
+                answersSpeakingA2: true,
+                answersSpeakingB1: true
             }
         });
 
@@ -176,17 +213,18 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
         const userId = await getUserId(req);
         if (!userId) return res.status(401).json({ error: "User not found" });
 
-        const { examId } = req.params;
+        const examId = parseInt(req.params.examId);
+        if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
 
         const exam = await prisma.mockExam.findUnique({
             where: { id: examId },
             include: {
-                scenario_a2: true,
-                scenario_a1: true,
-                scenario_b1: true,
-                answersA1: true,
-                answersA2: true,
-                answersB1: true,
+                speaking_a2: true,
+                speaking_a1: true,
+                speaking_b1: true,
+                answersSpeakingA1: true,
+                answersSpeakingA2: true,
+                answersSpeakingB1: true,
             }
         });
 
@@ -194,44 +232,50 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
             return res.status(404).json({ error: "Exam not found" });
         }
 
-        // Assemble full scenario items
-        const scenarios: any[] = [];
+        // Assemble full section items (speaking only)
+        const sections: any[] = [];
 
-        // A2
-        if (exam.scenario_a2) {
-            const content = loadScenarioContent("A2", exam.scenario_a2.id);
-            scenarios.push({
+        // --- A2 Speaking ---
+        if (exam.speaking_a2) {
+            const oralContent = loadSectionContent("A2", "Speaking", exam.speaking_a2.json_id);
+            sections.push({
                 level: "A2",
-                items: content ? content.items : JSON.parse(exam.scenario_a2.contentJson || "{}").items
+                type: "Speaking",
+                items: oralContent ? oralContent.items : []
             });
         }
 
-        // A1 or B1
-        // Determine path using explicit selection if available, otherwise heuristic
+        // --- A1 or B1 Speaking ---
         if (exam.selected_path === "B1") {
-            if (exam.scenario_b1) {
-                const content = loadScenarioContent("B1", exam.scenario_b1.id);
-                scenarios.push({
+            if (exam.speaking_b1) {
+                const oralContent = loadSectionContent("B1", "Speaking", exam.speaking_b1.json_id);
+                sections.push({
                     level: "B1",
-                    items: content ? content.items : JSON.parse(exam.scenario_b1.contentJson || "{}").items
+                    type: "Speaking",
+                    items: oralContent ? oralContent.items : []
                 });
             }
         } else if (exam.selected_path === "A1") {
-            if (exam.scenario_a1) {
-                const content = loadScenarioContent("A1", exam.scenario_a1.id);
-                scenarios.push({
+            if (exam.speaking_a1) {
+                const oralContent = loadSectionContent("A1", "Speaking", exam.speaking_a1.json_id);
+                sections.push({
                     level: "A1",
-                    items: content ? content.items : JSON.parse(exam.scenario_a1.contentJson || "{}").items
+                    type: "Speaking",
+                    items: oralContent ? oralContent.items : []
                 });
             }
         }
 
-        // Flatten all items and match with answers
-        const allAnswers = [...exam.answersA1, ...exam.answersA2, ...exam.answersB1];
+        // Flatten all answers (speaking only)
+        const allAnswers = [
+            ...exam.answersSpeakingA1,
+            ...exam.answersSpeakingA2,
+            ...exam.answersSpeakingB1
+        ];
 
         res.json({
             exam,
-            scenarios,
+            sections,
             answers: allAnswers
         });
 
@@ -242,8 +286,8 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
 });
 
 // POST /api/exam/mock/start
-// Starts a new mock exam session, initializing with A2 scenario or resumes existing
-router.post("/start", requireAuth, async (req: Request, res: Response) => {
+// Starts a new mock exam session, initializing with A2 section or resumes existing
+router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
     try {
         const userId = await getUserId(req);
         if (!userId) {
@@ -251,7 +295,9 @@ router.post("/start", requireAuth, async (req: Request, res: Response) => {
             return res.status(401).json({ error: "User not found" });
         }
 
-        const { examId: requestedExamId, forceNew } = req.body;
+        const { examId: requestedExamIdStr, forceNew } = req.body;
+        const requestedExamId = requestedExamIdStr ? parseInt(requestedExamIdStr) : undefined;
+
         console.log(`[START] User ${userId} requested start. examId: ${requestedExamId}, forceNew: ${forceNew}`);
 
         // Handle Resume Logic
@@ -261,7 +307,6 @@ router.post("/start", requireAuth, async (req: Request, res: Response) => {
                 status: "IN_PROGRESS"
             };
 
-            // If a specific examId is requested, resume only that one
             if (requestedExamId) {
                 resumeWhere.id = requestedExamId;
             }
@@ -270,82 +315,66 @@ router.post("/start", requireAuth, async (req: Request, res: Response) => {
                 where: resumeWhere,
                 orderBy: { createdAt: 'desc' },
                 include: {
-                    scenario_a2: true,
-                    scenario_a1: true,
-                    scenario_b1: true,
-                    answersA1: true,
-                    answersA2: true,
-                    answersB1: true
+                    speaking_a2: true,
+                    speaking_a1: true,
+                    speaking_b1: true,
+                    answersSpeakingA1: true,
+                    answersSpeakingA2: true,
+                    answersSpeakingB1: true
                 }
             });
 
             if (existingExam) {
                 console.log(`Resuming exam ${existingExam.id} for user ${userId}`);
 
-                const scenarios: any[] = [];
-                if (existingExam.scenario_a2) {
-                    scenarios.push({
-                        section: "A2",
-                        scenario: loadScenarioContent("A2", existingExam.scenario_a2.id) || JSON.parse(existingExam.scenario_a2?.contentJson || "{}")
+                const sections: any[] = [];
+                if (existingExam.speaking_a2) {
+                    sections.push({
+                        type: "Speaking",
+                        section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
                     });
                 }
 
-                if (existingExam.scenario_a1 && existingExam.answersA1.length > 0) {
-                    scenarios.push({
-                        section: "A1",
-                        scenario: loadScenarioContent("A1", existingExam.scenario_a1.id) || JSON.parse(existingExam.scenario_a1?.contentJson || "{}")
-                    });
-                }
-
-                if (existingExam.scenario_b1 && existingExam.answersB1.length > 0) {
-                    scenarios.push({
-                        section: "B1",
-                        scenario: loadScenarioContent("B1", existingExam.scenario_b1.id) || JSON.parse(existingExam.scenario_b1?.contentJson || "{}")
-                    });
-                }
-
-                const allAnswers = [...existingExam.answersA1, ...existingExam.answersA2, ...existingExam.answersB1];
+                const allAnswers = [
+                    ...existingExam.answersSpeakingA1,
+                    ...existingExam.answersSpeakingA2,
+                    ...existingExam.answersSpeakingB1
+                ];
 
                 return res.json({
                     examId: existingExam.id,
                     resumed: true,
-                    scenarios,
+                    sections,
                     answers: allAnswers
                 });
             }
         }
 
         // --- NEW EXAM FLOW ---
-        // (Previously deleted all history here - removed to preserve completed exams)
+        // Get least-used A2 Speaking section
+        const [leastUsedSpeakingA2Id] = await getLeastUsedSections(userId, 'A2', 'Speaking', 1);
 
-        // Use smart selection to get least-used A2 scenario
-        const [leastUsedA2Id] = await getLeastUsedScenarios(userId, 'A2', 1);
-        const scenarioA2 = await prisma.scenarioA2.findUnique({
-            where: { id: leastUsedA2Id }
-        });
-
-        if (!scenarioA2) {
-            return res.status(500).json({ error: "No A2 scenarios available" });
-        }
-
-        // Create MockExam with only A2 set
-        // A1 and B1 will be set when user selects their path
+        // Create MockExam with A2 Speaking section
         const exam = await prisma.mockExam.create({
             data: {
                 user_id: userId,
-                scenario_a2_id: scenarioA2.id,
-                // Leave A1 and B1 empty - they'll be set in select-path
+                speaking_a2_id: leastUsedSpeakingA2Id,
                 status: "IN_PROGRESS"
+            },
+            include: {
+                speaking_a2: true
             }
         });
-
-        // Load A2 content for the initial flow (user starts with A2)
-        const freshContent = loadScenarioContent("A2", scenarioA2.id);
 
         res.json({
             examId: exam.id,
             section: "A2",
-            scenario: freshContent || JSON.parse(scenarioA2.contentJson || "{}")
+            sections: [
+                {
+                    type: "Speaking",
+                    section: loadSectionContent("A2", "Speaking", exam.speaking_a2!.json_id) || {}
+                }
+            ]
         });
 
     } catch (err: any) {
@@ -356,14 +385,14 @@ router.post("/start", requireAuth, async (req: Request, res: Response) => {
 
 // POST /api/exam/mock/:examId/answer
 // Submit multiple answers for a section
-router.post("/:examId/answer", requireAuth, upload.any(), async (req: Request, res: Response) => {
+router.post("/mock/:examId/answer", requireAuth, upload.any(), async (req: Request, res: Response) => {
     try {
         const userId = await getUserId(req);
         if (!userId) return res.status(401).json({ error: "User not found" });
 
-        const { examId } = req.params;
+        const examId = parseInt(req.params.examId);
+        if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
 
-        // In multipart/form-data, answers might be sent as a JSON string
         let answers = req.body.answers;
         if (typeof answers === 'string') {
             answers = JSON.parse(answers);
@@ -373,15 +402,17 @@ router.post("/:examId/answer", requireAuth, upload.any(), async (req: Request, r
             return res.status(400).json({ error: "Answers must be an array" });
         }
 
+        const exam = await prisma.mockExam.findUnique({ where: { id: examId } });
+        if (!exam) return res.status(404).json({ error: "Exam not found" });
+
         const files = req.files as Express.Multer.File[];
         const results = [];
 
         for (const ans of answers) {
-            const { sectionType, questionId, answerText, fileField } = ans;
+            const { sectionType, mode, sectionId, questionId, answerText, fileField } = ans;
+            // mode should be 'Speaking' or 'Listening'
 
             let finalAudioUrl = ans.audioUrl;
-
-            // If a file was uploaded for this question, use its path
             if (fileField && files) {
                 const uploadedFile = files.find(f => f.fieldname === fileField);
                 if (uploadedFile) {
@@ -389,33 +420,73 @@ router.post("/:examId/answer", requireAuth, upload.any(), async (req: Request, r
                 }
             }
 
+            let dbSectionId: number | null = null;
+            if (sectionType === "A1" && mode === "Speaking") dbSectionId = exam.speaking_a1_id;
+            else if (sectionType === "A1" && mode === "Listening") dbSectionId = exam.listening_a1_id;
+            else if (sectionType === "A2" && mode === "Speaking") dbSectionId = exam.speaking_a2_id;
+            else if (sectionType === "A2" && mode === "Listening") dbSectionId = exam.listening_a2_id;
+            else if (sectionType === "B1" && mode === "Speaking") dbSectionId = exam.speaking_b1_id;
+            else if (sectionType === "B1" && mode === "Listening") dbSectionId = exam.listening_b1_id;
+
+            if (!dbSectionId) {
+                console.warn(`Could not find dbSectionId for ${sectionType} ${mode} on exam ${examId}`);
+                continue;
+            }
+
             const data = {
                 mock_exam_id: examId,
                 user_id: userId,
+                section_id: dbSectionId,
                 question_id: questionId,
                 answer_text: answerText || '',
                 audio_url: finalAudioUrl || ''
             };
 
             let result;
+            const modelName = `${sectionType}Section${mode}Answer`;
+            // Dynamic access or explicit if/else
             if (sectionType === "A1") {
-                result = await prisma.mockExamAnswerA1.upsert({
-                    where: { user_id_mock_exam_id_question_id: { user_id: userId, mock_exam_id: examId, question_id: questionId } },
-                    update: data,
-                    create: data
-                });
+                if (mode === "Speaking") {
+                    result = await prisma.a1SectionSpeakingAnswer.upsert({
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        update: data,
+                        create: data
+                    });
+                } else {
+                    result = await prisma.a1SectionListeningAnswer.upsert({
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        update: data,
+                        create: data
+                    });
+                }
             } else if (sectionType === "A2") {
-                result = await prisma.mockExamAnswerA2.upsert({
-                    where: { user_id_mock_exam_id_question_id: { user_id: userId, mock_exam_id: examId, question_id: questionId } },
-                    update: data,
-                    create: data
-                });
+                if (mode === "Speaking") {
+                    result = await prisma.a2SectionSpeakingAnswer.upsert({
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        update: data,
+                        create: data
+                    });
+                } else {
+                    result = await prisma.a2SectionListeningAnswer.upsert({
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        update: data,
+                        create: data
+                    });
+                }
             } else if (sectionType === "B1") {
-                result = await prisma.mockExamAnswerB1.upsert({
-                    where: { user_id_mock_exam_id_question_id: { user_id: userId, mock_exam_id: examId, question_id: questionId } },
-                    update: data,
-                    create: data
-                });
+                if (mode === "Speaking") {
+                    result = await prisma.b1SectionSpeakingAnswer.upsert({
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        update: data,
+                        create: data
+                    });
+                } else {
+                    result = await prisma.b1SectionListeningAnswer.upsert({
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        update: data,
+                        create: data
+                    });
+                }
             }
             results.push(result);
         }
@@ -429,13 +500,15 @@ router.post("/:examId/answer", requireAuth, upload.any(), async (req: Request, r
 
 // POST /api/exam/mock/:examId/decision
 // Handle the user choice between A1 and B1 after A2 section
-router.post("/:examId/decision", requireAuth, async (req: Request, res: Response) => {
+router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Response) => {
     try {
         const userId = await getUserId(req);
         if (!userId) return res.status(401).json({ error: "User not found" });
 
-        const { examId } = req.params;
-        const { choice } = req.body; // "A1", "B1" or specific Topic ID
+        const examId = parseInt(req.params.examId);
+        if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
+
+        const { choice } = req.body;
 
         console.log(`[DECISION] User ${userId} made choice "${choice}" for exam ${examId}`);
 
@@ -443,153 +516,81 @@ router.post("/:examId/decision", requireAuth, async (req: Request, res: Response
             return res.status(400).json({ error: "Missing choice." });
         }
 
-        // --- RESUME PROTECTION ---
-        const existingExam = await prisma.mockExam.findUnique({
-            where: { id: examId },
-            include: {
-                scenario_a1: true,
-                scenario_b1: true
-            }
-        });
-
-        if (!existingExam) {
-            return res.status(404).json({ error: "Exam not found." });
-        }
-
-        let freshContent = null;
-        let scenarioContentJson = null;
-
         if (choice === "A1") {
-            // User selected A1 - use smart selection to get least-used A1 scenario
-            const [leastUsedA1Id] = await getLeastUsedScenarios(userId, 'A1', 1);
+            const [oralId] = await getLeastUsedSections(userId, 'A1', 'Speaking', 1);
 
-            // Update exam with selected A1 scenario
             await prisma.mockExam.update({
                 where: { id: examId },
                 data: {
-                    scenario_a1_id: leastUsedA1Id,
+                    speaking_a1_id: oralId,
                     selected_path: "A1"
                 }
             });
 
-            const scenarioA1 = await prisma.scenarioA1.findUnique({
-                where: { id: leastUsedA1Id }
+            const sectionSpeaking = await prisma.a1SectionSpeaking.findUnique({ where: { id: oralId } });
+
+            return res.json({
+                examId,
+                section: "A1",
+                sections: [
+                    { type: "Speaking", section: loadSectionContent("A1", "Speaking", sectionSpeaking!.json_id) || {} }
+                ]
             });
 
-            if (!scenarioA1) {
-                return res.status(500).json({ error: "A1 scenario not found" });
-            }
-
-            freshContent = loadScenarioContent("A1", scenarioA1.id);
-            scenarioContentJson = scenarioA1.contentJson;
-
-            console.log(`[DECISION] ✓ Updated exam ${examId} with selected_path="A1" and scenario_a1_id="${leastUsedA1Id}"`);
-
         } else if (choice === "B1") {
-            // User selected B1 - use smart selection to get 2 least-used B1 scenarios
-            const [option1Id, option2Id] = await getLeastUsedScenarios(userId, 'B1', 2);
+            // Options are for Speaking B1 topic selection
+            const [option1Id, option2Id] = await getLeastUsedSections(userId, 'B1', 'Speaking', 2);
 
-            // Update exam with B1 options
             await prisma.mockExam.update({
                 where: { id: examId },
                 data: {
-                    scenario_b1_option1_id: option1Id,
-                    scenario_b1_option2_id: option2Id
+                    speaking_b1_option1_id: option1Id,
+                    speaking_b1_option2_id: option2Id
                 }
             });
 
-            const option1Scenario = await prisma.scenarioB1.findUnique({ where: { id: option1Id } });
-            const option2Scenario = await prisma.scenarioB1.findUnique({ where: { id: option2Id } });
+            const opt1 = await prisma.b1SectionSpeaking.findUnique({ where: { id: option1Id } });
+            const opt2 = await prisma.b1SectionSpeaking.findUnique({ where: { id: option2Id } });
 
-            if (!option1Scenario || !option2Scenario) {
-                return res.status(500).json({ error: "B1 scenarios not found" });
-            }
-
-            // Return topic selection UI
             return res.json({
                 examId,
                 section: "B1",
-                scenario: {
-                    title: "Expression Orale B1",
-                    items: [
-                        {
-                            id: "b1_topic_selection",
-                            type: "topic_selection",
-                            instruction: "Choisissez un sujet pour la partie B1 :",
-                            options: [
-                                {
-                                    id: option1Scenario.id,
-                                    title: option1Scenario.title,
-                                    description: "Discussion informelle"
-                                },
-                                {
-                                    id: option2Scenario.id,
-                                    title: option2Scenario.title,
-                                    description: "Discussion formelle"
-                                }
-                            ]
-                        }
+                topicSelection: {
+                    title: "Expression Speaking B1",
+                    options: [
+                        { id: opt1!.id, title: opt1!.title },
+                        { id: opt2!.id, title: opt2!.title }
                     ]
                 }
             });
 
-        } else {
-            // Choice is a specific B1 Scenario ID (Topic Selection)
-            console.log(`[DECISION] User selected B1 topic: ${choice}`);
+        } else if (typeof choice === 'number' || (typeof choice === 'string' && !isNaN(parseInt(choice)))) {
+            // Choice is B1 Speaking Topic selection
+            const selectedSpeakingId = typeof choice === 'number' ? choice : parseInt(choice);
 
-            // Fetch the B1 options from the exam to validate the choice
-            const examWithOptions = await prisma.mockExam.findUnique({
-                where: { id: examId },
-                select: {
-                    scenario_b1_option1_id: true,
-                    scenario_b1_option2_id: true
-                }
-            });
-
-            if (!examWithOptions || !examWithOptions.scenario_b1_option1_id || !examWithOptions.scenario_b1_option2_id) {
-                return res.status(500).json({ error: "B1 options not set for this exam" });
-            }
-
-            // Validate that the choice matches one of the options
-            let selectedScenarioId = null;
-            if (choice === examWithOptions.scenario_b1_option1_id) {
-                selectedScenarioId = choice;
-            } else if (choice === examWithOptions.scenario_b1_option2_id) {
-                selectedScenarioId = choice;
-            } else {
-                return res.status(404).json({ error: "Invalid B1 topic selection" });
-            }
-
-            // Fetch the selected scenario
-            const scenario = await prisma.scenarioB1.findUnique({
-                where: { id: selectedScenarioId }
-            });
-
-            if (!scenario) {
-                return res.status(500).json({ error: "B1 scenario not found" });
-            }
-
-            console.log(`[DECISION] Matched choice ${choice} to scenario ID: ${selectedScenarioId}`);
-
-            // Update exam with B1 scenario and path
             await prisma.mockExam.update({
                 where: { id: examId },
                 data: {
-                    scenario_b1_id: selectedScenarioId,
+                    speaking_b1_id: selectedSpeakingId,
                     selected_path: "B1"
                 }
             });
-            console.log(`[DECISION] ✓ Updated exam ${examId} with selected B1 scenario and selected_path="B1"`);
 
-            freshContent = loadScenarioContent("B1", scenario.id);
-            scenarioContentJson = scenario.contentJson;
+            const exam = await prisma.mockExam.findUnique({
+                where: { id: examId },
+                include: { speaking_b1: true }
+            });
+
+            return res.json({
+                examId,
+                section: "B1",
+                sections: [
+                    { type: "Speaking", section: loadSectionContent("B1", "Speaking", exam!.speaking_b1!.json_id) || {} }
+                ]
+            });
         }
 
-        res.json({
-            examId,
-            section: choice,
-            scenario: freshContent || JSON.parse(scenarioContentJson || "{}")
-        });
+        res.status(400).json({ error: "Invalid choice" });
     } catch (err: any) {
         console.error("Failed to process decision", err);
         res.status(500).json({ error: err.message });
@@ -598,20 +599,20 @@ router.post("/:examId/decision", requireAuth, async (req: Request, res: Response
 
 // POST /api/exam/mock/:examId/complete
 // Finalizes the mock exam session
-router.post("/:examId/complete", requireAuth, async (req: Request, res: Response) => {
+router.post("/mock/:examId/complete", requireAuth, async (req: Request, res: Response) => {
     try {
         const userId = await getUserId(req);
         if (!userId) return res.status(401).json({ error: "User not found" });
 
-        const { examId } = req.params;
+        const examId = parseInt(req.params.examId);
+        if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
+
         console.log(`[COMPLETE] User ${userId} completing exam ${examId}`);
 
-        const updated = await prisma.mockExam.update({
+        await prisma.mockExam.update({
             where: { id: examId, user_id: userId },
             data: { status: "COMPLETED" }
         });
-
-        console.log(`[COMPLETE] ✓ Exam ${examId} marked as COMPLETED`);
 
         res.json({ ok: true });
     } catch (err: any) {
