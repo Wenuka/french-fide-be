@@ -13,8 +13,8 @@
     "level": "A2",
     "language": "fr", // Input: language
     "paperId": 0, // Input: paperId
-    "sectionName": "paper0_a2_spoken", // pattern: f"paper{paperId}_a2_spoken"
-    "title": "Oral - Section 1",
+    "sectionName": "fr_paper0_a2_spoken", // pattern: f"{language}_paper{paperId}_a2_spoken"
+    "title": "xxx", // Generate Content: Infer the title from the situation in Target language (should be very short, e.g. "Appartment")
     "estimatedTime": "7-10 minutes",
     "items": [
         // Intro

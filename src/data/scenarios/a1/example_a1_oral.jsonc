@@ -15,6 +15,7 @@
     "level": "A1",
     "language": "fr", // Input: language
     "paperId": 0, // Input: paperId
+    "sectionName": "fr_paper0_a1_spoken", // pattern: f"{language}_paper{paperId}_a1_spoken"
     "title": "xxx", // In Target language: subject (or from image_scenarios) (should be very short, e.g. "At the supermarket")
     "estimatedTime": "4-5 minutes",
     "items": [

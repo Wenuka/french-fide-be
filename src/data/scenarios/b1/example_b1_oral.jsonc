@@ -12,8 +12,8 @@
     "level": "B1",
     "language": "fr", // Input: language
     "paperId": 0, // Input: paperId
-    "sectionName": "paper0_b1_spoken", // pattern: f"paper{paperId}_b1_spoken"
-    "title": "Oral - Section 2 (B1)",
+    "sectionName": "fr_paper0_b1_spoken", // pattern: f"{language}_paper{paperId}_b1_spoken"
+    "title": "xxx", // Generate Content: Infer the title from the topic in Target language (should be very short, e.g. "Appartment")
     "estimatedTime": "7-10 minutes",
     "items": [
         // Intro
