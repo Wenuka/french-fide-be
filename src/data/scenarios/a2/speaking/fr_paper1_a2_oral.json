@@ -23,6 +23,7 @@
             "template": "a2_1_q",
             "image": "images/a2/image_a2_1_task1.jpg",
             "sampleAnswer": "Sur cette image, je vois une femme avec les cheveux courts. Elle est assise à une table et elle lit une brochure. Elle est aussi en train de téléphoner. Sur la table, il y a un ordinateur portable et une tasse de café. En haut à droite, il y a une bulle. Dans la bulle, on voit un homme bien habillé qui répond au téléphone. Il porte une chemise, une cravate et un manteau. Le temps a l'air beau.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_a2_1_task1"
         },
         {
@@ -34,7 +35,10 @@
             "template": "a2_2_q",
             "image": "images/a2/image_a2_1_task1.jpg",
             "prompt": "Vous devez jouer la situation suivante : Cette femme cherche un nouvel appartement. Elle appelle un agent immobilier pour prendre rendez-vous et visiter un appartement. Je joue le rôle de l'agent immobilier, vous jouez le rôle de la femme.",
-            "sampleCharacters": "C1: Agent immobilier (homme, 40 ans), C2: Femme (30 ans)",
+            "sampleCharactersByAMale": {
+                "C1": true,
+                "C2": false
+            },
             "audioId": "fr_mock_a2_1_task2",
             "sampleAnswer": "C1: Bonjour. Agence Immo Plus, Patrick à l'appareil. Que puis-je faire pour vous ?\nC2: Bonjour Monsieur. Je m'appelle Sophie. J'ai vu votre annonce pour l'appartement de trois pièces dans le centre-ville. Est-ce qu'il est encore disponible ?\nC1: Oui, bien sûr. L'appartement est toujours libre. Vous souhaitez le visiter ?\nC2: Oui, j'aimerais bien prendre rendez-vous pour une visite. Est-ce que c'est possible cette semaine ?\nC1: Bien sûr. Je peux vous proposer mercredi à 14h. Cela vous convient ?\nC2: Mercredi, je ne suis pas disponible. Je travaille toute la journée. Est-ce que jeudi serait possible ?\nC1: Jeudi... oui, je peux à 10h le matin. Ça vous va ?\nC2: Oui, jeudi à 10h, c'est parfait pour moi. Est-ce que je peux vous demander quelques informations sur l'appartement ?\nC1: Oui, bien sûr. Il fait 75 mètres carrés, il est au deuxième étage et le loyer est de 1200 francs par mois.\nC2: D'accord, merci. L'appartement a un balcon ?\nC1: Oui, il y a un petit balcon dans le salon. Alors, on dit jeudi à 10h ?\nC2: Oui, c'est noté. Merci beaucoup Monsieur. À jeudi !\nC1: À jeudi, Madame. Au revoir.\nC2: Au revoir.",
             "answerAudioId": "fr_answers_a2_1_task2"
@@ -49,6 +53,7 @@
             "prompt": "Que cherchez-vous dans un appartement ? Pourquoi ?",
             "audioId": "fr_mock_a2_1_task3_part1",
             "sampleAnswer": "Dans un appartement, je cherche d'abord un endroit lumineux avec de grandes fenêtres. La lumière naturelle est très importante pour moi, parce que cela rend l'espace plus agréable. Ensuite, j'ai besoin d'une cuisine assez grande, car j'aime beaucoup cuisiner pour mes amis. Je préfère aussi un quartier calme, pas trop loin des transports. Enfin, un balcon, c'est très bien pour prendre le café le matin et profiter du beau temps.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_a2_1_task3_part1",
             "note": ""
         },
@@ -58,6 +63,7 @@
             "prompt": "Qu'avez-vous fait quand vous cherchiez votre appartement actuel ?",
             "audioId": "fr_mock_a2_1_task3_part2",
             "sampleAnswer": "Quand je cherchais mon appartement actuel, j'ai d'abord regardé les annonces sur internet, sur des sites comme Homegate et FlatFox. J'ai aussi demandé à des amis s'ils connaissaient des appartements libres. Ensuite, j'ai appelé plusieurs agences immobilières pour prendre des rendez-vous. J'ai visité six appartements en deux semaines. Finalement, j'ai trouvé un appartement qui me plaisait bien et le loyer n'était pas trop cher.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_a2_1_task3_part2"
         },
         {
@@ -66,6 +72,7 @@
             "prompt": "Quels sont les avantages et les inconvénients de vivre dans un petit village ou dans une grande ville ?",
             "audioId": "fr_mock_a2_1_task3_part3",
             "sampleAnswer": "Vivre dans un petit village a des avantages et des inconvénients. C'est plus calme, l'air est plus propre et les loyers sont moins chers. Les voisins se connaissent bien et c'est agréable. Mais il y a moins de magasins et de restaurants. Les transports en commun sont aussi plus rares. En grande ville, il y a beaucoup de choses à faire : des cinémas, des musées et des parcs. On trouve facilement du travail et les transports sont pratiques. Par contre, c'est plus bruyant, plus stressant et les loyers sont plus chers.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_a2_1_task3_part3"
         },
         {

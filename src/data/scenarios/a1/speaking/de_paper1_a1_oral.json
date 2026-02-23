@@ -22,6 +22,7 @@
             "prompt": "Jetzt sprechen wir über den Supermarkt. Was sehen Sie auf den Bildern? Wo sind die Personen? Was passiert hier?",
             "audioId": "de_mock_a1_1_task1",
             "sampleAnswer": "Ich sehe eine Frau hinter der Kasse in einem Supermarkt. Sie hat kurze Haare und trägt ein Hemd. Sie lächelt. Vor ihr steht ein Mann im T-Shirt. Er hat eine Flasche Wein in der Hand. Ich denke, er möchte die Flasche kaufen. Er bezahlt mit Bargeld.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "de_answers_a1_1_task1"
         },
         {
@@ -45,6 +46,7 @@
                     "image": "images/a1/image_a1_1_1.jpg",
                     "prompt": "Guten Tag! Willkommen! Was kann ich für Sie tun?",
                     "sampleAnswer": "Guten Tag. Ich möchte diese Flasche Wein kaufen, bitte.",
+                    "sampleAnswerByAMale": true,
                     "audioId": "de_mock_a1_1_task2_1",
                     "answerAudioId": "de_answers_a1_1_task2_1"
                 },
@@ -53,6 +55,7 @@
                     "image": "images/a1/image_a1_1_2.jpg",
                     "prompt": "Natürlich. Kann ich bitte Ihren Ausweis sehen?",
                     "sampleAnswer": "Ja, natürlich. Hier ist mein Ausweis.",
+                    "sampleAnswerByAMale": true,
                     "audioId": "de_mock_a1_1_task2_2",
                     "answerAudioId": "de_answers_a1_1_task2_2"
                 },
@@ -61,6 +64,7 @@
                     "image": "images/a1/image_a1_1_3.jpg",
                     "prompt": "Danke. Alles in Ordnung. Das macht acht Franken fünfzig. Wie möchten Sie bezahlen?",
                     "sampleAnswer": "Ich bezahle bar. Hier ist ein Zehn-Franken-Schein.",
+                    "sampleAnswerByAMale": true,
                     "audioId": "de_mock_a1_1_task2_3",
                     "answerAudioId": "de_answers_a1_1_task2_3"
                 },
@@ -69,6 +73,7 @@
                     "image": "images/a1/image_a1_1_4.jpg",
                     "prompt": "Hier ist Ihr Wechselgeld und Ihr Kassenbon. Danke und schönen Tag noch!",
                     "sampleAnswer": "Vielen Dank. Auf Wiedersehen und schönen Tag noch!",
+                    "sampleAnswerByAMale": true,
                     "audioId": "de_mock_a1_1_task2_4",
                     "answerAudioId": "de_answers_a1_1_task2_4"
                 }
@@ -79,6 +84,7 @@
             "template": "a1_4_q",
             "prompt": "Gehen Sie oft in den Supermarkt? Was kann man bei der Kasse im Supermarkt sehen?",
             "sampleAnswer": "Ja, ich gehe zweimal pro Woche in den Supermarkt. Bei der Kasse kann man Plastiktüten, Kaugummis, kleine Bonbons, Schokolade und Zeitungen sehen. Man kann auch das Laufband für die Artikel und den Bildschirm mit den Preisen sehen.",
+            "sampleAnswerByAMale": true,
             "audioId": "de_mock_a1_1_task3",
             "answerAudioId": "de_answers_a1_1_task3"
         },

@@ -73,6 +73,7 @@
                 "Si vous utilisez différents temps dans votre réponse, votre niveau semble plus élevé."
             ],
             "sampleAnswer": "Bonjour, je m’appelle Mark, j’ai 32 ans et je suis comptable. Je viens d’Espagne et je suis en Suisse depuis cinq ans. Au début, je suis venu pour le travail. Quand j’étais petit, je voulais visiter la Suisse, mais je ne pensais pas vivre ici un jour. Maintenant, je suis marié et j’habite à Lausanne. J’aime la qualité de vie ici. Dans le futur, j’aimerais rester en Suisse et peut-être devenir suisse.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "base_fr_answer_a2_0_q",
             "audioId": "base_fr_mock_a2_0_q",
             "recordable": true,
@@ -289,6 +290,7 @@
                 "Wenn Sie über Vergangenheit, Gegenwart und Zukunft sprechen, wirkt Ihr Niveau höher."
             ],
             "sampleAnswer": "Guten Tag, ich heiße Mark, ich bin 32 Jahre alt und ich bin Buchhalter. Ich komme aus Spanien und ich bin seit fünf Jahren in der Schweiz. Am Anfang bin ich wegen der Arbeit gekommen. Als ich klein war, wollte ich die Schweiz besuchen, aber ich dachte nicht, dass ich hier leben würde. Jetzt bin ich verheiratet und ich wohne in Lausanne. Ich mag die Lebensqualität hier. In der Zukunft möchte ich in der Schweiz bleiben und vielleicht Schweizer werden.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "base_de_answer_a2_0_q",
             "audioId": "base_de_mock_a2_0_q",
             "recordable": true,

@@ -22,6 +22,7 @@
             "prompt": "Maintenant, nous allons parler du supermarché. Que voyez-vous sur les images ? Où sont les personnes ? Qu'est-ce qui se passe ?",
             "audioId": "fr_mock_a1_1_task1",
             "sampleAnswer": "Je vois une femme derrière la caisse d'un supermarché. Elle a les cheveux courts et elle porte une chemise. Elle sourit. Devant elle, il y a un homme en t-shirt. Il tient une bouteille de vin à la main. Je pense qu'il veut acheter cette bouteille. Il paye avec de l'argent.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_a1_1_task1"
         },
         {
@@ -45,6 +46,7 @@
                     "image": "images/a1/image_a1_1_1.jpg",
                     "prompt": "Bonjour Monsieur, bienvenue ! Qu'est-ce que je peux faire pour vous ?",
                     "sampleAnswer": "Bonjour Madame. Je voudrais acheter cette bouteille de vin, s'il vous plaît.",
+                    "sampleAnswerByAMale": true,
                     "audioId": "fr_mock_a1_1_task2_1",
                     "answerAudioId": "fr_answers_a1_1_task2_1"
                 },
@@ -53,6 +55,7 @@
                     "image": "images/a1/image_a1_1_2.jpg",
                     "prompt": "Bien sûr. Est-ce que je peux voir votre carte d'identité, s'il vous plaît ?",
                     "sampleAnswer": "Oui, bien sûr. Voici ma carte d'identité.",
+                    "sampleAnswerByAMale": true,
                     "audioId": "fr_mock_a1_1_task2_2",
                     "answerAudioId": "fr_answers_a1_1_task2_2"
                 },
@@ -61,6 +64,7 @@
                     "image": "images/a1/image_a1_1_3.jpg",
                     "prompt": "Merci. C'est bon. Ça fait huit francs cinquante. Comment voulez-vous payer ?",
                     "sampleAnswer": "Je paye en espèces. Voici un billet de dix francs.",
+                    "sampleAnswerByAMale": true,
                     "audioId": "fr_mock_a1_1_task2_3",
                     "answerAudioId": "fr_answers_a1_1_task2_3"
                 },
@@ -69,6 +73,7 @@
                     "image": "images/a1/image_a1_1_4.jpg",
                     "prompt": "Voici votre monnaie et votre ticket de caisse. Merci et bonne journée !",
                     "sampleAnswer": "Merci beaucoup, Madame. Au revoir et bonne journée !",
+                    "sampleAnswerByAMale": true,
                     "audioId": "fr_mock_a1_1_task2_4",
                     "answerAudioId": "fr_answers_a1_1_task2_4"
                 }
@@ -79,6 +84,7 @@
             "template": "a1_4_q",
             "prompt": "Est-ce que vous allez souvent au supermarché ? Quelles sont les choses qu'on peut voir près de la caisse du supermarché ?",
             "sampleAnswer": "Oui, je vais au supermarché deux fois par semaine. Près de la caisse, on peut voir des sacs en plastique, des chewing-gums, des petits bonbons, des chocolats et des journaux. On peut aussi voir le tapis roulant pour poser les articles et l'écran qui montre les prix.",
+            "sampleAnswerByAMale": true,
             "audioId": "fr_mock_a1_1_task3",
             "answerAudioId": "fr_answers_a1_1_task3"
         },

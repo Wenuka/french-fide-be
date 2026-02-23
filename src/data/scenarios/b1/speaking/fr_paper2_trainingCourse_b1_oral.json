@@ -16,6 +16,7 @@
             "prompt": "Pourquoi la formation est-elle importante pour un emploi ?",
             "audioId": "fr_mock_b1_2_task1",
             "sampleAnswer": "La formation est très importante pour un emploi parce qu'elle nous aide à mieux comprendre notre travail. Quand on est bien formé, on fait moins d'erreurs et on se sent plus à l'aise. La formation permet aussi d'apprendre de nouvelles compétences et de progresser dans sa carrière.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_b1_2_task1"
         },
         {
@@ -24,6 +25,7 @@
             "prompt": "Quelle est la différence entre apprendre à l'école et apprendre au travail ?",
             "audioId": "fr_mock_b1_2_task2",
             "sampleAnswer": "À l'école, on apprend surtout la théorie. On lit des livres, on écoute le professeur et on passe des examens. Au travail, c'est très différent parce qu'on apprend en faisant les choses. Par exemple, on peut observer un collègue et ensuite essayer soi-même. À l'école, on a plus de temps pour comprendre, mais au travail, il faut souvent apprendre vite. Je pense que les deux sont importants parce que la théorie nous donne les bases et la pratique nous rend plus efficaces.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_b1_2_task2"
         },
         {
@@ -32,6 +34,7 @@
             "prompt": "Quel était votre premier emploi et comment avez-vous appris à le faire ?",
             "audioId": "fr_mock_b1_2_task3",
             "sampleAnswer": "Mon premier emploi était dans un supermarché. Je travaillais à la caisse le week-end quand j'étais étudiant. Au début, je ne savais pas comment utiliser la caisse et j'avais un peu peur de faire des erreurs. Un collègue plus expérimenté m'a montré comment faire pendant deux jours. Il m'a appris à scanner les produits, à rendre la monnaie et à être aimable avec les clients. Après une semaine, je me sentais beaucoup plus à l'aise.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_b1_2_task3"
         },
         {
@@ -40,6 +43,7 @@
             "prompt": "Quelles compétences aimeriez-vous améliorer à l'avenir ?",
             "audioId": "fr_mock_b1_2_task4",
             "sampleAnswer": "À l'avenir, j'aimerais surtout améliorer mon niveau en informatique. Aujourd'hui, beaucoup d'emplois demandent de savoir utiliser des logiciels spéciaux. Je voudrais aussi améliorer mon anglais parce que c'est utile dans beaucoup de métiers. Si j'avais plus de temps, je suivrais une formation en gestion pour peut-être devenir responsable d'équipe un jour. Je pense qu'il est important de continuer à apprendre tout au long de sa vie.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "fr_answers_b1_2_task4"
         },
         {

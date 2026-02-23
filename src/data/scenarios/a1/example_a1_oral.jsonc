@@ -37,6 +37,7 @@
             "prompt": "xxxxx", // Generate Content: In Target language: "Now we are going to talk about {subject}. What do you see in the images? Where are they? What is happening here?"
             "audioId": "fr_mock_a1_0_task1", // pattern: f"{language}_mock_a1_{paperId}_task1"
             "sampleAnswer": "xxxxx", // Generate Content: Based on `image_description`, describe only what is visible (people, clothes, objects, setting). The user may guess what's happening but should not explain the full story. ~6-7 sentences, <70 words.
+            "sampleAnswerByAMale": true, // Input: narrator_is_male
             "answerAudioId": "fr_answers_a1_0_task1" // pattern: f"{language}_answers_a1_{paperId}_task1"
         },
         // Task 2: Roleplay / Dialogue
@@ -61,6 +62,7 @@
                     "image": "images/a1/image_a1_0_1.jpg", // pattern: f"images/a1/image_a1_{paperId}_1.jpg"
                     "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 1, based on image_scenarios[0] and examiners_character.
                     "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 1. Simple sentence.
+                    "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
                     "audioId": "fr_mock_a1_0_task2_1", // pattern: f"{language}_mock_a1_{paperId}_task2_1"
                     "answerAudioId": "fr_answers_a1_0_task2_1" // pattern: f"{language}_answers_a1_{paperId}_task2_1"
                 },
@@ -69,6 +71,7 @@
                     "image": "images/a1/image_a1_0_2.jpg", // pattern: f"images/a1/image_a1_{paperId}_2.jpg"
                     "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 2, based on image_scenarios[1] and examiners_character.
                     "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 2. Simple sentence.
+                    "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
                     "audioId": "fr_mock_a1_0_task2_2", // pattern: f"{language}_mock_a1_{paperId}_task2_2"
                     "answerAudioId": "fr_answers_a1_0_task2_2" // pattern: f"{language}_answers_a1_{paperId}_task2_2"
                 },
@@ -77,6 +80,7 @@
                     "image": "images/a1/image_a1_0_3.jpg", // pattern: f"images/a1/image_a1_{paperId}_3.jpg"
                     "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 3, based on image_scenarios[2] and examiners_character.
                     "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 3. Simple sentence.
+                    "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
                     "audioId": "fr_mock_a1_0_task2_3", // pattern: f"{language}_mock_a1_{paperId}_task2_3"
                     "answerAudioId": "fr_answers_a1_0_task2_3" // pattern: f"{language}_answers_a1_{paperId}_task2_3"
                 },
@@ -85,6 +89,7 @@
                     "image": "images/a1/image_a1_0_4.jpg", // pattern: f"images/a1/image_a1_{paperId}_4.jpg"
                     "prompt": "xxxx", // Generate Content: In Target language: The examiner's dialogue for image 4, based on image_scenarios[3] and examiners_character.
                     "sampleAnswer": "xxxx", // Generate Content: In Target language: The user's response for image 4. Simple sentence.
+                    "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
                     "audioId": "fr_mock_a1_0_task2_4", // pattern: f"{language}_mock_a1_{paperId}_task2_4"
                     "answerAudioId": "fr_answers_a1_0_task2_4" // pattern: f"{language}_answers_a1_{paperId}_task2_4"
                 }
@@ -96,6 +101,7 @@
             "template": "a1_4_q",
             "prompt": "xxxx", // Generate Content: In Target language: `task3_question`
             "sampleAnswer": "xxxx", // Generate Content: In Target language: sample answer for `task3_question`. Use simple day-to-day vocabulary. // ~4-5 sentences. < 70 words
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "audioId": "fr_mock_a1_0_task3", // pattern: f"{language}_mock_a1_{paperId}_task3"
             "answerAudioId": "fr_answers_a1_0_task3" // pattern: f"{language}_answers_a1_{paperId}_task3"
         },

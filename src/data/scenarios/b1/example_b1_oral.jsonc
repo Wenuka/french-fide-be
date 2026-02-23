@@ -7,6 +7,7 @@
 // 4. questions: array of 4 strings (Four distinct open questions for Task 1, 2, 3, and 4)
 // Note: All "Generated Content" should be in the language specified by the `language` field.
 // Use A2-B1 level vocabulary (day to day words). Do not use overly complex grammar, but show ability to use past/imparfait/future/conditional if appropriate.
+// all sample answers assuming a male narrator (unless stated otherwise). Use "sampleAnswerByAMale": true/false accordingly.
 // Name the file as f"{language}_paper{paperId}_{topic}_b1_oral.json"
 {
     "level": "B1",
@@ -28,6 +29,7 @@
             "prompt": "xxxxx", // Input: questions[0]
             "audioId": "fr_mock_b1_0_task1", // pattern: f"{language}_mock_b1_{paperId}_task1"
             "sampleAnswer": "xxxxx", // Generate Content: Create a sample answer for questions[0]. ~40-50 words. Simple introduction/anecdote.
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_b1_0_task1" // pattern: f"{language}_answers_b1_{paperId}_task1"
         },
         // Task 2: Question 2
@@ -37,6 +39,7 @@
             "prompt": "xxxxx", // Input: questions[1]
             "audioId": "fr_mock_b1_0_task2", // pattern: f"{language}_mock_b1_{paperId}_task2"
             "sampleAnswer": "xxxxx", // Generate Content: Create a sample answer for questions[1]. ~80 words. Use different easy ways of comparisons as required. No hard grammar, A2-B1 level.
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_b1_0_task2" // pattern: f"{language}_answers_b1_{paperId}_task2"
         },
         // Task 3: Question 3
@@ -46,6 +49,7 @@
             "prompt": "xxxxx", // Input: questions[2]
             "audioId": "fr_mock_b1_0_task3", // pattern: f"{language}_mock_b1_{paperId}_task3"
             "sampleAnswer": "xxxxx", // Generate Content: Create a sample answer for questions[2]. ~80 words. Use A2-B1 vocabulary. Use past tense if recounting an experience. No hard grammar rules, A2-B1 level.
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_b1_0_task3" // pattern: f"{language}_answers_b1_{paperId}_task3"
         },
         // Task 4: Question 4
@@ -55,6 +59,7 @@
             "prompt": "xxxxx", // Input: questions[3]
             "audioId": "fr_mock_b1_0_task4", // pattern: f"{language}_mock_b1_{paperId}_task4"
             "sampleAnswer": "xxxxx", // Generate Content: Create a sample answer for questions[3]. ~80 words. Use conditional if hypothetical, or future if about future. No hard grammar rules, A2-B1 level.
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_b1_0_task4" // pattern: f"{language}_answers_b1_{paperId}_task4"
         },
         // End

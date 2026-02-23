@@ -16,6 +16,7 @@
             "prompt": "Was ist Ihr Lieblingsfest? Warum mögen Sie es?",
             "audioId": "de_mock_b1_1_task1",
             "sampleAnswer": "Mein Lieblingsfest ist Weihnachten. Ich mag dieses Fest, weil sich die ganze Familie trifft. Ich koche sehr gerne ein großes Essen, schmücke mit meinen Kindern den Baum und wir geben uns Geschenke. Die Stimmung ist immer magisch und sehr schön.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "de_answers_b1_1_task1"
         },
         {
@@ -24,6 +25,7 @@
             "prompt": "Mögen Sie lieber kleine oder große Partys? Warum?",
             "audioId": "de_mock_b1_1_task2",
             "sampleAnswer": "Ich mag kleine Partys lieber, weil sie persönlicher sind. Auf einer kleinen Party ist es einfacher, mit allen zu sprechen und seinen Freunden richtig zuzuhören. Große Partys sind für mich oft zu laut und anstrengend. Man verbringt auch weniger Zeit mit jeder Person. Außerdem kostet eine kleine Party weniger Geld. Gemütlichkeit und gute Gespräche sind mir wichtiger, als viele Gäste zu haben.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "de_answers_b1_1_task2"
         },
         {
@@ -32,6 +34,7 @@
             "prompt": "Auf welcher Feier waren Sie zuletzt?",
             "audioId": "de_mock_b1_1_task3",
             "sampleAnswer": "Die letzte Feier, auf der ich war, war die Hochzeit meiner Cousine im letzten Monat. Es war ein wunderschöner Tag. Die Zeremonie war in einem schönen Park. Danach haben wir in einem großen Restaurant gegessen. Ich habe meine Familie getroffen, die ich lange nicht gesehen hatte. Wir haben gut gegessen, getanzt und sind sehr spät nach Hause gekommen. Es war ein unvergesslicher Tag.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "de_answers_b1_1_task3"
         },
         {
@@ -40,6 +43,7 @@
             "prompt": "Wie möchten Sie Ihren nächsten Geburtstag feiern?",
             "audioId": "de_mock_b1_1_task4",
             "sampleAnswer": "An meinem nächsten Geburtstag möchte ich ein Essen in meinem Garten machen, wenn das Wetter gut ist. Ich würde alle meine engen Freunde und meine Familie einladen. Ich würde Fleisch, Salate und einen Schokoladenkuchen machen. Wir könnten zusammen Musik hören. Wenn es regnet, reserviere ich vielleicht einen Tisch in einem guten italienischen Restaurant. Das Wichtigste für mich ist, eine gute Zeit mit den Menschen zu verbringen, die ich liebe.",
+            "sampleAnswerByAMale": true,
             "answerAudioId": "de_answers_b1_1_task4"
         },
         {

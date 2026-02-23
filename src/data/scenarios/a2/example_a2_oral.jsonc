@@ -38,6 +38,7 @@
             "template": "a2_1_q",
             "image": "images/a2/image_a2_0_task1.jpg", // pattern: f"images/a2/image_a2_{paperId}_task1.jpg"
             "sampleAnswer": "xxxxx", // Generate Content: Create a sample answer based on `image_description`. Start with "In this image, I see xxxx."
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_a2_0_task1" // pattern: f"{language}_answers_a2_{paperId}_task1"
         },
         // Task 2: Roleplay / Dialogue
@@ -50,9 +51,12 @@
             "template": "a2_2_q",
             "image": "images/a2/image_a2_0_task1.jpg", // pattern: f"images/a2/image_a2_{paperId}_task1.jpg"
             "prompt": "xxxxx", // Generate Content: "Okay, now we are going to play the situation: {situation}.". Mention roles, eg: "I'm the doctor, you'll be the patient". // Do not add C1,C2 here (user doesn't need to know this)
-            "sampleCharacters": "C1: Agent (man, 40 years old), C2: user (women 25 years old)", // Generate Content: Define C1/C2 based on situation or user input. Gender and age of each character is important.
+            "sampleCharactersByAMale": {
+                "C1": true, // Generate Content <boolean>: depending on the C1 gender // true if a man, false if a woman
+                "C2": false // Generate Content <boolean>: depending on the C2 gender // true if a man, false if a woman
+            }, // A Json // Generate Content: Define C1/C2 based on situation or user input.
             "audioId": "fr_mock_a2_0_task2", // pattern: f"{language}_mock_a2_{paperId}_task2"
-            "sampleAnswer": "xxxxx", // Generate Content: Create a sample dialogue based on `situation` between C1 and C2. Format: "C1: ..., C2: ..., C1: ...". each dialogue should be not too long (max 10-12 words per turn). Total length ~60 seconds. Add one exchange where a character does not say “yes” immediately. eg: If a time is suggested, they should say they’re busy and propose another time instead. idea is to show that the user can react to the situation.
+            "sampleAnswer": "xxxxx", // Generate Content: Create a sample dialogue based on `situation` between C1 and C2. Format: "C1: ..., C2: ..., C1: ...". each dialogue should be not too long (max 10-12 words per turn). Total length ~60 seconds. Add one exchange where a character does not say "yes" immediately. eg: If a time is suggested, they should say they're busy and propose another time instead. idea is to show that the user can react to the situation.
             "answerAudioId": "fr_answers_a2_0_task2" // pattern: f"{language}_answers_a2_{paperId}_task2"
         },
         // Task 3: Questions
@@ -66,6 +70,7 @@
             "prompt": "xxxxx", // Input: questions[0]
             "audioId": "fr_mock_a2_0_task3_part1", // pattern: f"{language}_mock_a2_{paperId}_task3_part1"
             "sampleAnswer": "xxxxx", // Generate Content: Create sample answer for questions[0]. ~50-70 words. Use day to day easy vocabulary.
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_a2_0_task3_part1", // pattern: f"{language}_answers_a2_{paperId}_task3_part1"
             "note": ""
         },
@@ -75,6 +80,7 @@
             "prompt": "xxxxx", // Input: questions[1]
             "audioId": "fr_mock_a2_0_task3_part2", // pattern: f"{language}_mock_a2_{paperId}_task3_part2"
             "sampleAnswer": "xxxxx", // Generate Content: Create sample answer for questions[1]. ~50-70 words. Use day to day easy vocabulary. Try to use different tenses (as required in the question).
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_a2_0_task3_part2" // pattern: f"{language}_answers_a2_{paperId}_task3_part2"
         },
         {
@@ -83,6 +89,7 @@
             "prompt": "xxxxx", // Input: questions[2]
             "audioId": "fr_mock_a2_0_task3_part3", // pattern: f"{language}_mock_a2_{paperId}_task3_part3"
             "sampleAnswer": "xxxxx", // Generate Content: Create sample answer for questions[2]. ~50-70 words. Use day to day easy vocabulary. Try to use different tenses (as required in the question).
+            "sampleAnswerByAMale": true, // Generate Content <boolean>: depending on the sampleAnswer gender
             "answerAudioId": "fr_answers_a2_0_task3_part3" // pattern: f"{language}_answers_a2_{paperId}_task3_part3"
         },
         // End
