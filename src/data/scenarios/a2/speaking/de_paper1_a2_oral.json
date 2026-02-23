@@ -21,7 +21,7 @@
         {
             "id": 3,
             "template": "a2_1_q",
-            "image": "image_a2_1_task1.jpg",
+            "image": "images/a2/image_a2_1_task1.jpg",
             "sampleAnswer": "Auf diesem Bild sehe ich eine Frau, die draußen auf dem Boden sitzt. Sie trägt einen Fahrradhelm, eine Jacke und eine lange Hose. Neben ihr liegt ein kaputtes Fahrrad. Es sieht so aus, als hätte sie einen Unfall oder eine Panne gehabt. Sie hält ein Handy in der Hand und ruft jemanden an. In der Gedankenblase sieht man einen gut gekleideten Mann, vielleicht einen Immobilienmakler oder Vermieter, der vor einem Haus telefoniert. Die Frau sieht ein bisschen besorgt aus.",
             "answerAudioId": "de_answers_a2_1_task1"
         },
@@ -32,7 +32,7 @@
         {
             "id": 5,
             "template": "a2_2_q",
-            "image": "image_a2_1_task1.jpg",
+            "image": "images/a2/image_a2_1_task1.jpg",
             "prompt": "Sie müssen die folgende Situation spielen: Diese Frau hat einen Termin für eine Wohnungsbesichtigung, aber sie hatte ein Problem mit ihrem Fahrrad. Sie muss den Termin absagen. Sie rufen die Verwaltung an, um die Situation zu erklären. Ich spiele den Immobilienmakler (C1), Sie spielen die Frau (C2).",
             "sampleCharacters": "C1: Immobilienmakler (Mann, 40 Jahre alt), C2: Frau (25 Jahre alt)",
             "audioId": "de_mock_a2_1_task2",

@@ -14,10 +14,10 @@
             "id": 1,
             "template": "a1_1_q",
             "images": [
-                "image_a1_1_1.jpg",
-                "image_a1_1_2.jpg",
-                "image_a1_1_3.jpg",
-                "image_a1_1_4.jpg"
+                "images/a1/image_a1_1_1.jpg",
+                "images/a1/image_a1_1_2.jpg",
+                "images/a1/image_a1_1_3.jpg",
+                "images/a1/image_a1_1_4.jpg"
             ],
             "prompt": "Jetzt sprechen wir über den Supermarkt. Was sehen Sie auf den Bildern? Wo sind die Personen? Was passiert hier?",
             "audioId": "de_mock_a1_1_task1",
@@ -28,10 +28,10 @@
             "id": 2,
             "template": "a1_2_i",
             "images": [
-                "image_a1_1_1.jpg",
-                "image_a1_1_2.jpg",
-                "image_a1_1_3.jpg",
-                "image_a1_1_4.jpg"
+                "images/a1/image_a1_1_1.jpg",
+                "images/a1/image_a1_1_2.jpg",
+                "images/a1/image_a1_1_3.jpg",
+                "images/a1/image_a1_1_4.jpg"
             ],
             "prompt": "Das ist die Situation: Ein Kunde kauft eine Flasche Wein im Supermarkt. Ich spiele die Kassiererin und Sie spielen den Kunden.",
             "audioId": "de_mock_a1_1_task2_intro"
@@ -42,7 +42,7 @@
             "steps": [
                 {
                     "step": 1,
-                    "image": "image_a1_1_1.jpg",
+                    "image": "images/a1/image_a1_1_1.jpg",
                     "prompt": "Guten Tag! Willkommen! Was kann ich für Sie tun?",
                     "sampleAnswer": "Guten Tag. Ich möchte diese Flasche Wein kaufen, bitte.",
                     "audioId": "de_mock_a1_1_task2_1",
@@ -50,7 +50,7 @@
                 },
                 {
                     "step": 2,
-                    "image": "image_a1_1_2.jpg",
+                    "image": "images/a1/image_a1_1_2.jpg",
                     "prompt": "Natürlich. Kann ich bitte Ihren Ausweis sehen?",
                     "sampleAnswer": "Ja, natürlich. Hier ist mein Ausweis.",
                     "audioId": "de_mock_a1_1_task2_2",
@@ -58,7 +58,7 @@
                 },
                 {
                     "step": 3,
-                    "image": "image_a1_1_3.jpg",
+                    "image": "images/a1/image_a1_1_3.jpg",
                     "prompt": "Danke. Alles in Ordnung. Das macht acht Franken fünfzig. Wie möchten Sie bezahlen?",
                     "sampleAnswer": "Ich bezahle bar. Hier ist ein Zehn-Franken-Schein.",
                     "audioId": "de_mock_a1_1_task2_3",
@@ -66,7 +66,7 @@
                 },
                 {
                     "step": 4,
-                    "image": "image_a1_1_4.jpg",
+                    "image": "images/a1/image_a1_1_4.jpg",
                     "prompt": "Hier ist Ihr Wechselgeld und Ihr Kassenbon. Danke und schönen Tag noch!",
                     "sampleAnswer": "Vielen Dank. Auf Wiedersehen und schönen Tag noch!",
                     "audioId": "de_mock_a1_1_task2_4",
