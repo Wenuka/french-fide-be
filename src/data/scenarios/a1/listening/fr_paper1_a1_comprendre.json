@@ -17,7 +17,7 @@
             "recordingId": "F_001",
             "audioFile": "F_001.mp3",
             "type": "listening_situation",
-            "image": "instructor.png",
+            "image": "instructor.jpg",
             "prompt": "Écoutez la situation globale avant de répondre aux questions.",
             "timerSeconds": 60
         },
