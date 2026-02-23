@@ -35,7 +35,7 @@
         "a1_4_q": {
             "type": "open_question",
             "subSection": "Tâche 3",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "estimatedTime": "1 minute",
             "timerSeconds": 60,
             "recordable": true,
@@ -66,7 +66,7 @@
         "a2_0_q": {
             "type": "open_question",
             "subSection": "Introduction",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "prompt": "Est-ce que vous pouvez vous présenter en quelques mots ?",
             "tips": [
                 "Utilisez une réponse préparée pour vous présenter.",
@@ -129,7 +129,7 @@
         "a2_3_qi": {
             "type": "open_question",
             "subSection": "Tâche 3",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Essayez d’utiliser le passé, le présent et le futur.",
                 "Donnez votre opinion si possible.",
@@ -163,7 +163,7 @@
         "b1_q1": {
             "type": "open_question",
             "subSection": "Question 1",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Normalement, c'est une question générale pour introduire le sujet."
             ],
@@ -174,7 +174,7 @@
         "b1_q2": {
             "type": "open_question",
             "subSection": "Question 2",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Comme celle-ci, une des questions sera une comparaison."
             ],
@@ -185,7 +185,7 @@
         "b1_q3": {
             "type": "open_question",
             "subSection": "Question 3",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Comme celle-ci, une des questions portera sur le passé.",
                 "Essayez d'utiliser le passé composé ou l'imparfait."
@@ -197,7 +197,7 @@
         "b1_q4": {
             "type": "open_question",
             "subSection": "Question 4",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Comme celle-ci, une des questions portera sur le futur ou une situation hypothétique.",
                 "Essayez d'utiliser le futur ou le conditionnel."
@@ -252,7 +252,7 @@
         "a1_4_q": {
             "type": "open_question",
             "subSection": "Aufgabe 3",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "estimatedTime": "1 Minute",
             "timerSeconds": 60,
             "recordable": true,
@@ -283,7 +283,7 @@
         "a2_0_q": {
             "type": "open_question",
             "subSection": "Einleitung",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "prompt": "Können Sie sich bitte kurz vorstellen?",
             "tips": [
                 "Benutzen Sie eine vorbereitete Antwort.",
@@ -346,7 +346,7 @@
         "a2_3_qi": {
             "type": "open_question",
             "subSection": "Aufgabe 3",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Versuchen Sie, Vergangenheit, Gegenwart und Zukunft zu benutzen.",
                 "Sagen Sie Ihre Meinung, wenn es passt.",
@@ -380,7 +380,7 @@
         "b1_q1": {
             "type": "open_question",
             "subSection": "Frage 1",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Dies ist eine allgemeine Frage, um das Thema einzuleiten.",
                 "Sagen Sie Ihre persönliche Meinung oder erzählen Sie eine einfache Anekdote."
@@ -392,7 +392,7 @@
         "b1_q2": {
             "type": "open_question",
             "subSection": "Frage 2",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Ähnlich wie diese Frage wird eine der Fragen eine Vergleichsfrage sein."
             ],
@@ -403,7 +403,7 @@
         "b1_q3": {
             "type": "open_question",
             "subSection": "Frage 3",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Ähnlich wie diese Frage wird eine der Fragen sich auf die Vergangenheit beziehen.",
                 "Versuchen Sie, das Perfekt oder Präteritum zu verwenden."
@@ -415,7 +415,7 @@
         "b1_q4": {
             "type": "open_question",
             "subSection": "Frage 4",
-            "image": "images/instructor.jpg",
+            "image": "images/image_openquestion.jpg",
             "tips": [
                 "Ähnlich wie diese Frage wird eine der Fragen sich auf die Zukunft oder eine hypothetische Situation beziehen.",
                 "Versuchen Sie, das Futur oder den Konjunktiv zu verwenden."
