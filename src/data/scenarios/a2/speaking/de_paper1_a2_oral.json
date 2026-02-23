@@ -3,7 +3,7 @@
     "language": "de",
     "paperId": 1,
     "sectionName": "de_paper1_a2_spoken",
-    "title": "Sprechen - Teil 1",
+    "title": "Wohnung",
     "estimatedTime": "7-10 Minuten",
     "items": [
         {
@@ -22,7 +22,7 @@
             "id": 3,
             "template": "a2_1_q",
             "image": "images/a2/image_a2_1_task1.jpg",
-            "sampleAnswer": "Auf diesem Bild sehe ich eine Frau, die draußen auf dem Boden sitzt. Sie trägt einen Fahrradhelm, eine Jacke und eine lange Hose. Neben ihr liegt ein kaputtes Fahrrad. Es sieht so aus, als hätte sie einen Unfall oder eine Panne gehabt. Sie hält ein Handy in der Hand und ruft jemanden an. In der Gedankenblase sieht man einen gut gekleideten Mann, vielleicht einen Immobilienmakler oder Vermieter, der vor einem Haus telefoniert. Die Frau sieht ein bisschen besorgt aus.",
+            "sampleAnswer": "Auf diesem Bild sehe ich eine Frau mit kurzen Haaren. Sie sitzt an einem Tisch und liest eine Broschüre. Sie telefoniert auch gerade. Auf dem Tisch stehen ein Laptop und eine Tasse Kaffee. Oben rechts gibt es eine Blase. In der Blase sieht man einen gut gekleideten Mann, der ans Telefon geht. Er trägt ein Hemd, eine Krawatte und einen Mantel. Das Wetter sieht schön aus.",
             "answerAudioId": "de_answers_a2_1_task1"
         },
         {
@@ -33,10 +33,10 @@
             "id": 5,
             "template": "a2_2_q",
             "image": "images/a2/image_a2_1_task1.jpg",
-            "prompt": "Sie müssen die folgende Situation spielen: Diese Frau hat einen Termin für eine Wohnungsbesichtigung, aber sie hatte ein Problem mit ihrem Fahrrad. Sie muss den Termin absagen. Sie rufen die Verwaltung an, um die Situation zu erklären. Ich spiele den Immobilienmakler (C1), Sie spielen die Frau (C2).",
-            "sampleCharacters": "C1: Immobilienmakler (Mann, 40 Jahre alt), C2: Frau (25 Jahre alt)",
+            "prompt": "Sie müssen die folgende Situation spielen: Diese Frau sucht eine neue Wohnung. Sie ruft einen Immobilienmakler an, um einen Besichtigungstermin zu vereinbaren. Ich spiele den Immobilienmakler, Sie spielen die Frau.",
+            "sampleCharacters": "C1: Immobilienmakler (Mann, 40 Jahre alt), C2: Frau (30 Jahre alt)",
             "audioId": "de_mock_a2_1_task2",
-            "sampleAnswer": "C1: Guten Tag. Hier ist Patrick. Was kann ich für Sie tun?\nC2: Guten Tag. Ich heiße Frau Mia. Ich hatte heute um 14 Uhr einen Termin mit Ihnen, um die Wohnung in der Bahnhofstraße zu besichtigen.\nC1: Ah ja, guten Tag Frau Mia. Ich erwarte Sie.\nC2: Es tut mir sehr leid, aber ich hatte auf dem Weg ein Problem mit meinem Fahrrad. Es ist kaputt und ich kann nicht pünktlich kommen.\nC1: Oh, das ist ärgerlich. Ich hoffe, Sie sind nicht verletzt?\nC2: Nein, es geht mir gut, danke. Aber ich muss unseren Termin absagen. Ich kann heute nicht kommen.\nC1: Ich verstehe. Das ist kein Problem. Möchten Sie einen neuen Termin vereinbaren?\nC2: Ja, bitte. Wäre es möglich, den Termin auf morgen oder übermorgen zu verschieben?\nC1: Lassen Sie mich in meinen Kalender schauen... Morgen um 10 Uhr, passt Ihnen das?\nC2: Ja, das ist perfekt. Vielen Dank für Ihr Verständnis.\nC1: Gern geschehen. Bis morgen dann. Auf Wiederhören.\nC2: Auf Wiederhören.",
+            "sampleAnswer": "C1: Guten Tag. Immo Plus Agentur, Patrick am Apparat. Was kann ich für Sie tun?\nC2: Guten Tag. Mein Name ist Sophie. Ich habe Ihre Anzeige für die Dreizimmerwohnung im Stadtzentrum gesehen. Ist sie noch verfügbar?\nC1: Ja, natürlich. Die Wohnung ist noch frei. Möchten Sie sie besichtigen?\nC2: Ja, ich möchte gerne einen Termin für eine Besichtigung vereinbaren. Geht das diese Woche?\nC1: Natürlich. Ich kann Ihnen Mittwoch um 14 Uhr vorschlagen. Passt Ihnen das?\nC2: Am Mittwoch kann ich leider nicht. Ich arbeite den ganzen Tag. Wäre Donnerstag möglich?\nC1: Donnerstag... ja, um 10 Uhr morgens. Passt Ihnen das?\nC2: Ja, Donnerstag um 10 Uhr, das passt mir perfekt. Darf ich Sie noch etwas zur Wohnung fragen?\nC1: Ja, natürlich. Sie hat 75 Quadratmeter, ist im zweiten Stock und die Miete beträgt 1200 Franken pro Monat.\nC2: In Ordnung, danke. Hat die Wohnung einen Balkon?\nC1: Ja, es gibt einen kleinen Balkon im Wohnzimmer. Also, wir sagen Donnerstag um 10 Uhr?\nC2: Ja, das ist notiert. Vielen Dank. Bis Donnerstag!\nC1: Bis Donnerstag. Auf Wiederhören.\nC2: Auf Wiederhören.",
             "answerAudioId": "de_answers_a2_1_task2"
         },
         {
@@ -46,26 +46,26 @@
         {
             "id": 7,
             "template": "a2_3_qi",
-            "prompt": "Was ist Ihnen bei einer Wohnung wichtig? ... Warum?",
+            "prompt": "Was suchen Sie in einer Wohnung? Warum?",
             "audioId": "de_mock_a2_1_task3_part1",
-            "sampleAnswer": "Für mich ist bei einer Wohnung das Licht am wichtigsten. Ich brauche einen hellen Ort mit großen Fenstern, denn das gibt mir Energie und es ist viel angenehmer, dort zu leben. Dann ist mir auch die Küche sehr wichtig. Ich koche gerne für meine Familie und Freunde, deshalb brauche ich eine Küche, die groß genug und gut ausgestattet ist, um gutes Essen zuzubereiten. Schließlich suche ich auch eine ruhige Gegend, weit weg vom Verkehrslärm, damit ich gut schlafen und mich nach der Arbeit ausruhen kann.",
+            "sampleAnswer": "In einer Wohnung suche ich zuerst einen hellen Ort mit großen Fenstern. Natürliches Licht ist mir sehr wichtig, weil es den Raum angenehmer macht. Dann brauche ich eine große Küche, denn ich koche gerne für meine Freunde. Ich bevorzuge auch eine ruhige Gegend, nicht zu weit von den öffentlichen Verkehrsmitteln. Ein Balkon ist auch sehr schön, um morgens Kaffee zu trinken und das gute Wetter zu genießen.",
             "answerAudioId": "de_answers_a2_1_task3_part1",
             "note": ""
         },
         {
             "id": 8,
             "template": "a2_3_qi",
-            "prompt": "Haben Sie (oder jemand, den Sie kennen) schon einmal eine Wohnung gesucht? Wie haben Sie das gemacht?",
+            "prompt": "Was haben Sie gemacht, als Sie Ihre aktuelle Wohnung gesucht haben?",
             "audioId": "de_mock_a2_1_task3_part2",
-            "sampleAnswer": "Ja, natürlich. Ich habe meine Wohnung letztes Jahr gesucht. Zuerst habe ich mir Anzeigen im Internet angesehen, auf Seiten wie FlatFox. Das ist sehr praktisch. Ich habe auch meine Freunde und Kollegen gefragt, ob sie freie Wohnungen kennen. Ich habe fünf Wohnungen besichtigt, bis ich die gefunden habe, die mir wirklich gefiel und nicht zu teuer war.",
+            "sampleAnswer": "Als ich meine aktuelle Wohnung gesucht habe, habe ich zuerst Anzeigen im Internet angeschaut, auf Seiten wie Homegate und FlatFox. Ich habe auch Freunde gefragt, ob sie freie Wohnungen kennen. Dann habe ich mehrere Immobilienagenturen angerufen, um Termine zu vereinbaren. Ich habe sechs Wohnungen in zwei Wochen besichtigt. Schließlich habe ich eine Wohnung gefunden, die mir gut gefallen hat und die Miete war nicht zu teuer.",
             "answerAudioId": "de_answers_a2_1_task3_part2"
         },
         {
             "id": 9,
             "template": "a2_3_qi",
-            "prompt": "Was haben Sie gemacht, nachdem Sie in Ihre neue Wohnung eingezogen sind?",
+            "prompt": "Was sind die Vorteile und Nachteile, in einem kleinen Dorf oder in einer großen Stadt zu leben?",
             "audioId": "de_mock_a2_1_task3_part3",
-            "sampleAnswer": "Nach dem Einzug habe ich zuerst die ganze Wohnung geputzt. Dann habe ich meine Kartons ausgepackt und meine Sachen in die Schränke geräumt. Das hat lange gedauert! Ich habe auch ein paar neue Möbel gekauft, zum Beispiel ein Sofa für das Wohnzimmer. Als alles fertig war, habe ich meine Freunde und meine Familie zu einer kleinen Party in mein neues Zuhause eingeladen.",
+            "sampleAnswer": "In einem kleinen Dorf zu leben hat Vorteile und Nachteile. Es ist ruhiger, die Luft ist sauberer und die Mieten sind günstiger. Die Nachbarn kennen sich gut und das ist angenehm. Aber es gibt weniger Geschäfte und Restaurants. Die öffentlichen Verkehrsmittel sind auch seltener. In einer großen Stadt gibt es viel zu tun: Kinos, Museen und Parks. Man findet leicht Arbeit und die Verkehrsmittel sind praktisch. Allerdings ist es lauter, stressiger und die Mieten sind teurer.",
             "answerAudioId": "de_answers_a2_1_task3_part3"
         },
         {

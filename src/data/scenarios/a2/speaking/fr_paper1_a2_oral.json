@@ -3,7 +3,7 @@
     "language": "fr",
     "paperId": 1,
     "sectionName": "fr_paper1_a2_spoken",
-    "title": "Oral - Section 1",
+    "title": "Appartement",
     "estimatedTime": "7-10 minutes",
     "items": [
         {
@@ -22,7 +22,7 @@
             "id": 3,
             "template": "a2_1_q",
             "image": "images/a2/image_a2_1_task1.jpg",
-            "sampleAnswer": "Sur cette image, je vois une femme assise par terre à l'extérieur. Elle porte un casque de vélo, une veste et un pantalon long. À côté d'elle, il y a un vélo cassé. Elle semble avoir eu un accident ou une panne. Elle tient un téléphone portable et elle est en train d'appeler quelqu'un. Dans la bulle, on voit un homme bien habillé, peut-être un agent immobilier ou un propriétaire, qui répond au téléphone devant une maison. La femme a l'air un peu embêtée.",
+            "sampleAnswer": "Sur cette image, je vois une femme avec les cheveux courts. Elle est assise à une table et elle lit une brochure. Elle est aussi en train de téléphoner. Sur la table, il y a un ordinateur portable et une tasse de café. En haut à droite, il y a une bulle. Dans la bulle, on voit un homme bien habillé qui répond au téléphone. Il porte une chemise, une cravate et un manteau. Le temps a l'air beau.",
             "answerAudioId": "fr_answers_a2_1_task1"
         },
         {
@@ -33,10 +33,10 @@
             "id": 5,
             "template": "a2_2_q",
             "image": "images/a2/image_a2_1_task1.jpg",
-            "prompt": "Vous devez jouer la situation suivante : Cette femme a rendez-vous pour visiter un appartement, mais elle a eu un problème avec son vélo. Elle doit annuler le rendez-vous. Vous appelez la gérance pour expliquer la situation. Je joue le rôle de l'agent immobilier (C1), vous jouez le rôle de la femme (C2).",
-            "sampleCharacters": "C1: Agent immobilier (homme, 40 ans), C2: Femme (25 ans)",
+            "prompt": "Vous devez jouer la situation suivante : Cette femme cherche un nouvel appartement. Elle appelle un agent immobilier pour prendre rendez-vous et visiter un appartement. Je joue le rôle de l'agent immobilier, vous jouez le rôle de la femme.",
+            "sampleCharacters": "C1: Agent immobilier (homme, 40 ans), C2: Femme (30 ans)",
             "audioId": "fr_mock_a2_1_task2",
-            "sampleAnswer": "C1: Bonjour. Patrick à l'appareil. Que puis-je faire pour vous ?\nC2: Bonjour Monsieur. Je m'appelle Madame Mia. J'avais rendez-vous avec vous aujourd'hui à 14h pour visiter l'appartement rue de la Gare.\nC1: Ah oui, bonjour Madame Mia. Je vous attends.\nC2: Je suis vraiment désolée, mais j'ai eu un problème avec mon vélo en venant. Il est cassé et je ne peux pas arriver à l'heure.\nC1: Oh, c'est embêtant. Vous n'êtes pas blessée j'espère ?\nC2: Non, ça va, merci. Mais je dois annuler notre rendez-vous. Je ne pourrai pas venir aujourd'hui.\nC1: Je comprends. Ce n'est pas grave. Voulez-vous fixer une autre date ?\nC2: Oui, s'il vous plaît. Est-ce qu'il serait possible de le reporter à demain ou après-demain ?\nC1: Laissez-moi regarder mon agenda... Demain à 10h, cela vous convient ?\nC2: Oui, c'est parfait. Merci beaucoup de votre compréhension, Monsieur.\nC1: Je vous en prie. À demain alors. Au revoir Madame.\nC2: Au revoir Monsieur.",
+            "sampleAnswer": "C1: Bonjour. Agence Immo Plus, Patrick à l'appareil. Que puis-je faire pour vous ?\nC2: Bonjour Monsieur. Je m'appelle Sophie. J'ai vu votre annonce pour l'appartement de trois pièces dans le centre-ville. Est-ce qu'il est encore disponible ?\nC1: Oui, bien sûr. L'appartement est toujours libre. Vous souhaitez le visiter ?\nC2: Oui, j'aimerais bien prendre rendez-vous pour une visite. Est-ce que c'est possible cette semaine ?\nC1: Bien sûr. Je peux vous proposer mercredi à 14h. Cela vous convient ?\nC2: Mercredi, je ne suis pas disponible. Je travaille toute la journée. Est-ce que jeudi serait possible ?\nC1: Jeudi... oui, je peux à 10h le matin. Ça vous va ?\nC2: Oui, jeudi à 10h, c'est parfait pour moi. Est-ce que je peux vous demander quelques informations sur l'appartement ?\nC1: Oui, bien sûr. Il fait 75 mètres carrés, il est au deuxième étage et le loyer est de 1200 francs par mois.\nC2: D'accord, merci. L'appartement a un balcon ?\nC1: Oui, il y a un petit balcon dans le salon. Alors, on dit jeudi à 10h ?\nC2: Oui, c'est noté. Merci beaucoup Monsieur. À jeudi !\nC1: À jeudi, Madame. Au revoir.\nC2: Au revoir.",
             "answerAudioId": "fr_answers_a2_1_task2"
         },
         {
@@ -46,26 +46,26 @@
         {
             "id": 7,
             "template": "a2_3_qi",
-            "prompt": "Qu’est-ce qui est important pour vous dans un appartement ? … Pourquoi ?",
+            "prompt": "Que cherchez-vous dans un appartement ? Pourquoi ?",
             "audioId": "fr_mock_a2_1_task3_part1",
-            "sampleAnswer": "Pour moi, le plus important dans un appartement, c'est d'abord la lumière. J'ai besoin d'un endroit lumineux avec de grandes fenêtres, car cela me donne de l'énergie et c'est beaucoup plus agréable pour vivre au quotidien. Ensuite, la cuisine est aussi très importante pour moi. J'adore cuisiner pour ma famille et mes amis, donc j'ai besoin d'une cuisine assez grande et bien équipée pour préparer de bons repas. Enfin, je cherche aussi un quartier calme, loin du bruit de la circulation, pour pouvoir bien dormir et me reposer après le travail.",
+            "sampleAnswer": "Dans un appartement, je cherche d'abord un endroit lumineux avec de grandes fenêtres. La lumière naturelle est très importante pour moi, parce que cela rend l'espace plus agréable. Ensuite, j'ai besoin d'une cuisine assez grande, car j'aime beaucoup cuisiner pour mes amis. Je préfère aussi un quartier calme, pas trop loin des transports. Enfin, un balcon, c'est très bien pour prendre le café le matin et profiter du beau temps.",
             "answerAudioId": "fr_answers_a2_1_task3_part1",
             "note": ""
         },
         {
             "id": 8,
             "template": "a2_3_qi",
-            "prompt": "Avez-vous (ou quelqu’un que vous connaissez) déjà cherché un appartement ? Comment avez-vous fait ?",
+            "prompt": "Qu'avez-vous fait quand vous cherchiez votre appartement actuel ?",
             "audioId": "fr_mock_a2_1_task3_part2",
-            "sampleAnswer": "Oui, bien sûr. J'ai cherché mon appartement l'année dernière. J'ai commencé par regarder les annonces sur internet, sur des sites comme FlatFox. C'est très pratique. J'ai aussi demandé à mes amis et mes collègues s'ils connaissaient des appartements libres. J'ai visité cinq appartements avant de trouver celui qui me plaisait vraiment et qui n'était pas trop cher.",
+            "sampleAnswer": "Quand je cherchais mon appartement actuel, j'ai d'abord regardé les annonces sur internet, sur des sites comme Homegate et FlatFox. J'ai aussi demandé à des amis s'ils connaissaient des appartements libres. Ensuite, j'ai appelé plusieurs agences immobilières pour prendre des rendez-vous. J'ai visité six appartements en deux semaines. Finalement, j'ai trouvé un appartement qui me plaisait bien et le loyer n'était pas trop cher.",
             "answerAudioId": "fr_answers_a2_1_task3_part2"
         },
         {
             "id": 9,
             "template": "a2_3_qi",
-            "prompt": "Qu'avez-vous fait après avoir emménagé dans votre nouvel appartement ?",
+            "prompt": "Quels sont les avantages et les inconvénients de vivre dans un petit village ou dans une grande ville ?",
             "audioId": "fr_mock_a2_1_task3_part3",
-            "sampleAnswer": "Après avoir emménagé, j'ai d'abord nettoyé tout l'appartement. Ensuite, j'ai défait mes cartons et rangé mes affaires dans les placards. C'était long ! J'ai aussi acheté quelques nouveaux meubles, comme un canapé pour le salon. Une fois que tout était terminé, j'ai invité mes amis et ma famille pour une petite fête dans mon nouveau chez-moi.",
+            "sampleAnswer": "Vivre dans un petit village a des avantages et des inconvénients. C'est plus calme, l'air est plus propre et les loyers sont moins chers. Les voisins se connaissent bien et c'est agréable. Mais il y a moins de magasins et de restaurants. Les transports en commun sont aussi plus rares. En grande ville, il y a beaucoup de choses à faire : des cinémas, des musées et des parcs. On trouve facilement du travail et les transports sont pratiques. Par contre, c'est plus bruyant, plus stressant et les loyers sont plus chers.",
             "answerAudioId": "fr_answers_a2_1_task3_part3"
         },
         {

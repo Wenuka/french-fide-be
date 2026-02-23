@@ -7,8 +7,10 @@
 // 4. situation: string (Scenario for Task 2 involving two characters - C1: Examiner, C2: User). define C1, C2.
 // 5. questions: array of 3 strings (Three distinct questions for Task 3)
 // Note: All "Generated Content" should be in the language specified by the `language` field.
-// Allways use easy vocabulary (A2-B1 user), do not use complex grammar like subjunctive.
+// Allways use easy vocabulary (A2-B1 user), do not use complex grammar like subjunctive. Not too long sentences.
+// all sample answers assuming a male narrator (unless its the dialogue with 2 characters)
 // Name the file as f"{language}_paper{paperId}_a2_oral.json"
+// Very Important: when completing the "propmt" and "sampleAnswer", pay attention to the grammar (used for language learning). It should be always in `language` defined above.
 {
     "level": "A2",
     "language": "fr", // Input: language
@@ -47,10 +49,10 @@
             "id": 5,
             "template": "a2_2_q",
             "image": "images/a2/image_a2_0_task1.jpg", // pattern: f"images/a2/image_a2_{paperId}_task1.jpg"
-            "prompt": "xxxxx", // Generate Content: "Examiner asks the user to play the local situation: {situation}. Mention roles: 'I play agent (C1), you play user (C2)'."
+            "prompt": "xxxxx", // Generate Content: "Okay, now we are going to play the situation: {situation}.". Mention roles, eg: "I'm the doctor, you'll be the patient". // Do not add C1,C2 here (user doesn't need to know this)
             "sampleCharacters": "C1: Agent (man, 40 years old), C2: user (women 25 years old)", // Generate Content: Define C1/C2 based on situation or user input. Gender and age of each character is important.
             "audioId": "fr_mock_a2_0_task2", // pattern: f"{language}_mock_a2_{paperId}_task2"
-            "sampleAnswer": "xxxxx", // Generate Content: Create a sample dialogue based on `situation` between C1 and C2. Format: "C1: ..., C2: ..., C1: ...". each dialogue should be not too long (max 10-12 words per turn). Total length 45-60 seconds.
+            "sampleAnswer": "xxxxx", // Generate Content: Create a sample dialogue based on `situation` between C1 and C2. Format: "C1: ..., C2: ..., C1: ...". each dialogue should be not too long (max 10-12 words per turn). Total length ~60 seconds. Add one exchange where a character does not say “yes” immediately. eg: If a time is suggested, they should say they’re busy and propose another time instead. idea is to show that the user can react to the situation.
             "answerAudioId": "fr_answers_a2_0_task2" // pattern: f"{language}_answers_a2_{paperId}_task2"
         },
         // Task 3: Questions
