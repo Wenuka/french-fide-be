@@ -79,22 +79,25 @@ async function getLeastUsedSections(
     userId: number,
     level: 'A1' | 'A2' | 'B1',
     type: 'Speaking' | 'Listening',
-    count: number = 1
+    count: number = 1,
+    language: string = 'FR'
 ): Promise<number[]> {
+    const langEnum = language.toUpperCase() as "FR" | "EN" | "DE";
+
     // Get all sections for this level and type
     let allSections: { id: number }[] = [];
     if (level === 'A1') {
         allSections = type === 'Speaking'
-            ? await prisma.a1SectionSpeaking.findMany({ select: { id: true } })
-            : await prisma.a1SectionListening.findMany({ select: { id: true } });
+            ? await prisma.a1SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true } })
+            : await prisma.a1SectionListening.findMany({ where: { language: langEnum }, select: { id: true } });
     } else if (level === 'A2') {
         allSections = type === 'Speaking'
-            ? await prisma.a2SectionSpeaking.findMany({ select: { id: true } })
-            : await prisma.a2SectionListening.findMany({ select: { id: true } });
+            ? await prisma.a2SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true } })
+            : await prisma.a2SectionListening.findMany({ where: { language: langEnum }, select: { id: true } });
     } else if (level === 'B1') {
         allSections = type === 'Speaking'
-            ? await prisma.b1SectionSpeaking.findMany({ select: { id: true } })
-            : await prisma.b1SectionListening.findMany({ select: { id: true } });
+            ? await prisma.b1SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true } })
+            : await prisma.b1SectionListening.findMany({ where: { language: langEnum }, select: { id: true } });
     }
 
     if (allSections.length === 0) {
@@ -389,8 +392,10 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
         }
 
         // --- NEW EXAM FLOW ---
+        const language = req.body.language || 'FR';
+
         // Get least-used A2 Speaking section
-        const [leastUsedSpeakingA2Id] = await getLeastUsedSections(userId, 'A2', 'Speaking', 1);
+        const [leastUsedSpeakingA2Id] = await getLeastUsedSections(userId, 'A2', 'Speaking', 1, language);
 
         // Create MockExam with A2 Speaking section
         const exam = await prisma.mockExam.create({
@@ -430,7 +435,7 @@ router.post("/mock/start/listening", requireAuth, async (req: Request, res: Resp
         const userId = await getUserId(req);
         if (!userId) return res.status(401).json({ error: "User not found" });
 
-        const { forceNew, path: rawPath, speakingExamId: speakingExamIdStr } = req.body;
+        const { forceNew, path: rawPath, speakingExamId: speakingExamIdStr, language = 'FR' } = req.body;
         const speakingExamId = speakingExamIdStr ? parseInt(speakingExamIdStr) : undefined;
 
         // Resolve path: from body param OR from a prior speaking exam's selected_path
@@ -448,17 +453,17 @@ router.post("/mock/start/listening", requireAuth, async (req: Request, res: Resp
             }
         }
 
-        console.log(`[LISTEN_START] User ${userId} listening start. path: ${resolvedPath}, speakingExamId: ${speakingExamId}, forceNew: ${forceNew}`);
+        console.log(`[LISTEN_START] User ${userId} listening start. path: ${resolvedPath}, speakingExamId: ${speakingExamId}, forceNew: ${forceNew}, language: ${language}`);
 
         // Pick least-used sections
-        const [a2Id] = await getLeastUsedSections(userId, 'A2', 'Listening', 1);
+        const [a2Id] = await getLeastUsedSections(userId, 'A2', 'Listening', 1, language);
 
         let a1Id: number | undefined;
         let b1Id: number | undefined;
         if (resolvedPath === 'A1') {
-            [a1Id] = await getLeastUsedSections(userId, 'A1', 'Listening', 1);
+            [a1Id] = await getLeastUsedSections(userId, 'A1', 'Listening', 1, language);
         } else if (resolvedPath === 'B1') {
-            [b1Id] = await getLeastUsedSections(userId, 'B1', 'Listening', 1);
+            [b1Id] = await getLeastUsedSections(userId, 'B1', 'Listening', 1, language);
         }
 
         // Create new listening exam (linked sections)
@@ -509,14 +514,14 @@ router.post("/mock/:examId/listening/decision", requireAuth, async (req: Request
         const examId = parseInt(req.params.examId);
         if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
 
-        const { choice } = req.body; // 'A1' or 'B1'
+        const { choice, language = 'FR' } = req.body; // 'A1' or 'B1'
         if (!choice || !['A1', 'B1'].includes(choice)) {
             return res.status(400).json({ error: "Choice must be 'A1' or 'B1'" });
         }
 
-        console.log(`[LISTEN_DECISION] User ${userId} chose ${choice} listening for exam ${examId}`);
+        console.log(`[LISTEN_DECISION] User ${userId} chose ${choice} listening for exam ${examId}, language: ${language}`);
 
-        const [sectionId] = await getLeastUsedSections(userId, choice as 'A1' | 'B1', 'Listening', 1);
+        const [sectionId] = await getLeastUsedSections(userId, choice as 'A1' | 'B1', 'Listening', 1, language);
 
         const updateData: any = { selected_path: choice };
         if (choice === 'A1') updateData.listening_a1_id = sectionId;
@@ -671,16 +676,16 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
         const examId = parseInt(req.params.examId);
         if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
 
-        const { choice } = req.body;
+        const { choice, language = 'FR' } = req.body;
 
-        console.log(`[DECISION] User ${userId} made choice "${choice}" for exam ${examId}`);
+        console.log(`[DECISION] User ${userId} made choice "${choice}" for exam ${examId}, language: ${language}`);
 
         if (!choice) {
             return res.status(400).json({ error: "Missing choice." });
         }
 
         if (choice === "A1") {
-            const [oralId] = await getLeastUsedSections(userId, 'A1', 'Speaking', 1);
+            const [oralId] = await getLeastUsedSections(userId, 'A1', 'Speaking', 1, language);
 
             await prisma.mockExam.update({
                 where: { id: examId },
@@ -702,7 +707,7 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
 
         } else if (choice === "B1") {
             // Options are for Speaking B1 topic selection
-            const [option1Id, option2Id] = await getLeastUsedSections(userId, 'B1', 'Speaking', 2);
+            const [option1Id, option2Id] = await getLeastUsedSections(userId, 'B1', 'Speaking', 2, language);
 
             await prisma.mockExam.update({
                 where: { id: examId },
