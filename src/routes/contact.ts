@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     }
 
     // Lazily create client so server doesn't crash at startup when key is absent
-    const mailgun = new Mailgun(FormData as unknown as new (...args: any[]) => typeof FormData);
+    const mailgun = new (Mailgun as any)(FormData);
     const client = mailgun.client({ username: 'api', key: apiKey, url });
 
     const emailData = {
