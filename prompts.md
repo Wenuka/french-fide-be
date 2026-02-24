@@ -55,3 +55,36 @@ Now, the customer is handing over the cash (show a CHF 10 note).
 keep the above image as reference (keep the same characters/ scene).
 cashier is passing the receipt. the receipt is on the desk, but top part is still under her hand.
 ```
+
+## To generate audio
+
+Todo: optimize this prompt. wrong to say these 9 files. may be there is a better way to do this.
+```
+I want to generate audio for the "prompt" and "sampleAnswer" in these 9 files (using another app).
+give me a json with two keys fr, de , each has a list of dict { id: audioId, text: prompt, "sampleAnswerByAMale": true/false } and {id: answerAudioId, text: sampleAnswer, "sampleAnswerByAMale": true/false}
+i.e for french (paper name starting with fr_ and base_templates in fr section), and similarly for German (de instead of fr), create two sets of audioID -> text map, which i can use to generate mp3.
+for a2 papers (@xx, @xx), id 5, instead of sampleAnswerByAMale, use sampleCharactersByAMale (with a json value)
+idea is to get all the text out of these files, so i can generate mp3 from my other script.
+```
+
+@audio generation (in youtube video gen script)
+```
+write a python function(s) in a new helper function inside helpers/fideprep_helpers.py that can go through the file @beautifulMentionand generate voice using @beautifulMention. save the mp3 with file name "id". "text" should be the content for the audio. "sampleAnswerByAMale" will say whether its a male or female voice. for some instead of the sampleAnswerByAMale, we will have "sampleCharactersByAMale". for them, we have two characters. eg:
+"""
+"sampleCharactersByAMale": {
+                "C1": true,
+                "C2": false
+            }
+"""
+this mean c1 will be a man, c2 a girl. and the text will be ""C1: Bonjour. Agence Immo Plus, Patrick à l'appareil. \nC2: Bonjour Monsieur. Je m'appelle Sophie.\nC1: Oui, bien sûr.\nC2: Oui, j'aimerais bien ". for only this, we need to run a loop for c1, c2. remove the c1,c2, \n tags of course.
+
+save all the generated mp3 inside the "other_data\generated\mock_exam\" and file name is f"{id}.mp3"
+
+we will run this using the @beautifulMention
+
+to the function add a sample_size=None , but if a value is given only the first K audios will be generated. languages will be default to fr, de. but can only use one.
+
+use @beautifulMentionto select the voice (wrt lang/ gender).  always use the first available voice.
+
+add a //TODO: Verify xxxx if you have doubts in the implementation
+```
