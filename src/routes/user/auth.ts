@@ -226,6 +226,12 @@ router.post("/login", requireAuth, async (req: Request, res: Response) => {
  *                 target_lang:
  *                   type: string
  *                   enum: [EN, FR, DE]
+ *                 hasGeneratedDefaultLists:
+ *                   type: boolean
+ *                 hasCustomVocab:
+ *                   type: boolean
+ *                 hasMockExams:
+ *                   type: boolean
  *       401:
  *         description: Unauthorized
  *       500:
@@ -258,6 +264,11 @@ router.get("/profile", requireAuth, async (req: Request, res: Response) => {
       select: { custom_vocab_id: true }
     });
 
+    const hasMockExams = await prisma.mockExam.findFirst({
+      where: { user_id: user.id },
+      select: { id: true }
+    });
+
     res.json({
       uid: user.uid,
       email: user.email,
@@ -266,6 +277,7 @@ router.get("/profile", requireAuth, async (req: Request, res: Response) => {
       target_lang: user.target_lang,
       hasGeneratedDefaultLists: user.has_generated_default_lists,
       hasCustomVocab: !!hasCustomVocab,
+      hasMockExams: !!hasMockExams,
     });
   } catch (err: any) {
     res.status(500).json({ error: "Internal Server Error", message: err?.message });

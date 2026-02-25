@@ -105,6 +105,17 @@ router.put("/profile", requireAuth, async (req: Request, res: Response) => {
             });
         }
 
+        const hasMockExams = await prisma.mockExam.findFirst({
+            where: { user_id: userProfile.id },
+            select: { id: true }
+        });
+
+        if (hasMockExams) {
+            return res.status(400).json({
+                error: "You cannot change the language as you have saved mock exams. Please use a new account if you wish to practice a new language."
+            });
+        }
+
         if (userProfile?.has_generated_default_lists) {
             return res.status(400).json({
                 error: "You cannot change the language as you have already generated the default lists. Please use a new account or reset your progress if you wish to change languages."
