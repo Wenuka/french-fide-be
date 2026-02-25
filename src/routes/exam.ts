@@ -74,14 +74,14 @@ async function getUserId(req: Request) {
     return user ? user.id : null;
 }
 
-// Helper to get least-used sections for a user
-async function getLeastUsedSections(
-    userId: number,
+// Helper to get random sections
+async function getRandomSections(
     level: 'A1' | 'A2' | 'B1',
     type: 'Speaking' | 'Listening',
     count: number = 1,
     language: string = 'FR'
 ): Promise<number[]> {
+    if (!language) language = 'FR';
     const langEnum = language.toUpperCase() as "FR" | "EN" | "DE";
 
     // Get all sections for this level and type
@@ -101,79 +101,18 @@ async function getLeastUsedSections(
     }
 
     if (allSections.length === 0) {
-        throw new Error(`No ${level} ${type} sections available`);
+        throw new Error(`No ${level} ${type} sections available for language ${langEnum}`);
     }
 
-    // Get user's exam history to count section usage
-    const userExams = await prisma.mockExam.findMany({
-        where: { user_id: userId },
-        select: {
-            speaking_a1_id: true,
-            speaking_a2_id: true,
-            speaking_b1_id: true,
-            speaking_b1_option1_id: true,
-            speaking_b1_option2_id: true,
-            listening_a1_id: true,
-            listening_a2_id: true,
-            listening_b1_id: true
-        }
-    });
-
-    // Count usage for each section
-    const usageCount: Record<number, number> = {};
-    allSections.forEach(s => usageCount[s.id] = 0);
-
-    userExams.forEach(exam => {
-        if (type === 'Speaking') {
-            if (level === 'A1' && exam.speaking_a1_id) {
-                usageCount[exam.speaking_a1_id] = (usageCount[exam.speaking_a1_id] || 0) + 1;
-            } else if (level === 'A2' && exam.speaking_a2_id) {
-                usageCount[exam.speaking_a2_id] = (usageCount[exam.speaking_a2_id] || 0) + 1;
-            } else if (level === 'B1') {
-                if (exam.speaking_b1_id) {
-                    usageCount[exam.speaking_b1_id] = (usageCount[exam.speaking_b1_id] || 0) + 1;
-                }
-                if (exam.speaking_b1_option1_id) {
-                    usageCount[exam.speaking_b1_option1_id] = (usageCount[exam.speaking_b1_option1_id] || 0) + 0.5;
-                }
-                if (exam.speaking_b1_option2_id) {
-                    usageCount[exam.speaking_b1_option2_id] = (usageCount[exam.speaking_b1_option2_id] || 0) + 0.5;
-                }
-            }
-        } else {
-            // Listening
-            if (level === 'A1' && exam.listening_a1_id) {
-                usageCount[exam.listening_a1_id] = (usageCount[exam.listening_a1_id] || 0) + 1;
-            } else if (level === 'A2' && exam.listening_a2_id) {
-                usageCount[exam.listening_a2_id] = (usageCount[exam.listening_a2_id] || 0) + 1;
-            } else if (level === 'B1' && exam.listening_b1_id) {
-                usageCount[exam.listening_b1_id] = (usageCount[exam.listening_b1_id] || 0) + 1;
-            }
-        }
-    });
-
-    // Sort sections by usage count (ascending)
-    const sortedSections = allSections
-        .map(s => ({ id: s.id, count: usageCount[s.id] }))
-        .sort((a, b) => a.count - b.count);
-
-    // Get the minimum usage count
-    const minUsage = sortedSections[0].count;
-
-    // Get all sections with minimum usage
-    const leastUsedSections = sortedSections
-        .filter(s => s.count === minUsage)
-        .map(s => s.id);
-
-    // Shuffle the least-used sections
-    const shuffled = leastUsedSections.sort(() => 0.5 - Math.random());
+    // Shuffle all sections
+    const shuffled = allSections.map(s => s.id).sort(() => 0.5 - Math.random());
 
     const result: number[] = [];
     for (let i = 0; i < count; i++) {
         result.push(shuffled[i % shuffled.length]);
     }
 
-    console.log(`[SMART_SELECTION] Selected ${count} ${level} ${type} sections: ${result.join(', ')}`);
+    console.log(`[RANDOM_SELECTION] Selected ${count} ${level} ${type} sections: ${result.join(', ')}`);
     return result;
 }
 
@@ -394,14 +333,14 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
         // --- NEW EXAM FLOW ---
         const language = req.body.language || 'FR';
 
-        // Get least-used A2 Speaking section
-        const [leastUsedSpeakingA2Id] = await getLeastUsedSections(userId, 'A2', 'Speaking', 1, language);
+        // Get random A2 Speaking section
+        const [randomSpeakingA2Id] = await getRandomSections('A2', 'Speaking', 1, language);
 
         // Create MockExam with A2 Speaking section
         const exam = await prisma.mockExam.create({
             data: {
                 user_id: userId,
-                speaking_a2_id: leastUsedSpeakingA2Id,
+                speaking_a2_id: randomSpeakingA2Id,
                 status: "IN_PROGRESS"
             },
             include: {
@@ -455,15 +394,15 @@ router.post("/mock/start/listening", requireAuth, async (req: Request, res: Resp
 
         console.log(`[LISTEN_START] User ${userId} listening start. path: ${resolvedPath}, speakingExamId: ${speakingExamId}, forceNew: ${forceNew}, language: ${language}`);
 
-        // Pick least-used sections
-        const [a2Id] = await getLeastUsedSections(userId, 'A2', 'Listening', 1, language);
+        // Pick random sections
+        const [a2Id] = await getRandomSections('A2', 'Listening', 1, language);
 
         let a1Id: number | undefined;
         let b1Id: number | undefined;
         if (resolvedPath === 'A1') {
-            [a1Id] = await getLeastUsedSections(userId, 'A1', 'Listening', 1, language);
+            [a1Id] = await getRandomSections('A1', 'Listening', 1, language);
         } else if (resolvedPath === 'B1') {
-            [b1Id] = await getLeastUsedSections(userId, 'B1', 'Listening', 1, language);
+            [b1Id] = await getRandomSections('B1', 'Listening', 1, language);
         }
 
         // Create new listening exam (linked sections)
@@ -521,7 +460,7 @@ router.post("/mock/:examId/listening/decision", requireAuth, async (req: Request
 
         console.log(`[LISTEN_DECISION] User ${userId} chose ${choice} listening for exam ${examId}, language: ${language}`);
 
-        const [sectionId] = await getLeastUsedSections(userId, choice as 'A1' | 'B1', 'Listening', 1, language);
+        const [sectionId] = await getRandomSections(choice as 'A1' | 'B1', 'Listening', 1, language);
 
         const updateData: any = { selected_path: choice };
         if (choice === 'A1') updateData.listening_a1_id = sectionId;
@@ -679,7 +618,7 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
         }
 
         if (choice === "A1") {
-            const [oralId] = await getLeastUsedSections(userId, 'A1', 'Speaking', 1, language);
+            const [oralId] = await getRandomSections('A1', 'Speaking', 1, language);
 
             await prisma.mockExam.update({
                 where: { id: examId },
@@ -701,7 +640,7 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
 
         } else if (choice === "B1") {
             // Options are for Speaking B1 topic selection
-            const [option1Id, option2Id] = await getLeastUsedSections(userId, 'B1', 'Speaking', 2, language);
+            const [option1Id, option2Id] = await getRandomSections('B1', 'Speaking', 2, language);
 
             await prisma.mockExam.update({
                 where: { id: examId },
