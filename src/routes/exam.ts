@@ -553,7 +553,7 @@ router.post("/mock/:examId/listening/decision", requireAuth, async (req: Request
 
 // POST /api/exam/mock/:examId/answer
 // Submit multiple answers for a section
-router.post("/mock/:examId/answer", requireAuth, upload.any(), async (req: Request, res: Response) => {
+router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Response) => {
     try {
         const userId = await getUserId(req);
         if (!userId) return res.status(401).json({ error: "User not found" });
@@ -573,20 +573,14 @@ router.post("/mock/:examId/answer", requireAuth, upload.any(), async (req: Reque
         const exam = await prisma.mockExam.findUnique({ where: { id: examId } });
         if (!exam) return res.status(404).json({ error: "Exam not found" });
 
-        const files = req.files as Express.Multer.File[];
         const results = [];
 
         for (const ans of answers) {
-            const { sectionType, mode, sectionId, questionId, answerText, fileField } = ans;
+            const { sectionType, mode, sectionId, questionId, answerText, audioUrl } = ans;
             // mode should be 'Speaking' or 'Listening'
 
-            let finalAudioUrl = ans.audioUrl;
-            if (fileField && files) {
-                const uploadedFile = files.find(f => f.fieldname === fileField);
-                if (uploadedFile) {
-                    finalAudioUrl = `/audio/recordings/${uploadedFile.filename}`;
-                }
-            }
+            // Audio is now stored locally on the client. We only store the remote URL if it was previously provided via backend sync or another method
+            let finalAudioUrl = audioUrl || '';
 
             let dbSectionId: number | null = null;
             if (sectionType === "A1" && mode === "Speaking") dbSectionId = exam.speaking_a1_id;
