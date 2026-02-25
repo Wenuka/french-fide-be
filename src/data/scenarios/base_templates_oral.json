@@ -156,9 +156,9 @@
             "tips": [
                 "Essayez de donner des réponses détaillées et de justifier votre opinion.",
                 "Essayez d'utiliser différents temps.",
-                "Utilisez des connecteurs logiques (pour relier deux phrases)."
-            ],
-            "note": "Il y a 4 questions dans cette section. La première est une question générale sur le sujet. Ensuite, il y a une question de comparaison, une question sur le passé et une question sur le futur ou une situation hypothétique. Essayez d'utiliser les temps appropriés pour chaque question. L'ordre des questions peut bien sûr changer."
+                "Utilisez des connecteurs logiques (pour relier deux phrases).",
+                "Il y a 4 questions dans cette section. La première est une question générale sur le sujet. Ensuite, il y a une question de comparaison, une question sur le passé et une question sur le futur ou une situation hypothétique. Essayez d'utiliser les temps appropriés pour chaque question. L'ordre des questions peut bien sûr changer."
+            ]
         },
         "b1_q1": {
             "type": "open_question",
@@ -373,9 +373,9 @@
             "tips": [
                 "Versuchen Sie, detaillierte Antworten zu geben und Ihre Meinung zu begründen.",
                 "Versuchen Sie, verschiedene Zeitformen zu verwenden.",
-                "Verwenden Sie Verbindungswörter (um zwei Sätze zu verbinden)."
-            ],
-            "note": "In diesem Teil gibt es 4 Fragen. Die erste ist eine allgemeine Frage zum Thema. Danach gibt es eine Vergleichsfrage, eine Frage zur Vergangenheit und eine Frage zur Zukunft oder eine hypothetische Frage. Versuchen Sie, für jede Frage die passenden Zeitformen zu verwenden. Die Reihenfolge kann sich natürlich ändern."
+                "Verwenden Sie Verbindungswörter (um zwei Sätze zu verbinden).",
+                "In diesem Teil gibt es 4 Fragen. Die erste ist eine allgemeine Frage zum Thema. Danach gibt es eine Vergleichsfrage, eine Frage zur Vergangenheit und eine Frage zur Zukunft oder eine hypothetische Frage. Versuchen Sie, für jede Frage die passenden Zeitformen zu verwenden. Die Reihenfolge kann sich natürlich ändern."
+            ]
         },
         "b1_q1": {
             "type": "open_question",
