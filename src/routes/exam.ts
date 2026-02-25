@@ -657,7 +657,7 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
                 examId,
                 section: "B1",
                 topicSelection: {
-                    title: "Expression Speaking B1",
+                    title: "Section B1",
                     options: [
                         { id: opt1!.id, title: opt1!.title },
                         { id: opt2!.id, title: opt2!.title }
