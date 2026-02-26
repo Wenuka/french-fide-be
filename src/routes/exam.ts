@@ -226,9 +226,9 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
 
         // Flatten all answers (speaking only)
         const allAnswers = [
-            ...exam.answersSpeakingA1,
-            ...exam.answersSpeakingA2,
-            ...exam.answersSpeakingB1
+            ...exam.answersSpeakingA1.map((a: any) => ({ ...a, sectionType: "A1" })),
+            ...exam.answersSpeakingA2.map((a: any) => ({ ...a, sectionType: "A2" })),
+            ...exam.answersSpeakingB1.map((a: any) => ({ ...a, sectionType: "B1" }))
         ];
 
         res.json({
@@ -290,12 +290,14 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 if (existingExam.selected_path === "A1") {
                     if (existingExam.speaking_a1) {
                         sections.push({
+                            level: "A1",
                             type: "Speaking",
                             section: loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id) || {}
                         });
                     }
                     if (existingExam.speaking_a2) {
                         sections.push({
+                            level: "A2",
                             type: "Speaking",
                             section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
                         });
@@ -303,12 +305,14 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 } else {
                     if (existingExam.speaking_a2) {
                         sections.push({
+                            level: "A2",
                             type: "Speaking",
                             section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
                         });
                     }
                     if (existingExam.selected_path === "B1" && existingExam.speaking_b1) {
                         sections.push({
+                            level: "B1",
                             type: "Speaking",
                             section: loadSectionContent("B1", "Speaking", existingExam.speaking_b1.json_id) || {}
                         });
@@ -316,9 +320,9 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 }
 
                 const allAnswers = [
-                    ...existingExam.answersSpeakingA1,
-                    ...existingExam.answersSpeakingA2,
-                    ...existingExam.answersSpeakingB1
+                    ...existingExam.answersSpeakingA1.map((a: any) => ({ ...a, sectionType: "A1" })),
+                    ...existingExam.answersSpeakingA2.map((a: any) => ({ ...a, sectionType: "A2" })),
+                    ...existingExam.answersSpeakingB1.map((a: any) => ({ ...a, sectionType: "B1" }))
                 ];
 
                 return res.json({
@@ -353,6 +357,7 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
             section: "A2",
             sections: [
                 {
+                    level: "A2",
                     type: "Speaking",
                     section: loadSectionContent("A2", "Speaking", exam.speaking_a2!.json_id) || {}
                 }
@@ -538,7 +543,7 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
                 mock_exam_id: examId,
                 user_id: userId,
                 section_id: dbSectionId,
-                question_id: questionId,
+                question_id: String(questionId),
                 answer_text: answerText || '',
                 audio_url: finalAudioUrl || ''
             };
@@ -549,13 +554,13 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
             if (sectionType === "A1") {
                 if (mode === "Speaking") {
                     result = await prisma.a1SectionSpeakingAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
                         update: data,
                         create: data
                     });
                 } else {
                     result = await prisma.a1SectionListeningAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
                         update: data,
                         create: data
                     });
@@ -563,13 +568,13 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
             } else if (sectionType === "A2") {
                 if (mode === "Speaking") {
                     result = await prisma.a2SectionSpeakingAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
                         update: data,
                         create: data
                     });
                 } else {
                     result = await prisma.a2SectionListeningAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
                         update: data,
                         create: data
                     });
@@ -577,13 +582,13 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
             } else if (sectionType === "B1") {
                 if (mode === "Speaking") {
                     result = await prisma.b1SectionSpeakingAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
                         update: data,
                         create: data
                     });
                 } else {
                     result = await prisma.b1SectionListeningAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: questionId } },
+                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
                         update: data,
                         create: data
                     });
