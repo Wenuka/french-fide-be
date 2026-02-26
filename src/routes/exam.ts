@@ -196,18 +196,18 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
                 });
             }
         } else if (exam.selected_path === "A1") {
-            if (exam.speaking_a1) {
-                const oralContent = loadSectionContent("A1", "Speaking", exam.speaking_a1.json_id);
-                sections.push({
-                    level: "A1",
-                    type: "Speaking",
-                    items: oralContent ? oralContent.items : []
-                });
-            }
             if (exam.speaking_a2) {
                 const oralContent = loadSectionContent("A2", "Speaking", exam.speaking_a2.json_id);
                 sections.push({
                     level: "A2",
+                    type: "Speaking",
+                    items: oralContent ? oralContent.items : []
+                });
+            }
+            if (exam.speaking_a1) {
+                const oralContent = loadSectionContent("A1", "Speaking", exam.speaking_a1.json_id);
+                sections.push({
+                    level: "A1",
                     type: "Speaking",
                     items: oralContent ? oralContent.items : []
                 });
@@ -288,18 +288,18 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 const sections: any[] = [];
 
                 if (existingExam.selected_path === "A1") {
-                    if (existingExam.speaking_a1) {
-                        sections.push({
-                            level: "A1",
-                            type: "Speaking",
-                            section: loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id) || {}
-                        });
-                    }
                     if (existingExam.speaking_a2) {
                         sections.push({
                             level: "A2",
                             type: "Speaking",
                             section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
+                        });
+                    }
+                    if (existingExam.speaking_a1) {
+                        sections.push({
+                            level: "A1",
+                            type: "Speaking",
+                            section: loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id) || {}
                         });
                     }
                 } else {
@@ -425,11 +425,11 @@ router.post("/mock/start/listening", requireAuth, async (req: Request, res: Resp
         const a2Content = loadSectionContent('A2', 'Listening', exam.listening_a2!.json_id);
 
         if (resolvedPath === 'A1') {
+            sections.push({ level: 'A2', type: 'Listening', section: a2Content || {} });
             if (a1Id && exam.listening_a1) {
                 const a1Content = loadSectionContent('A1', 'Listening', exam.listening_a1.json_id);
                 sections.push({ level: 'A1', type: 'Listening', section: a1Content || {} });
             }
-            sections.push({ level: 'A2', type: 'Listening', section: a2Content || {} });
         } else {
             sections.push({ level: 'A2', type: 'Listening', section: a2Content || {} });
             if (resolvedPath === 'B1' && b1Id && exam.listening_b1) {
