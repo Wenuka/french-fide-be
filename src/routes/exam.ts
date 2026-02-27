@@ -365,11 +365,17 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
             }
         }
 
-        // Flatten all answers (speaking only)
+        // Flatten all answers (speaking only), filtered to current paper assignment
         const allAnswersRaw = [
-            ...exam.answersSpeakingA1.map((a: any) => ({ ...a, sectionType: "A1" })),
-            ...exam.answersSpeakingA2.map((a: any) => ({ ...a, sectionType: "A2" })),
-            ...exam.answersSpeakingB1.map((a: any) => ({ ...a, sectionType: "B1" }))
+            ...exam.answersSpeakingA1
+                .filter((a: any) => !exam.speaking_a1_id || a.section_id === exam.speaking_a1_id)
+                .map((a: any) => ({ ...a, sectionType: "A1" })),
+            ...exam.answersSpeakingA2
+                .filter((a: any) => !exam.speaking_a2_id || a.section_id === exam.speaking_a2_id)
+                .map((a: any) => ({ ...a, sectionType: "A2" })),
+            ...exam.answersSpeakingB1
+                .filter((a: any) => !exam.speaking_b1_id || a.section_id === exam.speaking_b1_id)
+                .map((a: any) => ({ ...a, sectionType: "B1" }))
         ];
 
         const allAnswers = filterLatestAnswers(allAnswersRaw, exam.attempt);
@@ -446,9 +452,15 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 }
 
                 const allAnswersRaw = [
-                    ...existingExam.answersSpeakingA1.map((a: any) => ({ ...a, sectionType: "A1" })),
-                    ...existingExam.answersSpeakingA2.map((a: any) => ({ ...a, sectionType: "A2" })),
-                    ...existingExam.answersSpeakingB1.map((a: any) => ({ ...a, sectionType: "B1" }))
+                    ...existingExam.answersSpeakingA1
+                        .filter((a: any) => !existingExam.speaking_a1_id || a.section_id === existingExam.speaking_a1_id)
+                        .map((a: any) => ({ ...a, sectionType: "A1" })),
+                    ...existingExam.answersSpeakingA2
+                        .filter((a: any) => !existingExam.speaking_a2_id || a.section_id === existingExam.speaking_a2_id)
+                        .map((a: any) => ({ ...a, sectionType: "A2" })),
+                    ...existingExam.answersSpeakingB1
+                        .filter((a: any) => !existingExam.speaking_b1_id || a.section_id === existingExam.speaking_b1_id)
+                        .map((a: any) => ({ ...a, sectionType: "B1" }))
                 ];
 
                 const allAnswers = filterLatestAnswers(allAnswersRaw, existingExam.attempt);

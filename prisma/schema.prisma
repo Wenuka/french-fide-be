@@ -294,6 +294,8 @@ model A1SectionSpeakingAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
+
+  @@index([section_id])
 }
 
 model A1SectionListeningAnswer {
@@ -311,6 +313,8 @@ model A1SectionListeningAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
+
+  @@index([section_id])
 }
 
 model A2SectionSpeakingAnswer {
@@ -328,6 +332,8 @@ model A2SectionSpeakingAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
+
+  @@index([section_id])
 }
 
 model A2SectionListeningAnswer {
@@ -345,6 +351,8 @@ model A2SectionListeningAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
+
+  @@index([section_id])
 }
 
 model B1SectionSpeakingAnswer {
@@ -362,6 +370,8 @@ model B1SectionSpeakingAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
+
+  @@index([section_id])
 }
 
 model B1SectionListeningAnswer {
@@ -379,4 +389,6 @@ model B1SectionListeningAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
+
+  @@index([section_id])
 }
