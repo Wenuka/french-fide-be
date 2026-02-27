@@ -232,6 +232,9 @@ model MockExam {
   // Explicitly track which path the user took
   selected_path ExamPath?
 
+  // Track the attempt number for this exact exam combination
+  attempt     Int    @default(1)
+
   // --- Speaking Components ---
   speaking_a2_id Int?
   speaking_a2    A2SectionSpeaking? @relation(fields: [speaking_a2_id], references: [id])
@@ -274,8 +277,10 @@ model MockExam {
 // Section-Specific Answers
 // When practicing standalone, mock_exam_id will be null.
 model A1SectionSpeakingAnswer {
+  id            Int         @id @default(autoincrement())
   user_id       Int
-  mock_exam_id  Int         @default(-1)
+  mock_exam_id  Int?
+  mock_attempt  Int?
   section_id    Int
   question_id   String
 
@@ -286,13 +291,13 @@ model A1SectionSpeakingAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
-
-  @@id([user_id, mock_exam_id, section_id, question_id])
 }
 
 model A1SectionListeningAnswer {
+  id            Int         @id @default(autoincrement())
   user_id       Int
-  mock_exam_id  Int         @default(-1)
+  mock_exam_id  Int?
+  mock_attempt  Int?
   section_id    Int
   question_id   String
 
@@ -303,13 +308,13 @@ model A1SectionListeningAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
-
-  @@id([user_id, mock_exam_id, section_id, question_id])
 }
 
 model A2SectionSpeakingAnswer {
+  id            Int         @id @default(autoincrement())
   user_id       Int
-  mock_exam_id  Int         @default(-1)
+  mock_exam_id  Int?
+  mock_attempt  Int?
   section_id    Int
   question_id   String
 
@@ -320,13 +325,13 @@ model A2SectionSpeakingAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
-
-  @@id([user_id, mock_exam_id, section_id, question_id])
 }
 
 model A2SectionListeningAnswer {
+  id            Int         @id @default(autoincrement())
   user_id       Int
-  mock_exam_id  Int         @default(-1)
+  mock_exam_id  Int?
+  mock_attempt  Int?
   section_id    Int
   question_id   String
 
@@ -337,13 +342,13 @@ model A2SectionListeningAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
-
-  @@id([user_id, mock_exam_id, section_id, question_id])
 }
 
 model B1SectionSpeakingAnswer {
+  id            Int         @id @default(autoincrement())
   user_id       Int
-  mock_exam_id  Int         @default(-1)
+  mock_exam_id  Int?
+  mock_attempt  Int?
   section_id    Int
   question_id   String
 
@@ -354,13 +359,13 @@ model B1SectionSpeakingAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
-
-  @@id([user_id, mock_exam_id, section_id, question_id])
 }
 
 model B1SectionListeningAnswer {
+  id            Int         @id @default(autoincrement())
   user_id       Int
-  mock_exam_id  Int         @default(-1)
+  mock_exam_id  Int?
+  mock_attempt  Int?
   section_id    Int
   question_id   String
 
@@ -371,6 +376,4 @@ model B1SectionListeningAnswer {
   audio_url     String?     
   
   createdAt     DateTime    @default(now())
-
-  @@id([user_id, mock_exam_id, section_id, question_id])
 }

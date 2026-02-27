@@ -74,46 +74,165 @@ async function getUserId(req: Request) {
     return user ? user.id : null;
 }
 
-// Helper to get random sections
-async function getRandomSections(
+// Helper: get all section IDs for a level/type/language, ordered by id ASC
+async function getOrderedSections(
     level: 'A1' | 'A2' | 'B1',
     type: 'Speaking' | 'Listening',
-    count: number = 1,
     language: string = 'FR'
 ): Promise<number[]> {
     if (!language) language = 'FR';
     const langEnum = language.toUpperCase() as "FR" | "EN" | "DE";
 
-    // Get all sections for this level and type
     let allSections: { id: number }[] = [];
     if (level === 'A1') {
         allSections = type === 'Speaking'
-            ? await prisma.a1SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true } })
-            : await prisma.a1SectionListening.findMany({ where: { language: langEnum }, select: { id: true } });
+            ? await prisma.a1SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true }, orderBy: { id: 'asc' } })
+            : await prisma.a1SectionListening.findMany({ where: { language: langEnum }, select: { id: true }, orderBy: { id: 'asc' } });
     } else if (level === 'A2') {
         allSections = type === 'Speaking'
-            ? await prisma.a2SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true } })
-            : await prisma.a2SectionListening.findMany({ where: { language: langEnum }, select: { id: true } });
+            ? await prisma.a2SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true }, orderBy: { id: 'asc' } })
+            : await prisma.a2SectionListening.findMany({ where: { language: langEnum }, select: { id: true }, orderBy: { id: 'asc' } });
     } else if (level === 'B1') {
         allSections = type === 'Speaking'
-            ? await prisma.b1SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true } })
-            : await prisma.b1SectionListening.findMany({ where: { language: langEnum }, select: { id: true } });
+            ? await prisma.b1SectionSpeaking.findMany({ where: { language: langEnum }, select: { id: true }, orderBy: { id: 'asc' } })
+            : await prisma.b1SectionListening.findMany({ where: { language: langEnum }, select: { id: true }, orderBy: { id: 'asc' } });
     }
 
     if (allSections.length === 0) {
         throw new Error(`No ${level} ${type} sections available for language ${langEnum}`);
     }
 
-    // Shuffle all sections
-    const shuffled = allSections.map(s => s.id).sort(() => 0.5 - Math.random());
+    return allSections.map(s => s.id);
+}
 
+// Helper: given an ordered list of DB ids, get the 0-based paper index for a DB id
+function getPaperIndex(orderedIds: number[], dbId: number): number {
+    const idx = orderedIds.indexOf(dbId);
+    if (idx === -1) throw new Error(`Section id ${dbId} not found in ordered list`);
+    return idx;
+}
+
+// Helper: get the next A2 paper for a user (deterministic, ordered)
+// Returns { a2Id, existingExamId (if reusing), alreadySeen }
+async function getA2PaperForUser(
+    userId: number,
+    language: string
+): Promise<{ a2Id: number; existingExamId: number | null; alreadySeen: boolean }> {
+    const allA2 = await getOrderedSections('A2', 'Speaking', language);
+
+    // Get all A2 speaking ids this user has used in MockExam
+    const userExams = await prisma.mockExam.findMany({
+        where: { user_id: userId, speaking_a2_id: { not: null } },
+        select: { id: true, speaking_a2_id: true }
+    });
+    const usedA2Ids = new Set(userExams.map(e => e.speaking_a2_id!));
+
+    // Find first unseen A2 paper (in order)
+    const unseenA2 = allA2.find(id => !usedA2Ids.has(id));
+
+    if (unseenA2 !== undefined) {
+        // Fresh paper — no existing exam
+        console.log(`[PAPER_SELECTION] User ${userId} gets fresh A2 paper id ${unseenA2} (paper #${getPaperIndex(allA2, unseenA2) + 1})`);
+        return { a2Id: unseenA2, existingExamId: null, alreadySeen: false };
+    }
+
+    // All papers seen — pick random, reuse existing MockExam
+    const randomA2 = allA2[Math.floor(Math.random() * allA2.length)];
+    const existingExam = userExams.find(e => e.speaking_a2_id === randomA2);
+    console.log(`[PAPER_SELECTION] User ${userId} has seen all A2 papers. Re-using A2 id ${randomA2} (exam ${existingExam?.id})`);
+    return { a2Id: randomA2, existingExamId: existingExam?.id ?? null, alreadySeen: true };
+}
+
+// Helper: get the A1 paper that pairs with an A2 paper (by index)
+async function getA1PaperForA2(
+    a2Id: number,
+    language: string
+): Promise<number> {
+    const allA2 = await getOrderedSections('A2', 'Speaking', language);
+    const allA1 = await getOrderedSections('A1', 'Speaking', language);
+    const paperIdx = getPaperIndex(allA2, a2Id);
+    // If there are fewer A1 papers than A2, wrap around
+    const a1Id = allA1[paperIdx % allA1.length];
+    console.log(`[PAPER_PAIRING] A2 id ${a2Id} (paper #${paperIdx + 1}) -> A1 id ${a1Id}`);
+    return a1Id;
+}
+
+// Helper: get two B1 options for a user, prioritizing unseen
+async function getB1OptionsForUser(
+    userId: number,
+    language: string
+): Promise<[number, number]> {
+    const allB1 = await getOrderedSections('B1', 'Speaking', language);
+
+    // Get already used B1 ids (speaking_b1_id = the one the user SELECTED)
+    const userExams = await prisma.mockExam.findMany({
+        where: { user_id: userId, speaking_b1_id: { not: null } },
+        select: { speaking_b1_id: true }
+    });
+    const usedB1Ids = new Set(userExams.map(e => e.speaking_b1_id!));
+
+    // Split into unseen and seen
+    const unseen = allB1.filter(id => !usedB1Ids.has(id));
+    const seen = allB1.filter(id => usedB1Ids.has(id));
+
+    // Shuffle unseen and seen separately to add randomness within priority groups
+    const shuffleArray = (arr: number[]) => arr.sort(() => 0.5 - Math.random());
+    const shuffledUnseen = shuffleArray([...unseen]);
+    const shuffledSeen = shuffleArray([...seen]);
+    const prioritizedPool = [...shuffledUnseen, ...shuffledSeen];
+
+    // Pick two
+    let option1: number, option2: number;
+    if (prioritizedPool.length >= 2) {
+        option1 = prioritizedPool[0];
+        option2 = prioritizedPool[1];
+    } else if (prioritizedPool.length === 1) {
+        option1 = prioritizedPool[0];
+        // Need a second — pick from allB1 excluding option1
+        const remaining = allB1.filter(id => id !== option1);
+        option2 = remaining.length > 0 ? remaining[Math.floor(Math.random() * remaining.length)] : option1;
+    } else {
+        // Fallback (shouldn't happen if allB1 has entries)
+        option1 = allB1[0];
+        option2 = allB1.length > 1 ? allB1[1] : allB1[0];
+    }
+
+    console.log(`[B1_OPTIONS] User ${userId}: option1=${option1}, option2=${option2}. Unseen: [${unseen}], Seen: [${seen}]`);
+    return [option1, option2];
+}
+
+// Legacy helper kept for listening (random selection, unchanged behavior)
+async function getRandomSections(
+    level: 'A1' | 'A2' | 'B1',
+    type: 'Speaking' | 'Listening',
+    count: number = 1,
+    language: string = 'FR'
+): Promise<number[]> {
+    const ordered = await getOrderedSections(level, type, language);
+    const shuffled = [...ordered].sort(() => 0.5 - Math.random());
     const result: number[] = [];
     for (let i = 0; i < count; i++) {
         result.push(shuffled[i % shuffled.length]);
     }
-
     console.log(`[RANDOM_SELECTION] Selected ${count} ${level} ${type} sections: ${result.join(', ')}`);
     return result;
+}
+
+// Helper: Filter answers to keep only the most recent per question, and flag if it's from an older attempt
+function filterLatestAnswers(answers: any[], currentAttempt: number) {
+    const latestByKey = new Map<string, any>();
+    for (const ans of answers) {
+        // Use question_id and sectionType as composite key
+        const key = `${ans.sectionType}_${ans.question_id}`;
+        const existing = latestByKey.get(key);
+        if (!existing || new Date(ans.createdAt) > new Date(existing.createdAt)) {
+            latestByKey.set(key, {
+                ...ans,
+                isOldAttempt: ans.mock_attempt !== currentAttempt
+            });
+        }
+    }
+    return Array.from(latestByKey.values());
 }
 
 
@@ -130,7 +249,7 @@ router.get("/history", requireAuth, async (req: Request, res: Response) => {
 
         const history = await prisma.mockExam.findMany({
             where: { user_id: userId },
-            orderBy: { createdAt: "desc" },
+            orderBy: { updatedAt: "desc" },
             include: {
                 speaking_a2: true,
                 speaking_a1: true,
@@ -225,11 +344,13 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
         }
 
         // Flatten all answers (speaking only)
-        const allAnswers = [
+        const allAnswersRaw = [
             ...exam.answersSpeakingA1.map((a: any) => ({ ...a, sectionType: "A1" })),
             ...exam.answersSpeakingA2.map((a: any) => ({ ...a, sectionType: "A2" })),
             ...exam.answersSpeakingB1.map((a: any) => ({ ...a, sectionType: "B1" }))
         ];
+
+        const allAnswers = filterLatestAnswers(allAnswersRaw, exam.attempt);
 
         res.json({
             exam,
@@ -244,7 +365,10 @@ router.get("/:examId", requireAuth, async (req: Request, res: Response) => {
 });
 
 // POST /api/exam/mock/start
-// Starts a new mock exam session, initializing with A2 section or resumes existing
+// Starts a mock exam session using deterministic paper assignment.
+// - Resumes IN_PROGRESS exams if resumeId is provided.
+// - Otherwise, assigns the next unseen A2 paper (by id order).
+// - If all A2 papers are seen, reuses an existing MockExam (reset for fresh attempt) and flags alreadySeen.
 router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
     try {
         const userId = await getUserId(req);
@@ -253,25 +377,16 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
             return res.status(401).json({ error: "User not found" });
         }
 
-        const { examId: requestedExamIdStr, forceNew } = req.body;
+        const { examId: requestedExamIdStr } = req.body;
         const requestedExamId = requestedExamIdStr ? parseInt(requestedExamIdStr) : undefined;
+        const language = req.body.language || 'FR';
 
-        console.log(`[START] User ${userId} requested start. examId: ${requestedExamId}, forceNew: ${forceNew}`);
+        console.log(`[START] User ${userId} requested start. examId: ${requestedExamId}, language: ${language}`);
 
-        // Handle Resume Logic
-        if (!forceNew) {
-            const resumeWhere: any = {
-                user_id: userId,
-                status: "IN_PROGRESS"
-            };
-
-            if (requestedExamId) {
-                resumeWhere.id = requestedExamId;
-            }
-
+        // --- RESUME: If a specific examId is requested, try to resume it ---
+        if (requestedExamId) {
             const existingExam = await prisma.mockExam.findFirst({
-                where: resumeWhere,
-                orderBy: { createdAt: 'desc' },
+                where: { id: requestedExamId, user_id: userId, status: "IN_PROGRESS" },
                 include: {
                     speaking_a2: true,
                     speaking_a1: true,
@@ -284,46 +399,37 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
 
             if (existingExam) {
                 console.log(`Resuming exam ${existingExam.id} for user ${userId}`);
-
                 const sections: any[] = [];
 
-                if (existingExam.selected_path === "A1") {
-                    if (existingExam.speaking_a2) {
-                        sections.push({
-                            level: "A2",
-                            type: "Speaking",
-                            section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
-                        });
-                    }
-                    if (existingExam.speaking_a1) {
-                        sections.push({
-                            level: "A1",
-                            type: "Speaking",
-                            section: loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id) || {}
-                        });
-                    }
-                } else {
-                    if (existingExam.speaking_a2) {
-                        sections.push({
-                            level: "A2",
-                            type: "Speaking",
-                            section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
-                        });
-                    }
-                    if (existingExam.selected_path === "B1" && existingExam.speaking_b1) {
-                        sections.push({
-                            level: "B1",
-                            type: "Speaking",
-                            section: loadSectionContent("B1", "Speaking", existingExam.speaking_b1.json_id) || {}
-                        });
-                    }
+                if (existingExam.speaking_a2) {
+                    sections.push({
+                        level: "A2",
+                        type: "Speaking",
+                        section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
+                    });
+                }
+                if (existingExam.selected_path === "A1" && existingExam.speaking_a1) {
+                    sections.push({
+                        level: "A1",
+                        type: "Speaking",
+                        section: loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id) || {}
+                    });
+                }
+                if (existingExam.selected_path === "B1" && existingExam.speaking_b1) {
+                    sections.push({
+                        level: "B1",
+                        type: "Speaking",
+                        section: loadSectionContent("B1", "Speaking", existingExam.speaking_b1.json_id) || {}
+                    });
                 }
 
-                const allAnswers = [
+                const allAnswersRaw = [
                     ...existingExam.answersSpeakingA1.map((a: any) => ({ ...a, sectionType: "A1" })),
                     ...existingExam.answersSpeakingA2.map((a: any) => ({ ...a, sectionType: "A2" })),
                     ...existingExam.answersSpeakingB1.map((a: any) => ({ ...a, sectionType: "B1" }))
                 ];
+
+                const allAnswers = filterLatestAnswers(allAnswersRaw, existingExam.attempt);
 
                 return res.json({
                     examId: existingExam.id,
@@ -334,27 +440,43 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
             }
         }
 
-        // --- NEW EXAM FLOW ---
-        const language = req.body.language || 'FR';
+        // --- DETERMINISTIC PAPER ASSIGNMENT ---
+        const { a2Id, existingExamId, alreadySeen } = await getA2PaperForUser(userId, language);
 
-        // Get random A2 Speaking section
-        const [randomSpeakingA2Id] = await getRandomSections('A2', 'Speaking', 1, language);
+        let exam: any;
 
-        // Create MockExam with A2 Speaking section
-        const exam = await prisma.mockExam.create({
-            data: {
-                user_id: userId,
-                speaking_a2_id: randomSpeakingA2Id,
-                status: "IN_PROGRESS"
-            },
-            include: {
-                speaking_a2: true
-            }
-        });
+        if (existingExamId) {
+            // Reuse existing MockExam: reset it for a fresh attempt, BUT preserve B1 options
+            console.log(`[START] Resetting existing exam ${existingExamId} for user ${userId} (A2 id: ${a2Id})`);
+            exam = await prisma.mockExam.update({
+                where: { id: existingExamId },
+                data: {
+                    status: "IN_PROGRESS",
+                    selected_path: null,
+                    speaking_a1_id: null,
+                    speaking_b1_id: null,
+                    attempt: { increment: 1 }
+                    // We purposefully DO NOT reset speaking_b1_option1_id, speaking_b1_option2_id
+                    // so that the decision endpoint can reuse them if the user picks B1 again.
+                },
+                include: { speaking_a2: true }
+            });
+        } else {
+            // Create new MockExam with the assigned A2 paper
+            exam = await prisma.mockExam.create({
+                data: {
+                    user_id: userId,
+                    speaking_a2_id: a2Id,
+                    status: "IN_PROGRESS"
+                },
+                include: { speaking_a2: true }
+            });
+        }
 
         res.json({
             examId: exam.id,
             section: "A2",
+            alreadySeen,
             sections: [
                 {
                     level: "A2",
@@ -541,6 +663,7 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
 
             const data = {
                 mock_exam_id: examId,
+                mock_attempt: exam.attempt,
                 user_id: userId,
                 section_id: dbSectionId,
                 question_id: String(questionId),
@@ -549,49 +672,23 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
             };
 
             let result;
-            const modelName = `${sectionType}Section${mode}Answer`;
-            // Dynamic access or explicit if/else
             if (sectionType === "A1") {
                 if (mode === "Speaking") {
-                    result = await prisma.a1SectionSpeakingAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
-                        update: data,
-                        create: data
-                    });
+                    result = await prisma.a1SectionSpeakingAnswer.create({ data });
                 } else {
-                    result = await prisma.a1SectionListeningAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
-                        update: data,
-                        create: data
-                    });
+                    result = await prisma.a1SectionListeningAnswer.create({ data });
                 }
             } else if (sectionType === "A2") {
                 if (mode === "Speaking") {
-                    result = await prisma.a2SectionSpeakingAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
-                        update: data,
-                        create: data
-                    });
+                    result = await prisma.a2SectionSpeakingAnswer.create({ data });
                 } else {
-                    result = await prisma.a2SectionListeningAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
-                        update: data,
-                        create: data
-                    });
+                    result = await prisma.a2SectionListeningAnswer.create({ data });
                 }
             } else if (sectionType === "B1") {
                 if (mode === "Speaking") {
-                    result = await prisma.b1SectionSpeakingAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
-                        update: data,
-                        create: data
-                    });
+                    result = await prisma.b1SectionSpeakingAnswer.create({ data });
                 } else {
-                    result = await prisma.b1SectionListeningAnswer.upsert({
-                        where: { user_id_mock_exam_id_section_id_question_id: { user_id: userId, mock_exam_id: examId, section_id: data.section_id, question_id: data.question_id } },
-                        update: data,
-                        create: data
-                    });
+                    result = await prisma.b1SectionListeningAnswer.create({ data });
                 }
             }
             results.push(result);
@@ -606,6 +703,8 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
 
 // POST /api/exam/mock/:examId/decision
 // Handle the user choice between A1 and B1 after A2 section
+// A1: deterministically paired with A2 paper by index
+// B1: reuse existing option1/option2 if exam was restarted, otherwise pick new options prioritizing unseen
 router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Response) => {
     try {
         const userId = await getUserId(req);
@@ -622,8 +721,23 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
             return res.status(400).json({ error: "Missing choice." });
         }
 
+        // Fetch exam to know A2 paper id and existing B1 options
+        const currentExam = await prisma.mockExam.findUnique({
+            where: { id: examId },
+            select: {
+                speaking_a2_id: true,
+                speaking_b1_option1_id: true,
+                speaking_b1_option2_id: true
+            }
+        });
+        if (!currentExam) return res.status(404).json({ error: "Exam not found" });
+
         if (choice === "A1") {
-            const [oralId] = await getRandomSections('A1', 'Speaking', 1, language);
+            // Deterministic A1 pairing by paper index
+            const a2Id = currentExam.speaking_a2_id;
+            if (!a2Id) return res.status(400).json({ error: "No A2 section on this exam" });
+
+            const oralId = await getA1PaperForA2(a2Id, language);
 
             await prisma.mockExam.update({
                 where: { id: examId },
@@ -644,16 +758,26 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
             });
 
         } else if (choice === "B1") {
-            // Options are for Speaking B1 topic selection
-            const [option1Id, option2Id] = await getRandomSections('B1', 'Speaking', 2, language);
+            let option1Id: number;
+            let option2Id: number;
 
-            await prisma.mockExam.update({
-                where: { id: examId },
-                data: {
-                    speaking_b1_option1_id: option1Id,
-                    speaking_b1_option2_id: option2Id
-                }
-            });
+            // If exam already has B1 options (from a previous attempt / restarted exam), reuse them
+            if (currentExam.speaking_b1_option1_id && currentExam.speaking_b1_option2_id) {
+                option1Id = currentExam.speaking_b1_option1_id;
+                option2Id = currentExam.speaking_b1_option2_id;
+                console.log(`[DECISION] Reusing existing B1 options for exam ${examId}: option1=${option1Id}, option2=${option2Id}`);
+            } else {
+                // New mock - pick B1 options prioritizing unseen
+                [option1Id, option2Id] = await getB1OptionsForUser(userId, language);
+
+                await prisma.mockExam.update({
+                    where: { id: examId },
+                    data: {
+                        speaking_b1_option1_id: option1Id,
+                        speaking_b1_option2_id: option2Id
+                    }
+                });
+            }
 
             const opt1 = await prisma.b1SectionSpeaking.findUnique({ where: { id: option1Id } });
             const opt2 = await prisma.b1SectionSpeaking.findUnique({ where: { id: option2Id } });
