@@ -433,6 +433,7 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
 
                 return res.json({
                     examId: existingExam.id,
+                    attempt: existingExam.attempt,
                     resumed: true,
                     sections,
                     answers: allAnswers
@@ -475,6 +476,7 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
 
         res.json({
             examId: exam.id,
+            attempt: exam.attempt,
             section: "A2",
             alreadySeen,
             sections: [
