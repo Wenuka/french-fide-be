@@ -131,7 +131,15 @@ async function getA2PaperForUser(
     const unseenA2 = allA2.find(id => !usedA2Ids.has(id));
 
     if (unseenA2 !== undefined) {
-        // Fresh paper — no existing exam
+        // Check if a MockExam already exists for this user+paper (from prior bug/race)
+        const existingForPaper = await prisma.mockExam.findFirst({
+            where: { user_id: userId, speaking_a2_id: unseenA2 },
+            select: { id: true }
+        });
+        if (existingForPaper) {
+            console.log(`[PAPER_SELECTION] User ${userId} already has MockExam ${existingForPaper.id} for A2 id ${unseenA2}, reusing`);
+            return { a2Id: unseenA2, existingExamId: existingForPaper.id, alreadySeen: true };
+        }
         console.log(`[PAPER_SELECTION] User ${userId} gets fresh A2 paper id ${unseenA2} (paper #${getPaperIndex(allA2, unseenA2) + 1})`);
         return { a2Id: unseenA2, existingExamId: null, alreadySeen: false };
     }
@@ -468,11 +476,7 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 data: {
                     status: "IN_PROGRESS",
                     selected_path: null,
-                    speaking_a1_id: null,
-                    speaking_b1_id: null,
                     attempt: { increment: 1 }
-                    // We purposefully DO NOT reset speaking_b1_option1_id, speaking_b1_option2_id
-                    // so that the decision endpoint can reuse them if the user picks B1 again.
                 },
                 include: { speaking_a2: true }
             });
@@ -833,7 +837,8 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
                 where: { id: examId },
                 data: {
                     speaking_a1_id: oralId,
-                    selected_path: "A1"
+                    selected_path: "A1",
+                    speaking_b1_id: null  // Clear B1 since user chose A1
                 }
             });
 
@@ -892,7 +897,8 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
                 where: { id: examId },
                 data: {
                     speaking_b1_id: selectedSpeakingId,
-                    selected_path: "B1"
+                    selected_path: "B1",
+                    speaking_a1_id: null  // Clear A1 since user chose B1
                 }
             });
 

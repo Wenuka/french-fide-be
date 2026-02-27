@@ -272,6 +272,9 @@ model MockExam {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   status      String   @default("IN_PROGRESS") // IN_PROGRESS, COMPLETED
+
+  // Prevent duplicate speaking exams for the same user + A2 paper
+  @@unique([user_id, speaking_a2_id])
 }
 
 // Section-Specific Answers
