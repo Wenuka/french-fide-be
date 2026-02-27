@@ -218,16 +218,30 @@ async function getRandomSections(
     return result;
 }
 
+function normalizeQuestionId(questionId: unknown, sectionType?: unknown): string {
+    const rawQuestionId = String(questionId ?? "");
+    const normalizedSectionType = String(sectionType ?? "").toUpperCase();
+    const sectionPrefix = `${normalizedSectionType}_`;
+
+    if (normalizedSectionType && rawQuestionId.toUpperCase().startsWith(sectionPrefix)) {
+        return rawQuestionId.slice(sectionPrefix.length);
+    }
+
+    return rawQuestionId;
+}
+
 // Helper: Filter answers to keep only the most recent per question, and flag if it's from an older attempt
 function filterLatestAnswers(answers: any[], currentAttempt: number) {
     const latestByKey = new Map<string, any>();
     for (const ans of answers) {
+        const normalizedQuestionId = normalizeQuestionId(ans.question_id, ans.sectionType);
         // Use question_id and sectionType as composite key
-        const key = `${ans.sectionType}_${ans.question_id}`;
+        const key = `${ans.sectionType}_${normalizedQuestionId}`;
         const existing = latestByKey.get(key);
         if (!existing || new Date(ans.createdAt) > new Date(existing.createdAt)) {
             latestByKey.set(key, {
                 ...ans,
+                question_id: normalizedQuestionId,
                 isOldAttempt: ans.mock_attempt !== currentAttempt
             });
         }
@@ -646,6 +660,7 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
         for (const ans of answers) {
             const { sectionType, mode, sectionId, questionId, answerText, audioUrl } = ans;
             // mode should be 'Speaking' or 'Listening'
+            const normalizedQuestionId = normalizeQuestionId(questionId, sectionType);
 
             // Audio is now stored locally on the client. We only store the remote URL if it was previously provided via backend sync or another method
             let finalAudioUrl = audioUrl || '';
@@ -668,7 +683,7 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
                 mock_attempt: exam.attempt,
                 user_id: userId,
                 section_id: dbSectionId,
-                question_id: String(questionId),
+                question_id: normalizedQuestionId,
                 answer_text: answerText || '',
                 audio_url: finalAudioUrl || ''
             };
@@ -741,12 +756,19 @@ router.delete("/mock/:examId/answer/:sectionType/:questionId", requireAuth, asyn
             return res.status(400).json({ error: "Invalid sectionType or mode" });
         }
 
+        const normalizedQuestionId = normalizeQuestionId(questionId, sectionType);
+        const candidateQuestionIds = Array.from(new Set([
+            String(questionId),
+            normalizedQuestionId,
+            `${sectionType}_${normalizedQuestionId}`
+        ]));
+
         const latestAnswer = await answerModel.findFirst({
             where: {
                 user_id: userId,
                 mock_exam_id: examId,
                 section_id: dbSectionId,
-                question_id: questionId
+                question_id: { in: candidateQuestionIds }
             },
             orderBy: {
                 createdAt: 'desc'
