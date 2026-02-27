@@ -701,6 +701,72 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
     }
 });
 
+// DELETE /api/exam/mock/:examId/answer/:sectionType/:questionId
+// Delete the most recent answer for a given question inside a section
+router.delete("/mock/:examId/answer/:sectionType/:questionId", requireAuth, async (req: Request, res: Response) => {
+    try {
+        const userId = await getUserId(req);
+        if (!userId) return res.status(401).json({ error: "User not found" });
+
+        const examId = parseInt(req.params.examId);
+        if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
+
+        const { sectionType, questionId } = req.params; // sectionType: 'A1', 'A2', 'B1'
+        const mode = req.query.mode as string || 'Speaking'; // default to Speaking
+
+        const exam = await prisma.mockExam.findUnique({ where: { id: examId } });
+        if (!exam) return res.status(404).json({ error: "Exam not found" });
+
+        let dbSectionId: number | null = null;
+        if (sectionType === "A1" && mode === "Speaking") dbSectionId = exam.speaking_a1_id;
+        else if (sectionType === "A1" && mode === "Listening") dbSectionId = exam.listening_a1_id;
+        else if (sectionType === "A2" && mode === "Speaking") dbSectionId = exam.speaking_a2_id;
+        else if (sectionType === "A2" && mode === "Listening") dbSectionId = exam.listening_a2_id;
+        else if (sectionType === "B1" && mode === "Speaking") dbSectionId = exam.speaking_b1_id;
+        else if (sectionType === "B1" && mode === "Listening") dbSectionId = exam.listening_b1_id;
+
+        if (!dbSectionId) {
+            return res.status(404).json({ error: "Section not found for this exam" });
+        }
+
+        // Find the most recent answer for this question
+        let answerModel: any;
+        if (sectionType === "A1") answerModel = mode === "Speaking" ? prisma.a1SectionSpeakingAnswer : prisma.a1SectionListeningAnswer;
+        else if (sectionType === "A2") answerModel = mode === "Speaking" ? prisma.a2SectionSpeakingAnswer : prisma.a2SectionListeningAnswer;
+        else if (sectionType === "B1") answerModel = mode === "Speaking" ? prisma.b1SectionSpeakingAnswer : prisma.b1SectionListeningAnswer;
+
+        if (!answerModel) {
+            return res.status(400).json({ error: "Invalid sectionType or mode" });
+        }
+
+        const latestAnswer = await answerModel.findFirst({
+            where: {
+                user_id: userId,
+                mock_exam_id: examId,
+                section_id: dbSectionId,
+                question_id: questionId
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
+        if (!latestAnswer) {
+            return res.status(404).json({ error: "Answer not found" });
+        }
+
+        await answerModel.delete({
+            where: { id: latestAnswer.id }
+        });
+
+        res.json({ ok: true, deletedId: latestAnswer.id });
+
+    } catch (err: any) {
+        console.error("Failed to delete answer", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // POST /api/exam/mock/:examId/decision
 // Handle the user choice between A1 and B1 after A2 section
 // A1: deterministically paired with A2 paper by index
