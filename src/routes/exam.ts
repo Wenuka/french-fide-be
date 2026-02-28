@@ -13,7 +13,9 @@ const router = Router();
 function loadSectionContent(level: string, type: 'Speaking' | 'Listening', id: string) {
     try {
         const filePath = path.join(__dirname, "..", "data", "scenarios", level.toLowerCase(), type.toLowerCase(), `${id}.json`);
+        console.log(`[loadSectionContent] Attempting to load ${level}/${type} from: ${filePath}`);
         if (fs.existsSync(filePath)) {
+            console.log(`[loadSectionContent] File exists: ${filePath}`);
             const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
             data.id = id;
 
@@ -21,7 +23,9 @@ function loadSectionContent(level: string, type: 'Speaking' | 'Listening', id: s
             if (type === 'Speaking' && data.items && Array.isArray(data.items)) {
                 try {
                     const templatesPath = path.join(__dirname, "..", "data", "scenarios", "base_templates_oral.json");
+                    console.log(`[loadSectionContent] Checking for base templates at: ${templatesPath}`);
                     if (fs.existsSync(templatesPath)) {
+                        console.log(`[loadSectionContent] Templates file exists: ${templatesPath}`);
                         const templatesData = JSON.parse(fs.readFileSync(templatesPath, "utf-8"));
                         const lang = data.language || 'fr';
                         const langTemplates = templatesData[lang] || {};
@@ -35,6 +39,8 @@ function loadSectionContent(level: string, type: 'Speaking' | 'Listening', id: s
                             }
                             return item;
                         });
+                    } else {
+                        console.warn(`[loadSectionContent] Templates file NOT found: ${templatesPath}`);
                     }
                 } catch (e) {
                     console.error("Failed to load or apply base templates for oral:", e);
@@ -42,6 +48,8 @@ function loadSectionContent(level: string, type: 'Speaking' | 'Listening', id: s
             }
 
             return data;
+        } else {
+            console.warn(`[loadSectionContent] Section file NOT found: ${filePath}`);
         }
     } catch (err) {
         console.error(`Failed to load section file for ${level}/${type}/${id}:`, err);
@@ -65,6 +73,7 @@ async function getOrderedSections(
 ): Promise<number[]> {
     if (!language) language = 'FR';
     const langEnum = language.toUpperCase() as "FR" | "EN" | "DE";
+    console.log(`[getOrderedSections] Fetching ${level} ${type} sections for lang ${langEnum} from DB`);
 
     let allSections: { id: number }[] = [];
     if (level === 'A1') {
@@ -81,7 +90,10 @@ async function getOrderedSections(
             : await prisma.b1SectionListening.findMany({ where: { language: langEnum }, select: { id: true }, orderBy: { id: 'asc' } });
     }
 
+    console.log(`[getOrderedSections] Found ${allSections.length} ${level} ${type} sections from DB`);
+
     if (allSections.length === 0) {
+        console.error(`[getOrderedSections] No ${level} ${type} sections available for language ${langEnum}`);
         throw new Error(`No ${level} ${type} sections available for language ${langEnum}`);
     }
 
@@ -101,7 +113,9 @@ async function getA2PaperForUser(
     userId: number,
     language: string
 ): Promise<{ a2Id: number; existingExamId: number | null; alreadySeen: boolean }> {
+    console.log(`[getA2PaperForUser] Getting A2 paper for user ${userId}, lang: ${language}`);
     const allA2 = await getOrderedSections('A2', 'Speaking', language);
+    console.log(`[getA2PaperForUser] Total A2 papers available: ${allA2.length}`);
 
     // Get all A2 speaking ids this user has used in MockExam
     const userExams = await prisma.mockExam.findMany({
@@ -109,11 +123,13 @@ async function getA2PaperForUser(
         select: { id: true, speaking_a2_id: true }
     });
     const usedA2Ids = new Set(userExams.map(e => e.speaking_a2_id!));
+    console.log(`[getA2PaperForUser] User has previously used A2 ids: ${Array.from(usedA2Ids).join(', ')}`);
 
     // Find first unseen A2 paper (in order)
     const unseenA2 = allA2.find(id => !usedA2Ids.has(id));
 
     if (unseenA2 !== undefined) {
+        console.log(`[getA2PaperForUser] Found unseen A2 paper id: ${unseenA2}`);
         // Check if a MockExam already exists for this user+paper (from prior bug/race)
         const existingForPaper = await prisma.mockExam.findFirst({
             where: { user_id: userId, speaking_a2_id: unseenA2 },
@@ -413,24 +429,31 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 const sections: any[] = [];
 
                 if (existingExam.speaking_a2) {
+                    console.log(`[START] Resuming A2: loading section content for ${existingExam.speaking_a2.json_id}`);
+                    const a2Content = loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id);
+                    console.log(`[START] Resuming A2 content loaded. items: ${a2Content?.items?.length || 0}`);
                     sections.push({
                         level: "A2",
                         type: "Speaking",
-                        section: loadSectionContent("A2", "Speaking", existingExam.speaking_a2.json_id) || {}
+                        section: a2Content || {}
                     });
                 }
                 if (existingExam.selected_path === "A1" && existingExam.speaking_a1) {
+                    console.log(`[START] Resuming A1: loading section content for ${existingExam.speaking_a1.json_id}`);
+                    const a1Content = loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id);
                     sections.push({
                         level: "A1",
                         type: "Speaking",
-                        section: loadSectionContent("A1", "Speaking", existingExam.speaking_a1.json_id) || {}
+                        section: a1Content || {}
                     });
                 }
                 if (existingExam.selected_path === "B1" && existingExam.speaking_b1) {
+                    console.log(`[START] Resuming B1: loading section content for ${existingExam.speaking_b1.json_id}`);
+                    const b1Content = loadSectionContent("B1", "Speaking", existingExam.speaking_b1.json_id);
                     sections.push({
                         level: "B1",
                         type: "Speaking",
-                        section: loadSectionContent("B1", "Speaking", existingExam.speaking_b1.json_id) || {}
+                        section: b1Content || {}
                     });
                 }
 
@@ -459,7 +482,9 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
         }
 
         // --- DETERMINISTIC PAPER ASSIGNMENT ---
+        console.log(`[START] Initiating deterministic A2 paper assignment`);
         const { a2Id, existingExamId, alreadySeen } = await getA2PaperForUser(userId, language);
+        console.log(`[START] getA2PaperForUser results -> a2Id: ${a2Id}, existingExamId: ${existingExamId}, alreadySeen: ${alreadySeen}`);
 
         let exam: any;
 
@@ -475,8 +500,10 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 },
                 include: { speaking_a2: true }
             });
+            console.log(`[START] Successfully reset existing exam. ID: ${exam.id}, attempt: ${exam.attempt}`);
         } else {
             // Create new MockExam with the assigned A2 paper
+            console.log(`[START] Creating new MockExam with A2 id ${a2Id} for user ${userId}`);
             exam = await prisma.mockExam.create({
                 data: {
                     user_id: userId,
@@ -485,7 +512,12 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 },
                 include: { speaking_a2: true }
             });
+            console.log(`[START] Successfully created new exam. ID: ${exam.id}`);
         }
+
+        console.log(`[START] Loading A2 section content for json_id: ${exam.speaking_a2?.json_id} (Speaking)`);
+        const a2SectionContent = loadSectionContent("A2", "Speaking", exam.speaking_a2!.json_id) || {};
+        console.log(`[START] A2 section content loaded. Has items: ${!!a2SectionContent.items}, items length: ${a2SectionContent.items?.length}`);
 
         res.json({
             examId: exam.id,
@@ -496,7 +528,7 @@ router.post("/mock/start", requireAuth, async (req: Request, res: Response) => {
                 {
                     level: "A2",
                     type: "Speaking",
-                    section: loadSectionContent("A2", "Speaking", exam.speaking_a2!.json_id) || {}
+                    section: a2SectionContent
                 }
             ]
         });
