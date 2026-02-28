@@ -542,8 +542,8 @@ router.post("/mock/start/listening", requireAuth, async (req: Request, res: Resp
             : null;
 
         if (!resolvedPath && speakingExamId) {
-            const speakingExam = await prisma.mockExam.findUnique({
-                where: { id: speakingExamId },
+            const speakingExam = await prisma.mockExam.findFirst({
+                where: { id: speakingExamId, user_id: userId },
                 select: { selected_path: true }
             });
             if (speakingExam?.selected_path) {
@@ -612,6 +612,9 @@ router.post("/mock/:examId/listening/decision", requireAuth, async (req: Request
         const examId = parseInt(req.params.examId);
         if (isNaN(examId)) return res.status(400).json({ error: "Invalid exam ID" });
 
+        const exam = await prisma.mockExam.findUnique({ where: { id: examId } });
+        if (!exam || exam.user_id !== userId) return res.status(404).json({ error: "Exam not found" });
+
         const { choice, language = 'FR' } = req.body; // 'A1' or 'B1'
         if (!choice || !['A1', 'B1'].includes(choice)) {
             return res.status(400).json({ error: "Choice must be 'A1' or 'B1'" });
@@ -669,7 +672,7 @@ router.post("/mock/:examId/answer", requireAuth, async (req: Request, res: Respo
         }
 
         const exam = await prisma.mockExam.findUnique({ where: { id: examId } });
-        if (!exam) return res.status(404).json({ error: "Exam not found" });
+        if (!exam || exam.user_id !== userId) return res.status(404).json({ error: "Exam not found" });
 
         const results = [];
 
@@ -748,7 +751,7 @@ router.delete("/mock/:examId/answer/:sectionType/:questionId", requireAuth, asyn
         const mode = req.query.mode as string || 'Speaking'; // default to Speaking
 
         const exam = await prisma.mockExam.findUnique({ where: { id: examId } });
-        if (!exam) return res.status(404).json({ error: "Exam not found" });
+        if (!exam || exam.user_id !== userId) return res.status(404).json({ error: "Exam not found" });
 
         let dbSectionId: number | null = null;
         if (sectionType === "A1" && mode === "Speaking") dbSectionId = exam.speaking_a1_id;
@@ -831,12 +834,13 @@ router.post("/mock/:examId/decision", requireAuth, async (req: Request, res: Res
         const currentExam = await prisma.mockExam.findUnique({
             where: { id: examId },
             select: {
+                user_id: true,
                 speaking_a2_id: true,
                 speaking_b1_option1_id: true,
                 speaking_b1_option2_id: true
             }
         });
-        if (!currentExam) return res.status(404).json({ error: "Exam not found" });
+        if (!currentExam || currentExam.user_id !== userId) return res.status(404).json({ error: "Exam not found" });
 
         if (choice === "A1") {
             // Deterministic A1 pairing by paper index
