@@ -1,0 +1,41 @@
+name: Backend Test Deploy
+
+on:
+  push:
+    branches: [test]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22' # Using the same as frontend
+          cache: 'npm'
+
+      - run: npm ci
+
+      # Sync Vercel project settings & link (.vercel/) to this repo
+      - name: Vercel Pull
+        run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.BE_TEST_VERCEL_PROJECT_ID }}
+
+      # Create .vercel/output (required for --prebuilt)
+      - name: Vercel Build
+        run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.BE_TEST_VERCEL_PROJECT_ID }}
+
+      # Deploy the prebuilt output
+      - name: Vercel Deploy
+        run: npx vercel deploy --prebuilt --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.BE_TEST_VERCEL_PROJECT_ID }}
